@@ -49,4 +49,84 @@ public final class Constants
     public static final double RIGHT_X_DEADBAND = 0.01;
     public static final double TURN_CONSTANT = 0.75;
   }
+  public static final class ShooterConstants {
+    public static final boolean kEncoderReversed = false;
+    public static final int kEncoderCPR = 1;
+    public static final double kEncoderDistancePerPulse =
+        // Distance units will be rotations
+        1.0 / (double) kEncoderCPR;
+
+    public static final int kShooterMotorPort = 10;
+    public static final int kShooterMotor1Port = 12;
+
+    public static final double kShooterFreeRPS = 5676;
+    public static final double kShooterTargetRPS = 4000;
+    public static final double kShooterToleranceRPS = 50;
+
+    // These are not real PID gains, and will have to be tuned for your specific robot.
+    public static final double kP = 0.001;
+    public static final double kI = 0;
+    public static final double kD = 0;
+
+    // On a real robot the feedforward constants should be empirically determined; these are
+    // reasonable guesses.
+    public static final double kSVolts = 0.05;
+    public static final double kVVoltSecondsPerRotation =
+        // Should have value 12V at free speed...
+        12.0 / kShooterFreeRPS;
+  }
+
+  public static final class IntakeConstants{
+    public static final int kIntakeMotorPort = 13;
+    public static final double kIntakeMotorSpeed = -1;
+    public static final int kDistanceSensorPort = 1;
+  }
+
+  public static final class  ClimbConstants {
+    public static final int kClimberMotorPort = 15;
+    public static final int kClimberMotor1Port = 16;
+    
+  }
+
+  public static final class ArmConstants {
+    public static final int kMotorPort = 11;
+    public static final int kMotor1Port = 9;
+
+    public static final double kP = 5;
+
+    // These are fake gains; in actuality these must be determined individually for each robot
+    // public static final double kSVolts = 0.18;
+    // public static final double kGVolts = 0.3;
+    // public static final double kVVoltSecondPerRad = 6.24;
+    // public static final double kAVoltSecondSquaredPerRad = 0.07;
+
+    public static final double kMaxVelocityRadPerSecond = 1;
+    public static final double kMaxAccelerationRadPerSecSquared = 2;
+
+    // public static final int[] kEncoderPorts = new int[] {4, 5};
+    // public static final int kEncoderPPR = 2048;
+    // public static final double m_encoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
+    public static final double m_EncoderDistancePerRotation = 2.0 * Math.PI;
+    public static final int kEncoderPort = 0;
+
+    // The offset of the arm from the horizontal in its neutral position,
+    // measured from the horizontal
+    public static final double kArmOffsetRads = 3.715;
+    public static final double kAmpSpot = 2.035;
+    public static final double kSubwooferSpot = 3.452 ;
+    public static final double kSourceSpot = 2.3;
+    public static final double kStowSpot = 3.6;
+    public static final double kPodiumSpot = 3.09;
+    public static final double kWingLineSpot = 3.023;
+    
+  }
+
+  public static final class AutoConstants {
+    public static final double kAutoTimeoutSeconds = 12;
+    public static final double kAutoShootTimeSeconds = 7;
+  }
+
+  public static final class OIConstants {
+    public static final int kOperatorControllerPort = 1;
+  }
 }

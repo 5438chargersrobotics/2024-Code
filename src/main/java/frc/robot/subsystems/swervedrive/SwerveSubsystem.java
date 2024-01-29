@@ -16,6 +16,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,7 +42,10 @@ public class SwerveSubsystem extends SubsystemBase
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  public        double      maximumSpeed = Units.feetToMeters(14.5);
+  public        double      maximumSpeed = Units.feetToMeters(15.1);
+  // Limelight setup
+  NetworkTableInstance inst = NetworkTableInstance.getDefault();
+  private NetworkTableEntry tx = inst.getTable("limelight").getEntry("tx");
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -74,7 +79,7 @@ public class SwerveSubsystem extends SubsystemBase
     {
       throw new RuntimeException(e);
     }
-    swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
+    swerveDrive.setHeadingCorrection(true); // Heading correction should only be used while controlling the robot via angle.
 
     setupPathPlanner();
   }
@@ -275,7 +280,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public Rotation2d getHeading()
   {
-    return swerveDrive.getYaw();
+    return getPose().getRotation();//swerveDrive.getYaw();
   }
 
   /**
@@ -383,5 +388,19 @@ public class SwerveSubsystem extends SubsystemBase
   public void addFakeVisionReading()
   {
     swerveDrive.addVisionMeasurement(new Pose2d(3, 3, Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp());
+  }
+
+  public double calculateTurnAngle(){
+    double targetOffsetHorizontal = 0.04*tx.getDouble(0);
+    double minMoveCmd = 0.07;
+    if(targetOffsetHorizontal < 3 && targetOffsetHorizontal > -3){
+      return targetOffsetHorizontal + 1.3* minMoveCmd;
+    }
+    else if(targetOffsetHorizontal < 10 && targetOffsetHorizontal >-10){
+      return targetOffsetHorizontal + minMoveCmd;
+    }
+    else{
+      return targetOffsetHorizontal;
+    }
   }
 }

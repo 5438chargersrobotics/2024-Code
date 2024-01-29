@@ -3,63 +3,341 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 7.0
+        "x": 0.7859976973515199,
+        "y": 4.420390379242297
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0,
-        "y": 6.5
+        "x": 1.7859976973515153,
+        "y": 3.9203903792422974
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.0,
-        "y": 5.0
+        "x": 7.732325436160843,
+        "y": 2.4206899695850677
       },
       "prevControl": {
-        "x": 4.0,
-        "y": 6.0
+        "x": 5.03541914312723,
+        "y": 1.0722368230681587
       },
       "nextControl": {
-        "x": 6.0,
-        "y": 4.0
+        "x": 7.755713745045723,
+        "y": 2.4323841240275086
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.225280307703473,
-        "y": 6.012192024384049
+        "x": 1.7449183616306994,
+        "y": 3.7655177304658607
       },
       "prevControl": {
-        "x": 6.975280307703473,
-        "y": 7.512192024384059
+        "x": 6.831875544091182,
+        "y": 0.12863569886724147
+      },
+      "nextControl": {
+        "x": 1.7148357131278456,
+        "y": 3.787025095257558
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.627078046177989,
+        "y": 0.8536732742983166
+      },
+      "prevControl": {
+        "x": 6.364109366394476,
+        "y": 1.146027135359315
+      },
+      "nextControl": {
+        "x": 7.706828350426407,
+        "y": 0.835212555722294
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.7449183616306994,
+        "y": 3.7655177304658607
+      },
+      "prevControl": {
+        "x": 4.563209582258725,
+        "y": 1.4266868419778735
+      },
+      "nextControl": {
+        "x": 1.6680310182703961,
+        "y": 3.8293246544163195
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.5050384003892954,
+        "y": 4.186507290393699
+      },
+      "prevControl": {
+        "x": 2.610285790371255,
+        "y": 4.268366371490779
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": -52.25319461272528,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 4,
+      "rotationDegrees": -58.67130713219583,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Subwoofer height and shoot",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "parallel",
+              "data": {
+                "commands": [
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "Rev Shooter Wheels"
+                    }
+                  },
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "Arm to Subwoofer"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Run Index"
+              }
+            },
+            {
+              "type": "parallel",
+              "data": {
+                "commands": [
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "Arm to Intake"
+                    }
+                  },
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "Run Intake with Sensor"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Shoot with Limelight",
+      "waypointRelativePos": 1.7000000000000002,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "parallel",
+              "data": {
+                "commands": [
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "Arm to Limelight"
+                    }
+                  },
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "Rev Shooter Wheels"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Run Index"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Intake",
+      "waypointRelativePos": 0.2,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Arm to Intake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Run Intake with Sensor"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Shoot with Limelight",
+      "waypointRelativePos": 3.4000000000000004,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "parallel",
+              "data": {
+                "commands": [
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "Arm to Limelight"
+                    }
+                  },
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "Rev Shooter Wheels"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Run Index"
+              }
+            },
+            {
+              "type": "parallel",
+              "data": {
+                "commands": [
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "Arm to Intake"
+                    }
+                  },
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "Run Intake with Sensor"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Shoot with Limelight",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "parallel",
+              "data": {
+                "commands": [
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "Arm to Limelight"
+                    }
+                  },
+                  {
+                    "type": "named",
+                    "data": {
+                      "name": "Rev Shooter Wheels"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Run Index"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 4.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -25.97439396243134,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
-  "previewStartingState": null,
+  "previewStartingState": {
+    "rotation": -55.35905248808368,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }
