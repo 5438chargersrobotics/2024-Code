@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7531929553170285,
+      "y": 4.397140955802102
+    },
+    "rotation": -58.970461890040895
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Sub to W4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W4 to Sub"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Sub to W5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W5 to Sub"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

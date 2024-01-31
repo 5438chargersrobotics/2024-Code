@@ -391,16 +391,18 @@ public class SwerveSubsystem extends SubsystemBase
   }
 
   public double calculateTurnAngle(){
-    double targetOffsetHorizontal = 0.04*tx.getDouble(0);
-    double minMoveCmd = 0.07;
-    if(targetOffsetHorizontal < 3 && targetOffsetHorizontal > -3){
-      return targetOffsetHorizontal + 1.3* minMoveCmd;
+    double targetOffsetHorizontal = tx.getDouble(0);
+    double kP = 0.03;
+    double minMoveCmdFar = 1.6;
+    double minMoveCmdClose = 3;
+    if(targetOffsetHorizontal < 7 && targetOffsetHorizontal > -7){
+      return kP*targetOffsetHorizontal* minMoveCmdClose;
     }
-    else if(targetOffsetHorizontal < 10 && targetOffsetHorizontal >-10){
-      return targetOffsetHorizontal + minMoveCmd;
+    else if(targetOffsetHorizontal < 15 && targetOffsetHorizontal >-15){
+      return kP*targetOffsetHorizontal * minMoveCmdFar;
     }
     else{
-      return targetOffsetHorizontal;
+      return kP*targetOffsetHorizontal;
     }
   }
 }

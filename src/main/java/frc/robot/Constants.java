@@ -83,7 +83,7 @@ public final class Constants
   }
 
   public static final class  ClimbConstants {
-    public static final int kClimberMotorPort = 15;
+    public static final int kClimberMotorPort = 11;
     public static final int kClimberMotor1Port = 16;
     
   }
@@ -118,6 +118,7 @@ public final class Constants
     public static final double kStowSpot = 3.6;
     public static final double kPodiumSpot = 3.09;
     public static final double kWingLineSpot = 3.023;
+   public static final double kMiddleSpot = 3.248;
     
   }
 

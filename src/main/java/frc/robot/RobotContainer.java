@@ -9,6 +9,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -37,6 +38,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 /**
@@ -64,6 +66,7 @@ public class RobotContainer
   CommandPS5Controller driverController = new CommandPS5Controller(0);
    CommandPS5Controller m_operatorController =
       new CommandPS5Controller(OIConstants.kOperatorControllerPort);
+   private final SendableChooser<Command> autoChooser;
     
       
 
@@ -117,9 +120,9 @@ public class RobotContainer
                                                     () -> driverController.getRawAxis(2), () -> true);
     TeleopDrive closedFieldRel = new TeleopDrive(
         drivebase,
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverController.getRawAxis(2), () -> true);
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+        () -> -driverController.getRawAxis(2), () -> true);
     TeleopDrive closedFieldRobotOriented = new TeleopDrive(
       drivebase,
         () -> MathUtil.applyDeadband(driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
@@ -127,14 +130,33 @@ public class RobotContainer
         () -> driverController.getRawAxis(2), () -> false);
 
     drivebase.setDefaultCommand(closedFieldRel);
-    m_arm.setDefaultCommand(new ArmJoystickCmd(m_arm, () -> MathUtil.applyDeadband(-m_operatorController.getRightY(), .05)));
+    m_arm.setDefaultCommand(new ArmJoystickCmd(m_arm, () -> MathUtil.applyDeadband(m_operatorController.getLeftY(), .05)));
     // Pathplanner commands
    NamedCommands.registerCommand("Arm to Subwoofer", Commands.run(() -> {
       m_arm.setMotor(ArmConstants.kSubwooferSpot);
       },
       m_arm).withTimeout(2)
     );
-    NamedCommands.registerCommand("Rev up shooter", Commands.run(m_shooter::setMotorFullSpeed, m_shooter).withTimeout(2));
+    NamedCommands.registerCommand("Rev Shooter Wheels", Commands.run(m_shooter::setMotorFullSpeed, m_shooter).withTimeout(2));
+    NamedCommands.registerCommand("Stop Shooter Wheels", Commands.run(m_shooter::stopMotor, m_shooter));
+    NamedCommands.registerCommand("Run Index", Commands.run(m_Intake::runIntake).withTimeout(3));
+    NamedCommands.registerCommand("Run Intake with Sensor", Commands.run(m_Intake::runIntakeWithSensor));
+    NamedCommands.registerCommand("Arm to Intake", Commands.run(() -> {
+      m_arm.setMotor(ArmConstants.kArmOffsetRads);
+      },
+      m_arm).withTimeout(2));
+    NamedCommands.registerCommand("Arm to Podium", Commands.run(() -> {
+      m_arm.setMotor(ArmConstants.kPodiumSpot);
+      },
+      m_arm).withTimeout(2));
+      
+    // Build an auto chooser. This will use Commands.none() as the default option.
+    autoChooser = AutoBuilder.buildAutoChooser();
+
+    // Another option that allows you to specify the default auto by its name
+    // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   /**
@@ -149,25 +171,22 @@ public class RobotContainer
    
     //Driver Controls
     driverController.R1().onTrue((new InstantCommand(drivebase::zeroGyro)));
-    driverController.button(9).onTrue(Commands.run(m_climb::setLeftMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopMotors, m_climb));
-     driverController.povUp().onTrue(Commands.run(m_climb::setLeftMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopMotors, m_climb));
-     driverController.options().onTrue(Commands.run(m_climb::setRightMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopMotors, m_climb));
-     driverController.triangle().onTrue(Commands.run(m_climb::setRightMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopMotors, m_climb));
      driverController.button(12).whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
+     driverController.square().onTrue(Commands.run(m_shooter::setMotor18Percent, m_shooter)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
      // Limelight drivebase targeting
      driverController.L2().onTrue(new TeleopDrive( drivebase,
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-        () -> drivebase.calculateTurnAngle(), () -> true)).onFalse(new TeleopDrive(
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+        () -> -drivebase.calculateTurnAngle(), () -> true)).onFalse(new TeleopDrive(
         drivebase,
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverController.getRawAxis(2), () -> true));
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+        () -> -driverController.getRawAxis(2), () -> true));
     // drive robot oriented
     driverController.L1().toggleOnTrue(new TeleopDrive(drivebase,
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverController.getRawAxis(2), () -> false));
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+        () -> -driverController.getRawAxis(2), () -> false));
     
    // driverController.R2().onTrue(new InstantCommand(drivebase::addFakeVisionReading));
    //Operator Controls
@@ -178,6 +197,24 @@ public class RobotContainer
   // m_operatorController.L1().onTrue(Commands.run(m_shooter::setMotorQuarterSpeed, m_Intake)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
     m_operatorController.R1().onTrue(Commands.run(m_shooter::setMotorFullSpeed, m_shooter)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
     m_operatorController.R2().onTrue(Commands.run(m_Intake::runIntake, m_Intake)).onFalse(Commands.run(m_Intake::stopIntake, m_Intake));
+    //m_operatorController.povUp().onTrue(Commands.run(m_climb::setLeftMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopMotors, m_climb));
+    driverController.pov(0).onTrue(Commands.run(m_climb::setLeftMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopLeftMotor, m_climb));
+    driverController.pov(180).onTrue(Commands.run(m_climb::setLeftMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopLeftMotor, m_climb));
+    driverController.triangle().onTrue(Commands.run(m_climb::setRightMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopRightMotor, m_climb));
+    driverController.cross().onTrue(Commands.run(m_climb::setRightMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopRightMotor, m_climb));
+
+    // if(m_operatorController.getRawAxis(5)>0.05){
+    //   Commands.run(m_climb::setRightMotorDown, m_climb);
+    // }
+    // else if(m_operatorController.getRawAxis(5)<-0.05){
+    //   Commands.run(m_climb::setRightMotorUp, m_climb);
+    // }
+    // else{
+    //  // Commands.run(m_climb::stopLeftMotor, m_climb);
+    //   Commands.run(m_climb::stopRightMotor, m_climb);
+    // }
+    // m_operatorController.getRightY().onTrue(Commands.run(m_climb::setRightMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopMotors, m_climb));
+    // m_operatorController.triangle().onTrue(Commands.run(m_climb::setRightMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopMotors, m_climb));
     // m_operatorController.cross().onTrue(Commands.run(m_shooter::setMotorHalfSpeed, m_Intake)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
     //  m_operatorController.circle().onTrue(Commands.run(m_shooter::setMotorThreeQuarterSpeed, m_Intake)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
      
@@ -223,7 +260,7 @@ public class RobotContainer
     .options()
     .onTrue(
       Commands.run(() -> {
-      m_arm.setMotor(ArmConstants.kWingLineSpot);
+      m_arm.setMotor(ArmConstants.kMiddleSpot);
       },
       m_arm)
     );
@@ -266,7 +303,15 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    return drivebase.getAutonomousCommand("New Path", true);
+   // return drivebase.getAutonomousCommand("W4W5", true);
+  return new SequentialCommandGroup( new ParallelCommandGroup(Commands.run(() -> {
+      m_arm.setMotor(ArmConstants.kSubwooferSpot);
+      },
+      m_arm).withTimeout(2), Commands.run(m_shooter::setMotorFullSpeed, m_shooter).withTimeout(2)), 
+      new ParallelCommandGroup(Commands.run(m_Intake::runIntake, m_Intake).withTimeout(2),
+      Commands.run(m_shooter::stopMotor, m_shooter),
+      drivebase.getAutonomousCommand("Sub to W4", true),
+      drivebase.getAutonomousCommand("W4 to Sub", true)));
   }
 
   public void setDriveMode()

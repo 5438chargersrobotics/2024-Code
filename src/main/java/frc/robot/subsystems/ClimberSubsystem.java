@@ -8,8 +8,8 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubsystem extends SubsystemBase {
-    private final CANSparkMax m_leftClimberMotor = new CANSparkMax(20, MotorType.kBrushless );
-    private final CANSparkMax m_rightClimberMotor = new CANSparkMax(19, MotorType.kBrushless);
+    private final CANSparkMax m_leftClimberMotor = new CANSparkMax(14, MotorType.kBrushless );
+    private final CANSparkMax m_rightClimberMotor = new CANSparkMax(15, MotorType.kBrushless);
 
 public ClimberSubsystem(){
     m_leftClimberMotor.setIdleMode(IdleMode.kBrake);
@@ -17,20 +17,22 @@ public ClimberSubsystem(){
 }
 
 public void setLeftMotorUp(){
-    m_leftClimberMotor.set(0.5);
+    m_leftClimberMotor.set(1);
 }
 public void setRightMotorUp(){
-    m_rightClimberMotor.set(0.5);
+    m_rightClimberMotor.set(1);
 }
 public void setLeftMotorDown(){
-    m_leftClimberMotor.set(-0.5);
+    m_leftClimberMotor.set(-1);
 }
 public void setRightMotorDown(){
-    m_rightClimberMotor.set(-0.5);
+    m_rightClimberMotor.set(-1);
 }
 
-public void stopMotors(){
+public void stopLeftMotor(){
     m_leftClimberMotor.set(0);
+}
+public void stopRightMotor(){
     m_rightClimberMotor.set(0);
 }
 }

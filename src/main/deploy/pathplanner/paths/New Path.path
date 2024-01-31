@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 7.732325436160843,
-        "y": 2.4206899695850677
+        "x": 7.627078046177989,
+        "y": 2.417940037780313
       },
       "prevControl": {
-        "x": 5.03541914312723,
-        "y": 1.0722368230681587
+        "x": 5.8815657773833365,
+        "y": 0.21449468077083544
       },
       "nextControl": {
-        "x": 7.755713745045723,
-        "y": 2.4323841240275086
+        "x": 7.707664783166269,
+        "y": 2.519668610319072
       },
       "isLocked": false,
       "linkedName": null
@@ -44,7 +44,7 @@
         "y": 3.787025095257558
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Shoot"
     },
     {
       "anchor": {
@@ -71,46 +71,30 @@
         "x": 4.563209582258725,
         "y": 1.4266868419778735
       },
-      "nextControl": {
-        "x": 1.6680310182703961,
-        "y": 3.8293246544163195
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.5050384003892954,
-        "y": 4.186507290393699
-      },
-      "prevControl": {
-        "x": 2.610285790371255,
-        "y": 4.268366371490779
-      },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Shoot"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": 0,
+      "rotationDegrees": -1.0615276095474306,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 2,
-      "rotationDegrees": -52.25319461272528,
+      "rotationDegrees": -50.389810177667975,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 3,
-      "rotationDegrees": 0,
+      "rotationDegrees": -0.7114416894464981,
       "rotateFast": false
     },
     {
       "waypointRelativePos": 4,
-      "rotationDegrees": -58.67130713219583,
+      "rotationDegrees": -54.47033713762719,
       "rotateFast": false
     }
   ],
@@ -120,7 +104,7 @@
       "name": "Subwoofer height and shoot",
       "waypointRelativePos": 0,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
         "data": {
           "commands": [
             {
@@ -147,32 +131,13 @@
               "data": {
                 "name": "Run Index"
               }
-            },
-            {
-              "type": "parallel",
-              "data": {
-                "commands": [
-                  {
-                    "type": "named",
-                    "data": {
-                      "name": "Arm to Intake"
-                    }
-                  },
-                  {
-                    "type": "named",
-                    "data": {
-                      "name": "Run Intake with Sensor"
-                    }
-                  }
-                ]
-              }
             }
           ]
         }
       }
     },
     {
-      "name": "Shoot with Limelight",
+      "name": "Podium height ",
       "waypointRelativePos": 1.7000000000000002,
       "command": {
         "type": "sequential",
@@ -185,7 +150,7 @@
                   {
                     "type": "named",
                     "data": {
-                      "name": "Arm to Limelight"
+                      "name": "Arm to Podium"
                     }
                   },
                   {
@@ -196,12 +161,6 @@
                   }
                 ]
               }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Run Index"
-              }
             }
           ]
         }
@@ -209,7 +168,7 @@
     },
     {
       "name": "Intake",
-      "waypointRelativePos": 0.2,
+      "waypointRelativePos": 2.3,
       "command": {
         "type": "parallel",
         "data": {
@@ -231,54 +190,16 @@
       }
     },
     {
-      "name": "Shoot with Limelight",
+      "name": "Align with Limelight",
       "waypointRelativePos": 3.4000000000000004,
       "command": {
         "type": "sequential",
         "data": {
           "commands": [
             {
-              "type": "parallel",
-              "data": {
-                "commands": [
-                  {
-                    "type": "named",
-                    "data": {
-                      "name": "Arm to Limelight"
-                    }
-                  },
-                  {
-                    "type": "named",
-                    "data": {
-                      "name": "Rev Shooter Wheels"
-                    }
-                  }
-                ]
-              }
-            },
-            {
               "type": "named",
               "data": {
-                "name": "Run Index"
-              }
-            },
-            {
-              "type": "parallel",
-              "data": {
-                "commands": [
-                  {
-                    "type": "named",
-                    "data": {
-                      "name": "Arm to Intake"
-                    }
-                  },
-                  {
-                    "type": "named",
-                    "data": {
-                      "name": "Run Intake with Sensor"
-                    }
-                  }
-                ]
+                "name": "Align to Apriltag"
               }
             }
           ]
@@ -286,35 +207,79 @@
       }
     },
     {
-      "name": "Shoot with Limelight",
-      "waypointRelativePos": 0,
+      "name": "Shoot",
+      "waypointRelativePos": 2.0,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
         "data": {
           "commands": [
             {
-              "type": "parallel",
+              "type": "named",
               "data": {
-                "commands": [
-                  {
-                    "type": "named",
-                    "data": {
-                      "name": "Arm to Limelight"
-                    }
-                  },
-                  {
-                    "type": "named",
-                    "data": {
-                      "name": "Rev Shooter Wheels"
-                    }
-                  }
-                ]
+                "name": "Run Index"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Shoot",
+      "waypointRelativePos": 4,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Run Index"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Intake",
+      "waypointRelativePos": 0.15,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Arm to Intake"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "Run Index"
+                "name": "Run Intake with Sensor"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Podium height",
+      "waypointRelativePos": 3.45,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Rev Shooter Wheels"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Arm to Podium"
               }
             }
           ]
@@ -324,19 +289,19 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 1.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -25.97439396243134,
+    "rotation": -46.48744097354455,
     "rotateFast": false
   },
   "reversed": false,
   "folder": null,
   "previewStartingState": {
-    "rotation": -55.35905248808368,
+    "rotation": -58.699168676442625,
     "velocity": 0
   },
   "useDefaultConstraints": false
