@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 2.1864074131948756,
-        "y": 3.383166101249068
+        "y": 3.412415375899636
       },
       "prevControl": {
         "x": 4.126609298349241,
-        "y": 2.3496917302623204
+        "y": 2.3789410049128885
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AutoLine Spot"
     }
   ],
   "rotationTargets": [],

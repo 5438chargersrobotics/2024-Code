@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7859976973515199,
-      "y": 4.420390379242297
+      "x": 1.3186789318946823,
+      "y": 5.401366052138281
     },
-    "rotation": -58.340310894933474
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "AutoLine to C3"
+            "pathName": "Test Path"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Test Path 2"
           }
         }
       ]

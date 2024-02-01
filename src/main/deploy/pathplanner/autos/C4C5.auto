@@ -14,25 +14,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Sub to W4"
+            "pathName": "Sub to C4"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "W4 to Sub"
+            "pathName": "C4 to AutoLine"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Sub to W5"
+            "pathName": "AutoLine to C5"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "W5 to Sub"
+            "pathName": "C5 to AutoLine"
           }
         }
       ]

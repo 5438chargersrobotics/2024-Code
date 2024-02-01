@@ -151,7 +151,7 @@ public class RobotContainer
       m_arm).withTimeout(2));
       
     // Build an auto chooser. This will use Commands.none() as the default option.
-    autoChooser = AutoBuilder.buildAutoChooser();
+    autoChooser = AutoBuilder.buildAutoChooser("Test Auto");
 
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
@@ -303,15 +303,16 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-   // return drivebase.getAutonomousCommand("W4W5", true);
-  return new SequentialCommandGroup( new ParallelCommandGroup(Commands.run(() -> {
-      m_arm.setMotor(ArmConstants.kSubwooferSpot);
-      },
-      m_arm).withTimeout(2), Commands.run(m_shooter::setMotorFullSpeed, m_shooter).withTimeout(2)), 
-      new ParallelCommandGroup(Commands.run(m_Intake::runIntake, m_Intake).withTimeout(2),
-      Commands.run(m_shooter::stopMotor, m_shooter),
-      drivebase.getAutonomousCommand("Sub to W4", true),
-      drivebase.getAutonomousCommand("W4 to Sub", true)));
+   return drivebase.getAutonomousCommand("Sub to W1", true);
+   //return autoChooser.getSelected();
+  // return new SequentialCommandGroup( new ParallelCommandGroup(Commands.run(() -> {
+  //     m_arm.setMotor(ArmConstants.kSubwooferSpot);
+  //     },
+  //     m_arm).withTimeout(2), Commands.run(m_shooter::setMotorFullSpeed, m_shooter).withTimeout(2)), 
+  //     new ParallelCommandGroup(Commands.run(m_Intake::runIntake, m_Intake).withTimeout(2),
+  //     Commands.run(m_shooter::stopMotor, m_shooter),
+  //     drivebase.getAutonomousCommand("Sub to W4", true),
+  //     drivebase.getAutonomousCommand("W4 to Sub", true)));
   }
 
   public void setDriveMode()
