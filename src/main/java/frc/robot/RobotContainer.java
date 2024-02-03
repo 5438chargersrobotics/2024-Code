@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -34,6 +35,7 @@ import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
@@ -55,9 +57,9 @@ public class RobotContainer
                                                                          
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   private final IntakeSubsystem m_Intake = new IntakeSubsystem();
-  //private final ClimbSubsystem m_climb = new ClimbSubsystem();
   private final ArmSubsystem m_arm = new ArmSubsystem();
   private final ClimberSubsystem m_climb = new ClimberSubsystem();
+  private final LEDSubsystem m_LED = new LEDSubsystem(m_Intake);
 
   private final Command m_spinUpShooter = Commands.runOnce(m_shooter::enable, m_shooter);
   private final Command m_stopShooter = Commands.runOnce(m_shooter::disable, m_shooter);
@@ -135,23 +137,24 @@ public class RobotContainer
    NamedCommands.registerCommand("Arm to Subwoofer", Commands.run(() -> {
       m_arm.setMotor(ArmConstants.kSubwooferSpot);
       },
-      m_arm).withTimeout(2)
+      m_arm).withTimeout(1.25)
     );
-    NamedCommands.registerCommand("Rev Shooter Wheels", Commands.run(m_shooter::setMotorFullSpeed, m_shooter).withTimeout(2));
+    NamedCommands.registerCommand("align Drivebase", Commands.run(drivebase.drive(new Translation2d(0,0), drivebase.calculateTurnAngle(), true), drivebase));
+    NamedCommands.registerCommand("Rev Shooter Wheels", Commands.run(m_shooter::setMotorFullSpeed, m_shooter).withTimeout(1.25));
     NamedCommands.registerCommand("Stop Shooter Wheels", Commands.run(m_shooter::stopMotor, m_shooter));
-    NamedCommands.registerCommand("Run Index", Commands.run(m_Intake::runIntake).withTimeout(3));
+    NamedCommands.registerCommand("Run Index", Commands.run(m_Intake::runIntake).withTimeout(0.25));
     NamedCommands.registerCommand("Run Intake with Sensor", Commands.run(m_Intake::runIntakeWithSensor));
     NamedCommands.registerCommand("Arm to Intake", Commands.run(() -> {
       m_arm.setMotor(ArmConstants.kArmOffsetRads);
       },
-      m_arm).withTimeout(2));
+      m_arm).withTimeout(1.5));
     NamedCommands.registerCommand("Arm to Podium", Commands.run(() -> {
       m_arm.setMotor(ArmConstants.kPodiumSpot);
       },
-      m_arm).withTimeout(2));
+      m_arm).withTimeout(1.25));
       
     // Build an auto chooser. This will use Commands.none() as the default option.
-    autoChooser = AutoBuilder.buildAutoChooser("Test Auto");
+    autoChooser = AutoBuilder.buildAutoChooser("W1");
 
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
@@ -198,10 +201,10 @@ public class RobotContainer
     m_operatorController.R1().onTrue(Commands.run(m_shooter::setMotorFullSpeed, m_shooter)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
     m_operatorController.R2().onTrue(Commands.run(m_Intake::runIntake, m_Intake)).onFalse(Commands.run(m_Intake::stopIntake, m_Intake));
     //m_operatorController.povUp().onTrue(Commands.run(m_climb::setLeftMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopMotors, m_climb));
-    driverController.pov(0).onTrue(Commands.run(m_climb::setLeftMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopLeftMotor, m_climb));
-    driverController.pov(180).onTrue(Commands.run(m_climb::setLeftMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopLeftMotor, m_climb));
-    driverController.triangle().onTrue(Commands.run(m_climb::setRightMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopRightMotor, m_climb));
-    driverController.cross().onTrue(Commands.run(m_climb::setRightMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopRightMotor, m_climb));
+    m_operatorController.povUp().onTrue(Commands.run(m_climb::setLeftMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopLeftMotor, m_climb));
+   m_operatorController.povLeft().onTrue(Commands.run(m_climb::setLeftMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopLeftMotor, m_climb));
+    m_operatorController.povRight().onTrue(Commands.run(m_climb::setRightMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopRightMotor, m_climb));
+    m_operatorController.povDown().onTrue(Commands.run(m_climb::setRightMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopRightMotor, m_climb));
 
     // if(m_operatorController.getRawAxis(5)>0.05){
     //   Commands.run(m_climb::setRightMotorDown, m_climb);
@@ -228,7 +231,7 @@ public class RobotContainer
             () -> {
               m_arm.setMotor(ArmConstants.kArmOffsetRads);
             },
-            m_arm), Commands.run(m_Intake::runIntakeWithSensor, m_Intake)));//.onFalse(Commands.run(m_arm::stopMotor, m_arm));
+            m_arm), Commands.run(m_Intake::runIntakeWithSensor, m_Intake), Commands.run(m_LED::setLEDColor, m_LED)));//.onFalse(Commands.run(m_arm::stopMotor, m_arm));
   // Stow Setpoint
     m_operatorController
     .circle()
@@ -303,8 +306,8 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-   return drivebase.getAutonomousCommand("Sub to W1", true);
-   //return autoChooser.getSelected();
+   //return drivebase.getAutonomousCommand("Sub to W1", true);
+   return autoChooser.getSelected();
   // return new SequentialCommandGroup( new ParallelCommandGroup(Commands.run(() -> {
   //     m_arm.setMotor(ArmConstants.kSubwooferSpot);
   //     },

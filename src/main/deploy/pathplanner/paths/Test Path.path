@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3186789318946823,
-        "y": 5.401366052138281
+        "x": 1.3381784483283943,
+        "y": 5.547612425391122
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3284286901115385,
-        "y": 5.4111158103551364
+        "x": 1.3479282065452505,
+        "y": 5.557362183607978
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.5903725964221542,
-        "y": 5.401366052138281
+        "x": 2.6446460493871116,
+        "y": 5.547612425391122
       },
       "prevControl": {
-        "x": 3.5708730799884427,
-        "y": 5.381866535704569
+        "x": 2.6251465329534,
+        "y": 5.528112908957411
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,16 +32,22 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "wait",
-      "waypointRelativePos": 0.5,
+      "name": "intake",
+      "waypointRelativePos": 0,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
         "data": {
           "commands": [
             {
-              "type": "wait",
+              "type": "named",
               "data": {
-                "waitTime": 3.0
+                "name": "Arm to Intake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Run Intake with Sensor"
               }
             }
           ]
@@ -50,8 +56,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

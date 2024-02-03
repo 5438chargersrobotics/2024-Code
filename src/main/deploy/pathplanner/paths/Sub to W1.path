@@ -20,8 +20,8 @@
         "y": 6.82483075179927
       },
       "prevControl": {
-        "x": 2.5276489507848385,
-        "y": 6.7955814771487
+        "x": 2.0206615235083216,
+        "y": 6.7858317189318464
       },
       "nextControl": null,
       "isLocked": false,
@@ -54,12 +54,6 @@
               "type": "named",
               "data": {
                 "name": "Run Intake with Sensor"
-              }
-            },
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 2.0
               }
             }
           ]

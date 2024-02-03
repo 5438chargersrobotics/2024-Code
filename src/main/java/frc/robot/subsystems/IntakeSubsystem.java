@@ -15,7 +15,6 @@ public class IntakeSubsystem extends SubsystemBase{
 
     private final CANSparkMax m_IntakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotorPort, MotorType.kBrushless);
     private final DigitalInput m_DistanceSensor = new DigitalInput(IntakeConstants.kDistanceSensorPort);
-    private final Timer m_Timer = new Timer();
     
 
     public IntakeSubsystem(){

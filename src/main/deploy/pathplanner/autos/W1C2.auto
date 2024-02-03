@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3381784483283943,
-      "y": 5.547612425391122
+      "x": 0.7531929553145035,
+      "y": 6.6590848621184895
     },
-    "rotation": 0
+    "rotation": 60.52411099619394
   },
   "command": {
     "type": "sequential",
@@ -22,13 +22,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Rev Shooter Wheels"
+                        "name": "Arm to Subwoofer"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to Subwoofer"
+                        "name": "Rev Shooter Wheels"
                       }
                     }
                   ]
@@ -46,7 +46,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Test Path"
+            "pathName": "Sub to W1"
           }
         },
         {
@@ -79,6 +79,18 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W1 to C2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C2 to autoLine"
           }
         }
       ]

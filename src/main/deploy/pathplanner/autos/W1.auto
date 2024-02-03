@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3381784483283943,
-      "y": 5.547612425391122
+      "x": 0.7531929553145035,
+      "y": 6.6590848621184895
     },
-    "rotation": 0
+    "rotation": 61.3895403334508
   },
   "command": {
     "type": "sequential",
@@ -46,7 +46,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Test Path"
+            "pathName": "Sub to W1"
           }
         },
         {
@@ -60,13 +60,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to Podium"
+                        "name": "Rev Shooter Wheels"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Rev Shooter Wheels"
+                        "name": "Arm to Podium"
                       }
                     }
                   ]
@@ -76,6 +76,12 @@
                 "type": "named",
                 "data": {
                   "name": "Run Index"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Stop Shooter Wheels"
                 }
               }
             ]
