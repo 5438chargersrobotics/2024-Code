@@ -55,8 +55,8 @@
       }
     },
     {
-      "name": "Shoot",
-      "waypointRelativePos": 1.0,
+      "name": "Arm to Podium",
+      "waypointRelativePos": 0.9,
       "command": {
         "type": "parallel",
         "data": {
@@ -64,7 +64,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Run Index"
+                "name": "Arm to Podium"
               }
             }
           ]
@@ -84,7 +84,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Field Side",
   "previewStartingState": {
     "rotation": 34.28687697720886,
     "velocity": 0

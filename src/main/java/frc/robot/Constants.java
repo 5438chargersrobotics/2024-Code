@@ -79,12 +79,13 @@ public final class Constants
   public static final class IntakeConstants{
     public static final int kIntakeMotorPort = 13;
     public static final double kIntakeMotorSpeed = -1;
-    public static final int kDistanceSensorPort = 1;
+    public static final int kLeftDistanceSensorPort = 1;
+     public static final int kRightDistanceSensorPort = 2;
   }
 
   public static final class  ClimbConstants {
-    public static final int kClimberMotorPort = 11;
-    public static final int kClimberMotor1Port = 16;
+    public static final int kleftClimberMotor = 14;
+    public static final int krightClimberMotor = 15;
     
   }
 
@@ -113,12 +114,14 @@ public final class Constants
     // measured from the horizontal
     public static final double kArmOffsetRads = 3.715;
     public static final double kAmpSpot = 2.035;
-    public static final double kSubwooferSpot = 3.452 ;
+    public static final double kSubwooferSpot = 3.45 ;
     public static final double kSourceSpot = 2.3;
     public static final double kStowSpot = 3.6;
     public static final double kPodiumSpot = 3.09;
     public static final double kWingLineSpot = 3.023;
-   public static final double kMiddleSpot = 3.248;
+   public static final double kMiddleSpot = 3.181;
+   public static final double kSubwooferSideSpot = 3.573;
+   public static final double kHoardSpot = 2.611;
     
   }
 

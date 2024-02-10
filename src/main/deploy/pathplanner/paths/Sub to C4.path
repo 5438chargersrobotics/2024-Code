@@ -53,23 +53,6 @@
           ]
         }
       }
-    },
-    {
-      "name": "wait",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "wait",
-              "data": {
-                "waitTime": 2.0
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
@@ -84,7 +67,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Field Side",
   "previewStartingState": {
     "rotation": -58.75307058652308,
     "velocity": 0

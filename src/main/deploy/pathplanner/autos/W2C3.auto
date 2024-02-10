@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7531929553145035,
-      "y": 6.6590848621184895
+      "x": 1.3381784483283943,
+      "y": 5.547612425391122
     },
-    "rotation": 60.52411099619394
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -22,13 +22,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to SubwooferSide"
+                        "name": "Rev Shooter Wheels"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Rev Shooter Wheels"
+                        "name": "Arm to Subwoofer"
                       }
                     }
                   ]
@@ -46,7 +46,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Sub to W1"
+            "pathName": "Sub to W2"
           }
         },
         {
@@ -60,7 +60,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to Podium"
+                        "name": "Arm to Mid"
                       }
                     },
                     {
@@ -77,6 +77,19 @@
                 "data": {
                   "name": "Run Index"
                 }
+              },
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Arm to Intake"
+                      }
+                    }
+                  ]
+                }
               }
             ]
           }
@@ -84,29 +97,42 @@
         {
           "type": "path",
           "data": {
-            "pathName": "W1 to C2"
+            "pathName": "W2 to C3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "C2 to autoLine"
+            "pathName": "C3 to AutoLine"
           }
         },
         {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "Align Drivebase"
+                  "name": "Arm to Mid"
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "Run Index"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align Drivebase"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Run Index"
+                      }
+                    }
+                  ]
                 }
               }
             ]

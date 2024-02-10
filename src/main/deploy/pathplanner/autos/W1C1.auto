@@ -22,7 +22,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to Subwoofer"
+                        "name": "Arm to SubwooferSide"
                       }
                     },
                     {
@@ -91,6 +91,31 @@
           "type": "path",
           "data": {
             "pathName": "C1 to autoLine"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Align Drivebase"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W1 to C1"
           }
         }
       ]

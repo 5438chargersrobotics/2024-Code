@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3381784483283943,
-      "y": 5.547612425391122
+      "x": 0.7141939224496041,
+      "y": 4.397140955802102
     },
-    "rotation": 0
+    "rotation": -59.9202375139842
   },
   "command": {
     "type": "sequential",
@@ -22,13 +22,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Rev Shooter Wheels"
+                        "name": "Arm to Subwoofer"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to Subwoofer"
+                        "name": "Rev Shooter Wheels"
                       }
                     }
                   ]
@@ -46,7 +46,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Test Path"
+            "pathName": "Sub to W3"
           }
         },
         {
@@ -70,6 +70,43 @@
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Align Drivebase"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W3 to C5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C5 to autoLine"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Align Drivebase"
                 }
               },
               {

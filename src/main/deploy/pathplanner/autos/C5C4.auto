@@ -20,7 +20,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "C5 to AutoLine"
+            "pathName": "C5 to autoLine"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Run Index"
           }
         },
         {
@@ -33,6 +39,19 @@
           "type": "path",
           "data": {
             "pathName": "C4 to AutoLine"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
           }
         }
       ]
