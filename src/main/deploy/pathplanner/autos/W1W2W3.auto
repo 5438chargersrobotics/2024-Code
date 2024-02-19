@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7141939224496041,
-      "y": 4.397140955802102
+      "x": 0.7336934388833163,
+      "y": 6.688334136763285
     },
-    "rotation": -59.794481089584956
+    "rotation": 59.403990532937314
   },
   "command": {
     "type": "sequential",
@@ -46,75 +46,55 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Sub to W3"
+            "pathName": "Sub to W1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "W3 to AutoLine"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Arm to Podium"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Rev Shooter Wheels"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Align Drivebase"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Run Index"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "W3 to C4"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "C4 to AutoLine"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Align Drivebase"
+            "pathName": "W1 to Sub"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Run Index"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Sub to W2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W2 to Sub"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Run Index"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Sub to W3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W3 to Sub"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Sub to Middle"
           }
         }
       ]

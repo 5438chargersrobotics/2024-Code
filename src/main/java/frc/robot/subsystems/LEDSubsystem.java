@@ -19,25 +19,40 @@ public LEDSubsystem(IntakeSubsystem m_IntakeSubsystem){
 public void setLEDColorGreen() {
     if(m_IntakeSubsystem.getBothSensors()){
          for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-      m_ledBuffer.setLED(i, Color.kGreen);
+      m_ledBuffer.setLED(i, Color.kBlue);
     }
+    m_addressableLED.setData(m_ledBuffer);
     }
+    else{
+      for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+      m_ledBuffer.setRGB(i, 0, 0, 0);
+    }
+     m_addressableLED.setData(m_ledBuffer);
+  }
     }
 public void setLEDColorYellow() {
-  if(m_IntakeSubsystem.getLeftSensor()^m_IntakeSubsystem.getRightSensor()){
+  if(m_IntakeSubsystem.getLeftSensor()||m_IntakeSubsystem.getRightSensor()){
       for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-      m_ledBuffer.setLED(i, Color.kYellow);
+      m_ledBuffer.setLED(i, Color.kBlue);
     }
+    m_addressableLED.setData(m_ledBuffer);
+  }
+   else{
+      for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+      m_ledBuffer.setRGB(i, 0, 0, 0);
+    }
+     m_addressableLED.setData(m_ledBuffer);
   }
 }
 public void setLEDColorRed(){
   for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-      m_ledBuffer.setLED(i, Color.kRed);
+      m_ledBuffer.setRGB(i, 100, 100, 55);
     }
+    m_addressableLED.setData(m_ledBuffer);
 }
 public void turnOffLEDs(){
   for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-      m_ledBuffer.setRGB(i, 0, 0, 0);
+      m_addressableLED.stop();
     }
 }
 

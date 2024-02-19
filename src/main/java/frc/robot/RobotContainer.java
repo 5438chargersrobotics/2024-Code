@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -26,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.ArmJoystickCmd;
@@ -43,6 +45,7 @@ import java.io.File;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.util.PathPlannerLogging;
 
 
 
@@ -73,6 +76,7 @@ public class RobotContainer
       new CommandPS5Controller(OIConstants.kOperatorControllerPort);
   // private final SendableChooser<Command> autoChooser;
     private final SendableChooser<Command> autoChooser;
+    private final Field2d field;
     
       
 
@@ -168,6 +172,10 @@ public class RobotContainer
         m_arm.setMotor(ArmConstants.kMiddleSpot);
         },
         m_arm).withTimeout(1.5));
+        NamedCommands.registerCommand("Arm to Middle Auto ", Commands.run(() -> {
+        m_arm.setMotor(ArmConstants.kMiddleAutoSpot);
+        },
+        m_arm).withTimeout(1.5));
       
     // Build an auto chooser. This will use Commands.none() as the default option.
     // autoChooser = AutoBuilder.buildAutoChooser("W1C1");
@@ -177,6 +185,24 @@ public class RobotContainer
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
       autoChooser = AutoBuilder.buildAutoChooser("W1C1");
     SmartDashboard.putData("Auto Chooser", autoChooser);
+    field = new Field2d();
+        SmartDashboard.putData("Field", field);
+
+        // Logging callback for current robot pose
+        PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {
+            // Do whatever you want with the pose here
+            field.setRobotPose(pose);
+        });
+        PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
+          // Do whatever you want with the pose here
+          field.getObject("target pose").setPose(pose);
+      });
+
+      // Logging callback for the active path, this is sent as a list of poses
+      PathPlannerLogging.setLogActivePathCallback((poses) -> {
+          // Do whatever you want with the poses here
+          field.getObject("path").setPoses(poses);
+      });
   }
 
   /**
@@ -207,37 +233,39 @@ public class RobotContainer
         () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
         () -> -driverController.getRawAxis(2), () -> false));
+    //Climber Pid Control
+      //Climbing in middle of chain
+      driverController
+    .cross()
+    .onTrue(
+      Commands.run(() -> {
+      m_climb.setBothMotors(ClimbConstants.kMiddleClimbSpot);
+      },
+      m_climb)
+    );
+     driverController
+    .triangle()
+    .onTrue(
+      Commands.run(() -> {
+      m_climb.setBothMotors(ClimbConstants.kEdgeClimbSpot);
+      },
+      m_climb)
+    );
     
    // driverController.R2().onTrue(new InstantCommand(drivebase::addFakeVisionReading));
    //Operator Controls
    
    m_operatorController.L2().onTrue(new ParallelCommandGroup(Commands.run(m_Intake::runOuttake, m_Intake), Commands.run(m_shooter::setMotorReverse, m_shooter)))
    .onFalse(new ParallelCommandGroup(Commands.run(m_Intake::stopIntake, m_Intake), Commands.run(m_shooter::stopMotor, m_shooter)));
-   //m_operatorController.povRight().onTrue(Commands.run(m_Intake::runIntakeWithSensor, m_Intake)).onFalse(Commands.run(m_Intake::stopIntake, m_Intake));
-  // m_operatorController.L1().onTrue(Commands.run(m_shooter::setMotorQuarterSpeed, m_Intake)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
     m_operatorController.R1().onTrue(Commands.run(m_shooter::setMotorFullSpeed, m_shooter)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
     m_operatorController.R2().onTrue(Commands.run(m_Intake::runIntake, m_Intake)).onFalse(Commands.run(m_Intake::stopIntake, m_Intake));
-    //m_operatorController.povUp().onTrue(Commands.run(m_climb::setLeftMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopMotors, m_climb));
-     m_operatorController.button(13).onTrue(Commands.run(m_climb::setRightMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopRightMotor, m_climb));
-     m_operatorController.button(15).onTrue(Commands.run(m_climb::setRightMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopRightMotor, m_climb));
-     m_operatorController.povUp().onTrue(Commands.run(m_climb::setLeftMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopLeftMotor, m_climb));
-     m_operatorController.povDown().onTrue(Commands.run(m_climb::setLeftMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopLeftMotor, m_climb));
-     m_operatorController.button(14).toggleOnTrue(Commands.run(m_LED::setLEDColorRed, m_LED));
-
-    // if(m_operatorController.getRawAxis(5)>0.05){
-    //   Commands.run(m_climb::setRightMotorDown, m_climb);
-    // }
-    // else if(m_operatorController.getRawAxis(5)<-0.05){
-    //   Commands.run(m_climb::setRightMotorUp, m_climb);
-    // }
-    // else{
-    //  // Commands.run(m_climb::stopLeftMotor, m_climb);
-    //   Commands.run(m_climb::stopRightMotor, m_climb);
-    // }
-    // m_operatorController.getRightY().onTrue(Commands.run(m_climb::setRightMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopMotors, m_climb));
-    // m_operatorController.triangle().onTrue(Commands.run(m_climb::setRightMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopMotors, m_climb));
-    // m_operatorController.cross().onTrue(Commands.run(m_shooter::setMotorHalfSpeed, m_Intake)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
-    //  m_operatorController.circle().onTrue(Commands.run(m_shooter::setMotorThreeQuarterSpeed, m_Intake)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
+     m_operatorController.povUp().onTrue(Commands.run(m_climb::setRightMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopRightMotor, m_climb));
+     m_operatorController.povDown().onTrue(Commands.run(m_climb::setRightMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopRightMotor, m_climb));
+     m_operatorController.button(13).onTrue(Commands.run(m_climb::setLeftMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopLeftMotor, m_climb));
+     m_operatorController.button(15).onTrue(Commands.run(m_climb::setLeftMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopLeftMotor, m_climb));
+     m_operatorController.povLeft().onTrue(Commands.run(m_climb::setBothMotorsUp, m_climb)).onFalse(Commands.run(m_climb::stopBothMotors, m_climb));
+      m_operatorController.povRight().onTrue(Commands.run(m_climb::setBothMotorsDown, m_climb)).onFalse(Commands.run(m_climb::stopBothMotors, m_climb));
+     m_operatorController.button(14).onTrue(Commands.run(m_LED::setLEDColorRed, m_LED));
      
   
      //Intake setpoint and run LEDs: if just one sensor is detected, display yellow, if both are detected, display green   
@@ -249,9 +277,8 @@ public class RobotContainer
             () -> {
               m_arm.setMotor(ArmConstants.kArmOffsetRads);
             },
-            m_arm), Commands.run(m_Intake::runIntakeWithSensor, m_Intake), 
-            Commands.run(m_LED::setLEDColorGreen, m_LED), 
-            Commands.run(m_LED::setLEDColorYellow, m_LED)));//.onFalse(Commands.run(m_arm::stopMotor, m_arm));
+            m_arm), Commands.run(m_Intake::runIntakeWithSensor, m_Intake),
+            Commands.run(m_LED::setLEDColorYellow), Commands.run(m_LED::setLEDColorGreen))); 
   // Stow Setpoint
     m_operatorController
     .circle()
@@ -335,7 +362,7 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-   //return drivebase.getAutonomousCommand("Sub to W1", true);
+   //return drivebase.getAutonomousCommand("W1 to C1 slow", true);
    return autoChooser.getSelected();
   // return new SequentialCommandGroup( new ParallelCommandGroup(Commands.run(() -> {
   //     m_arm.setMotor(ArmConstants.kSubwooferSpot);

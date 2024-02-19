@@ -3,41 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.334279751694896,
-        "y": 4.02665014356157
+        "x": 2.235156204279156,
+        "y": 4.611635636572936
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.945588988565151,
-        "y": 4.02665014356157
+        "x": 1.8646653920386245,
+        "y": 5.030875239897749
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.9413638922289733,
-        "y": 5.196621129584303
+        "x": 1.3674277229789629,
+        "y": 5.547612425391122
       },
       "prevControl": {
-        "x": 5.218582218637122,
-        "y": 4.065649176428995
-      },
-      "nextControl": {
-        "x": 3.453125626549597,
-        "y": 5.62895425033856
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.102884685579349,
-        "y": 5.537862667174266
-      },
-      "prevControl": {
-        "x": 3.4343764649524564,
-        "y": 5.469614359656273
+        "x": 1.8159166009543433,
+        "y": 5.17712161315059
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,12 +32,18 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Rev shooter wheels",
+      "name": "Arm to Sub",
       "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
         "data": {
           "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Arm to Subwoofer"
+              }
+            },
             {
               "type": "named",
               "data": {
@@ -63,40 +53,23 @@
           ]
         }
       }
-    },
-    {
-      "name": "Arm to Mid",
-      "waypointRelativePos": 0.7,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Arm to Mid"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 1.7,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Middle",
+  "folder": "Amp Side",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -41.08175113593266,
     "velocity": 0
   },
   "useDefaultConstraints": false

@@ -52,7 +52,7 @@ public class ShooterSubsystem extends PIDSubsystem {
     m_shooterMotor.set(1);
   }
   public void setMotorTrapSpeed(){
-    m_shooterMotor.set(0.69);
+    m_shooterMotor.set(0.25);
   }
   public void setMotorThreeQuarterSpeed(){
     m_shooterMotor.set(0.75);

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.934539664803796,
-        "y": 1.8329545447689473
+        "x": 6.97353869767122,
+        "y": 1.540461798263264
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.32582955902254,
-        "y": 1.3162173592755742
+        "x": 5.286830526155116,
+        "y": 1.1699709860227325
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.1864074131948756,
-        "y": 3.412415375899636
+        "x": 2.4789001597005584,
+        "y": 3.3149177937310745
       },
       "prevControl": {
-        "x": 4.44835131950549,
-        "y": 1.7549564790340981
+        "x": 4.740844066011173,
+        "y": 1.6574588968655366
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "AutoLine Spot"
+      "linkedName": "Field Side autoLine"
     }
   ],
   "rotationTargets": [],
@@ -80,7 +80,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -46.63657704161673,
+    "rotation": -38.659808254090066,
     "rotateFast": false
   },
   "reversed": false,

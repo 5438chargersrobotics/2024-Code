@@ -30,7 +30,7 @@ public class ArmSubsystem extends SubsystemBase {
   // private final Encoder m_encoder =
   //     new Encoder(ArmConstants.kEncoderPorts[0], ArmConstants.kEncoderPorts[1]);
   private final DutyCycleEncoder m_Encoder = new DutyCycleEncoder(ArmConstants.kEncoderPort);
-  private final PIDController pidController = new PIDController(1.3, 0, 0);
+  private final PIDController pidController = new PIDController(ArmConstants.kP, 0, 0);
   private final TrapezoidProfile.Constraints trapezoidProfile = new TrapezoidProfile.Constraints(ArmConstants.kMaxVelocityRadPerSecond, ArmConstants.kMaxAccelerationRadPerSecSquared);
    private final ProfiledPIDController pidController1 = new ProfiledPIDController(0.5, 0, 0,trapezoidProfile);
    NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -59,7 +59,7 @@ public class ArmSubsystem extends SubsystemBase {
   // }
   @Override
   public void periodic(){
-    SmartDashboard.putNumber("encoder", getMeasurement());
+    SmartDashboard.putNumber("ArmEncoder", getMeasurement());
    
   }
 

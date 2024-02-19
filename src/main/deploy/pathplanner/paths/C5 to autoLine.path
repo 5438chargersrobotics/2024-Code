@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.1864074131948756,
-        "y": 3.412415375899636
+        "x": 2.4789001597005584,
+        "y": 3.3149177937310745
       },
       "prevControl": {
-        "x": 3.8438663100604127,
-        "y": 2.3204424556117527
+        "x": 4.1363590565660955,
+        "y": 2.222944873443191
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "AutoLine Spot"
+      "linkedName": "Field Side autoLine"
     }
   ],
   "rotationTargets": [],

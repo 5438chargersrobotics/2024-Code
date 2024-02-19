@@ -50,6 +50,12 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "W3 to AutoLine"
+          }
+        },
+        {
           "type": "sequential",
           "data": {
             "commands": [

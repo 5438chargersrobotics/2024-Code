@@ -3,52 +3,42 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.334279751694896,
-        "y": 4.02665014356157
+        "x": 1.3576779647621067,
+        "y": 5.537862667174266
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.945588988565151,
-        "y": 4.02665014356157
+        "x": 1.9426634577734727,
+        "y": 4.835880075560627
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.9413638922289733,
-        "y": 5.196621129584303
+        "x": 2.4691504014837022,
+        "y": 4.172896516814411
       },
       "prevControl": {
-        "x": 5.218582218637122,
-        "y": 4.065649176428995
-      },
-      "nextControl": {
-        "x": 3.453125626549597,
-        "y": 5.62895425033856
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.102884685579349,
-        "y": 5.537862667174266
-      },
-      "prevControl": {
-        "x": 3.4343764649524564,
-        "y": 5.469614359656273
+        "x": 2.069410314592602,
+        "y": 4.631135153006649
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -28.646874927054814,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Rev shooter wheels",
+      "name": "Intake",
       "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
@@ -57,24 +47,13 @@
             {
               "type": "named",
               "data": {
-                "name": "Rev Shooter Wheels"
+                "name": "Arm to Intake"
               }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Arm to Mid",
-      "waypointRelativePos": 0.7,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
+            },
             {
               "type": "named",
               "data": {
-                "name": "Arm to Mid"
+                "name": "Run Intake with Sensor"
               }
             }
           ]
@@ -84,17 +63,17 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 1.7,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": -22.78240573048167,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Middle",
+  "folder": "Amp Side",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

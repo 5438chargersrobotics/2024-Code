@@ -111,6 +111,12 @@
               }
             ]
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W1 to C1 Max Speed"
+          }
         }
       ]
     }

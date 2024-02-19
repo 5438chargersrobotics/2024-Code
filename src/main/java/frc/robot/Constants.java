@@ -86,6 +86,9 @@ public final class Constants
   public static final class  ClimbConstants {
     public static final int kleftClimberMotor = 14;
     public static final int krightClimberMotor = 15;
+    public static final double kMiddleClimbSpot = 20;
+    public static final double kEdgeClimbSpot = 30;
+    public static final double kP = 0.1;
     
   }
 
@@ -93,7 +96,7 @@ public final class Constants
     public static final int kMotorPort = 11;
     public static final int kMotor1Port = 9;
 
-    public static final double kP = 5;
+    public static final double kP = 1.3;
 
     // These are fake gains; in actuality these must be determined individually for each robot
     // public static final double kSVolts = 0.18;
@@ -117,11 +120,12 @@ public final class Constants
     public static final double kSubwooferSpot = 3.45 ;
     public static final double kSourceSpot = 2.3;
     public static final double kStowSpot = 3.6;
-    public static final double kPodiumSpot = 3.09;
+    public static final double kPodiumSpot = 3.06;
     public static final double kWingLineSpot = 3.023;
    public static final double kMiddleSpot = 3.181;
    public static final double kSubwooferSideSpot = 3.573;
    public static final double kHoardSpot = 2.611;
+   public static final double kMiddleAutoSpot  = 3.14;
     
   }
 
