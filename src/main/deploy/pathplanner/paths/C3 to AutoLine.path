@@ -36,8 +36,24 @@
         "y": 5.537862667174266
       },
       "prevControl": {
-        "x": 3.4343764649524564,
-        "y": 5.469614359656273
+        "x": 3.440670020247179,
+        "y": 5.516751083757526
+      },
+      "nextControl": {
+        "x": 2.7908924226399536,
+        "y": 5.557362183607978
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.3576779647621067,
+        "y": 5.537862667174266
+      },
+      "prevControl": {
+        "x": 2.191282292303302,
+        "y": 5.498863634306841
       },
       "nextControl": null,
       "isLocked": false,
@@ -75,6 +91,23 @@
               "type": "named",
               "data": {
                 "name": "Arm to Mid"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Stop Intake",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Intake"
               }
             }
           ]

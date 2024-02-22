@@ -77,6 +77,12 @@
                 "data": {
                   "name": "Run Index"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Align Drivebase"
+                }
               }
             ]
           }

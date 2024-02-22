@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDSubsystem extends SubsystemBase{
     private final AddressableLED m_addressableLED = new AddressableLED(3);
-    private final AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(28);
+    private final AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(70);
     private IntakeSubsystem m_IntakeSubsystem;
 public LEDSubsystem(IntakeSubsystem m_IntakeSubsystem){
     this.m_IntakeSubsystem = m_IntakeSubsystem;

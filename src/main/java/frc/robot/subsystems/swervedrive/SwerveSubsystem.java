@@ -46,6 +46,7 @@ public class SwerveSubsystem extends SubsystemBase
   // Limelight setup
   NetworkTableInstance inst = NetworkTableInstance.getDefault();
   private NetworkTableEntry tx = inst.getTable("limelight").getEntry("tx");
+  private NetworkTableEntry ty = inst.getTable("limelight").getEntry("ty");
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -62,7 +63,7 @@ public class SwerveSubsystem extends SubsystemBase
     //  In this case the wheel diameter is 4 inches, which must be converted to meters to get meters/second.
     //  The gear ratio is 6.75 motor revolutions per wheel rotation.
     //  The encoder resolution per motor revolution is 1 per motor revolution.
-    double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4), 6.75, 1);
+    double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4.2), 6.75, 1);
     System.out.println("\"conversionFactor\": {");
     System.out.println("\t\"angle\": " + angleConversionFactor + ",");
     System.out.println("\t\"drive\": " + driveConversionFactor);
@@ -196,6 +197,7 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   {
+    swerveDrive.addVisionMeasurement(getPose(), Timer.getFPGATimestamp());
   }
 
   @Override
@@ -392,17 +394,41 @@ public class SwerveSubsystem extends SubsystemBase
 
   public double calculateTurnAngle(){
     double targetOffsetHorizontal = tx.getDouble(0);
-    double kP = 0.03;
-    double minMoveCmdFar = 1.6;
-    double minMoveCmdClose = 3;
-    if(targetOffsetHorizontal < 7 && targetOffsetHorizontal > -7){
-      return kP*targetOffsetHorizontal* minMoveCmdClose;
-    }
-    else if(targetOffsetHorizontal < 15 && targetOffsetHorizontal >-15){
-      return kP*targetOffsetHorizontal * minMoveCmdFar;
-    }
-    else{
-      return kP*targetOffsetHorizontal;
-    }
-  }
+    double kP = 0.025;
+    double minMoveCmdFar = 1.3;
+    double minMoveCmdClose = 2;
+    
+  //   if(targetOffsetHorizontal < 7 && targetOffsetHorizontal > -7){
+  //     return kP*targetOffsetHorizontal* minMoveCmdClose;
+  //   }
+  //   else if(targetOffsetHorizontal < 15 && targetOffsetHorizontal >-15){
+  //     return kP*targetOffsetHorizontal * minMoveCmdFar;
+  //   }
+  //   else{
+  //     return kP*targetOffsetHorizontal;
+  //   }
+  // }
+  
+   if(targetOffsetHorizontal< 12 && targetOffsetHorizontal > -12){
+     return minMoveCmdClose * kP * targetOffsetHorizontal;
+   }
+   else{
+  return kP*targetOffsetHorizontal;
 }
+
+  }
+
+public Command aimAtTarget()
+{ double targetOffsetHorizontal = tx.getDouble(0);
+  double targetOffsetVertical = ty.getDouble(0);
+  return run(() -> {
+    if (targetOffsetHorizontal!=0)
+    {
+      drive(getTargetSpeeds(0,
+                            0,
+                            Rotation2d.fromDegrees(targetOffsetHorizontal))); // Not sure if this will work, more math may be required.
+    }
+  });
+}
+}
+

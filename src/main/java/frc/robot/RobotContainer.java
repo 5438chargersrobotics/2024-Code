@@ -176,6 +176,7 @@ public class RobotContainer
         m_arm.setMotor(ArmConstants.kMiddleAutoSpot);
         },
         m_arm).withTimeout(1.5));
+      NamedCommands.registerCommand("Stop Intake", Commands.run(m_Intake::stopIntake, m_Intake));
       
     // Build an auto chooser. This will use Commands.none() as the default option.
     // autoChooser = AutoBuilder.buildAutoChooser("W1C1");
@@ -219,15 +220,20 @@ public class RobotContainer
     driverController.R1().onTrue((new InstantCommand(drivebase::zeroGyro)));
      driverController.R2().whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
      driverController.square().onTrue(Commands.run(m_shooter::setMotorTrapSpeed, m_shooter)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
+     driverController.L2().whileTrue(new RepeatCommand(new InstantCommand(drivebase::aimAtTarget)));//.onFalse(new TeleopDrive(
+    //     drivebase,
+     //    () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+     //  () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+     // () -> -driverController.getRawAxis(2), () -> true));
      // Limelight drivebase targeting
-     driverController.L2().onTrue(new TeleopDrive( drivebase,
-        () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-        () -> -drivebase.calculateTurnAngle(), () -> true)).onFalse(new TeleopDrive(
-        drivebase,
-        () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-        () -> -driverController.getRawAxis(2), () -> true));
+    //  driverController.L2().onTrue(new TeleopDrive( drivebase,
+    //     () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+    //     () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+    //     () -> -drivebase.calculateTurnAngle(), () -> true)).onFalse(new TeleopDrive(
+    //     drivebase,
+    //     () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+    //     () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+    //     () -> -driverController.getRawAxis(2), () -> true));
     // drive robot oriented
     driverController.L1().toggleOnTrue(new TeleopDrive(drivebase,
         () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),

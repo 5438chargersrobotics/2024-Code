@@ -20,8 +20,8 @@
         "y": 6.1520974348362
       },
       "prevControl": {
-        "x": 4.155858572999805,
-        "y": 6.493338972426164
+        "x": 4.233856638734657,
+        "y": 6.668834620329574
       },
       "nextControl": null,
       "isLocked": false,
@@ -65,6 +65,23 @@
               "type": "named",
               "data": {
                 "name": "Arm to Podium"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Stop Intake",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Intake"
               }
             }
           ]
