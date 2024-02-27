@@ -1,0 +1,189 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3674277229789629,
+      "y": 5.567111941824834
+    },
+    "rotation": 0.734521034254806
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Arm to Subwoofer"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Rev Shooter Wheels"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Sub to W3 Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W3 to MiddleAutoLine"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align Drivebase"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Arm to Mid"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W3 to W2 Blue"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Arm to Podium"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Rev Shooter Wheels"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align Drivebase"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W2 to W1 Blue"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Arm to Podium"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Rev Shooter Wheels"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align Drivebase"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W1 to C1 Red"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

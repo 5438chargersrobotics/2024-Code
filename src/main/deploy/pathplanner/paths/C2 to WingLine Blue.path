@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.8341165518435565,
-        "y": 6.90282881753412
+        "x": 7.568273948899444,
+        "y": 6.074099369101352
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.183808282105876,
-        "y": 7.195321564039803
+        "x": 6.95403918123751,
+        "y": 6.20669728750384
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.231257507645656,
-        "y": 7.380566970160069
+        "x": 5.764568678781065,
+        "y": 6.356842357390178
       },
       "prevControl": {
-        "x": 8.153259441910805,
-        "y": 7.409816244810637
+        "x": 6.788293291550955,
+        "y": 6.259344775221617
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
+      "name": "Arm to WingLine",
       "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
@@ -41,13 +41,30 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to Intake"
+                "name": "Rev Shooter Wheels"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "Run Intake with Sensor"
+                "name": "Arm to WingLine"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Arm to WingLine",
+      "waypointRelativePos": 0.9,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Arm to WingLine"
               }
             }
           ]
@@ -57,20 +74,20 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 1.5,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 360.0
+    "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
-    "rotateFast": true
+    "rotation": 8.972626614896424,
+    "rotateFast": false
   },
   "reversed": false,
-  "folder": "Amp Side",
+  "folder": "Middle",
   "previewStartingState": {
-    "rotation": -122.38067770656926,
+    "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

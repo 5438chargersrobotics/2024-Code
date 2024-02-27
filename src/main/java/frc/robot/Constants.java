@@ -120,7 +120,7 @@ public final class Constants
     public static final double kSubwooferSpot = 3.45 ;
     public static final double kSourceSpot = 2.3;
     public static final double kStowSpot = 3.6;
-    public static final double kPodiumSpot = 3.06;
+    public static final double kPodiumSpot = 3.02;
     public static final double kWingLineSpot = 2.94;
    public static final double kMiddleSpot = 3.181;
    public static final double kSubwooferSideSpot = 3.573;

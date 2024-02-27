@@ -155,7 +155,7 @@ public class RobotContainer
      NamedCommands.registerCommand("Align Drivebase", new TeleopDrive( drivebase,
          () -> (0),
         () -> (0),
-        () -> -drivebase.calculateTurnAngle(), () -> true).withTimeout(0.7));
+        () -> -drivebase.calculateTurnAngle(), () -> true).withTimeout(0.5));
     NamedCommands.registerCommand("Rev Shooter Wheels", Commands.run(m_shooter::setMotorFullSpeed, m_shooter).withTimeout(0.7));
     NamedCommands.registerCommand("Stop Shooter Wheels", Commands.run(m_shooter::stopMotor, m_shooter));
     NamedCommands.registerCommand("Run Index", Commands.run(m_Intake::runIntake).withTimeout(0.25));
@@ -179,7 +179,7 @@ public class RobotContainer
           NamedCommands.registerCommand("Arm to WingLine", Commands.run(() -> {
         m_arm.setMotor(ArmConstants.kWingLineSpot);
         },
-        m_arm).withTimeout(1.5));
+        m_arm).withTimeout(0.7));
       NamedCommands.registerCommand("Stop Intake", Commands.run(m_Intake::stopIntake, m_Intake));
       
     // Build an auto chooser. This will use Commands.none() as the default option.

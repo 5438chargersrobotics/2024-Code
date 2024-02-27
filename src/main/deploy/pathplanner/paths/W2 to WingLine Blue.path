@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.8341165518435565,
-        "y": 6.90282881753412
+        "x": 7.45127685029717,
+        "y": 5.918103237631654
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.183808282105876,
-        "y": 7.195321564039803
+        "x": 6.807792807984668,
+        "y": 6.113098401968776
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.231257507645656,
-        "y": 7.380566970160069
+        "x": 5.803567711648489,
+        "y": 6.395841390257602
       },
       "prevControl": {
-        "x": 8.153259441910805,
-        "y": 7.409816244810637
+        "x": 6.505550303262128,
+        "y": 6.142347676619344
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
+      "name": "Arm to WingLine",
       "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
@@ -41,13 +41,24 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to Intake"
+                "name": "Arm to WingLine"
               }
-            },
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Arm to WingLine",
+      "waypointRelativePos": 0.8,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
             {
               "type": "named",
               "data": {
-                "name": "Run Intake with Sensor"
+                "name": "Arm to WingLine"
               }
             }
           ]
@@ -59,17 +70,17 @@
     "maxVelocity": 4.0,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 360.0
+    "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 10.304846468766131,
     "rotateFast": true
   },
   "reversed": false,
   "folder": "Amp Side",
   "previewStartingState": {
-    "rotation": -122.38067770656926,
+    "rotation": -1.1233027140753868,
     "velocity": 0
   },
   "useDefaultConstraints": false
