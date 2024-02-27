@@ -1,0 +1,110 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.041787005189213,
+        "y": 7.292819146208364
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.856541599068947,
+        "y": 7.283069387991509
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.1613832348804856,
+        "y": 6.67858437854643
+      },
+      "prevControl": {
+        "x": 5.04308657073371,
+        "y": 7.195321564039803
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Amp Side autoLine"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Arm to Podium",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Arm to Podium"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Rev Shooter Wheels"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Arm to Podium",
+      "waypointRelativePos": 0.9,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Arm to Podium"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Stop Intake",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Intake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 360.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 32.34744349944204,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Amp Side",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

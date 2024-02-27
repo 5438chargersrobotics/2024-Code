@@ -145,18 +145,18 @@ public class RobotContainer
    NamedCommands.registerCommand("Arm to Subwoofer", Commands.run(() -> {
       m_arm.setMotor(ArmConstants.kSubwooferSpot);
       },
-      m_arm).withTimeout(1.25)
+      m_arm).withTimeout(1.5)
     );
     NamedCommands.registerCommand("Arm to SubwooferSide", Commands.run(() -> {
       m_arm.setMotor(ArmConstants.kSubwooferSideSpot);
       },
-      m_arm).withTimeout(1.25)
+      m_arm).withTimeout(2.5)
     );
      NamedCommands.registerCommand("Align Drivebase", new TeleopDrive( drivebase,
          () -> (0),
         () -> (0),
         () -> -drivebase.calculateTurnAngle(), () -> true).withTimeout(0.7));
-    NamedCommands.registerCommand("Rev Shooter Wheels", Commands.run(m_shooter::setMotorFullSpeed, m_shooter).withTimeout(1.25));
+    NamedCommands.registerCommand("Rev Shooter Wheels", Commands.run(m_shooter::setMotorFullSpeed, m_shooter).withTimeout(0.7));
     NamedCommands.registerCommand("Stop Shooter Wheels", Commands.run(m_shooter::stopMotor, m_shooter));
     NamedCommands.registerCommand("Run Index", Commands.run(m_Intake::runIntake).withTimeout(0.25));
     NamedCommands.registerCommand("Run Intake with Sensor", Commands.run(m_Intake::runIntakeWithSensor));
@@ -167,13 +167,17 @@ public class RobotContainer
     NamedCommands.registerCommand("Arm to Podium", Commands.run(() -> {
       m_arm.setMotor(ArmConstants.kPodiumSpot);
       },
-      m_arm).withTimeout(1.25));
+      m_arm).withTimeout(1));
       NamedCommands.registerCommand("Arm to Mid", Commands.run(() -> {
         m_arm.setMotor(ArmConstants.kMiddleSpot);
         },
-        m_arm).withTimeout(1.5));
+        m_arm).withTimeout(1));
         NamedCommands.registerCommand("Arm to Middle Auto ", Commands.run(() -> {
         m_arm.setMotor(ArmConstants.kMiddleAutoSpot);
+        },
+        m_arm).withTimeout(1.5));
+          NamedCommands.registerCommand("Arm to WingLine", Commands.run(() -> {
+        m_arm.setMotor(ArmConstants.kWingLineSpot);
         },
         m_arm).withTimeout(1.5));
       NamedCommands.registerCommand("Stop Intake", Commands.run(m_Intake::stopIntake, m_Intake));
@@ -220,20 +224,20 @@ public class RobotContainer
     driverController.R1().onTrue((new InstantCommand(drivebase::zeroGyro)));
      driverController.R2().whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
      driverController.square().onTrue(Commands.run(m_shooter::setMotorTrapSpeed, m_shooter)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
-     driverController.L2().whileTrue(new RepeatCommand(new InstantCommand(drivebase::aimAtTarget)));//.onFalse(new TeleopDrive(
+    // driverController.L2().whileTrue(new RepeatCommand(new InstantCommand(drivebase::aimAtTarget)));//.onFalse(new TeleopDrive(
     //     drivebase,
      //    () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
      //  () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
      // () -> -driverController.getRawAxis(2), () -> true));
      // Limelight drivebase targeting
-    //  driverController.L2().onTrue(new TeleopDrive( drivebase,
-    //     () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-    //     () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-    //     () -> -drivebase.calculateTurnAngle(), () -> true)).onFalse(new TeleopDrive(
-    //     drivebase,
-    //     () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-    //     () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-    //     () -> -driverController.getRawAxis(2), () -> true));
+     driverController.L2().onTrue(new TeleopDrive( drivebase,
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+        () -> -drivebase.calculateTurnAngle(), () -> true)).onFalse(new TeleopDrive(
+        drivebase,
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+        () -> -driverController.getRawAxis(2), () -> true));
     // drive robot oriented
     driverController.L1().toggleOnTrue(new TeleopDrive(drivebase,
         () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
@@ -241,21 +245,29 @@ public class RobotContainer
         () -> -driverController.getRawAxis(2), () -> false));
     //Climber Pid Control
       //Climbing in middle of chain
-      driverController
+    //   driverController
+    // .cross()
+    // .onTrue(
+    //   Commands.run(() -> {
+    //   m_climb.setBothMotors(ClimbConstants.kMiddleClimbSpot);
+    //   },
+    //   m_climb)
+    // );
+    //  driverController
+    // .triangle()
+    // .onTrue(
+    //   Commands.run(() -> {
+    //   m_climb.setBothMotors(ClimbConstants.kEdgeClimbSpot);
+    //   },
+    //   m_climb)
+    // );
+     driverController
     .cross()
     .onTrue(
       Commands.run(() -> {
-      m_climb.setBothMotors(ClimbConstants.kMiddleClimbSpot);
+      m_arm.setMotor(ArmConstants.kWingLineSpot);
       },
-      m_climb)
-    );
-     driverController
-    .triangle()
-    .onTrue(
-      Commands.run(() -> {
-      m_climb.setBothMotors(ClimbConstants.kEdgeClimbSpot);
-      },
-      m_climb)
+      m_arm)
     );
     
    // driverController.R2().onTrue(new InstantCommand(drivebase::addFakeVisionReading));

@@ -1,0 +1,169 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3674277229789629,
+      "y": 5.567111941824834
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Arm to Subwoofer"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Rev Shooter Wheels"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Sub to W3 Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W3 to MiddleAutoLine"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Arm to Mid"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Rev Shooter Wheels"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align Drivebase"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W3 to W2 Blue"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Arm to Podium"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Rev Shooter Wheels"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align Drivebase"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W2 to C2 Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C2 to WingLine Blue"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Align Drivebase"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Run Index"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

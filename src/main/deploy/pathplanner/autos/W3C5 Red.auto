@@ -1,0 +1,132 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7141939224496041,
+      "y": 4.397140955802102
+    },
+    "rotation": -59.9202375139842
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Arm to Subwoofer"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Rev Shooter Wheels"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Sub to W3 Red"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W3 to AutoLine"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Arm to Mid"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Rev Shooter Wheels"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Align Drivebase"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W3 to C5 Red"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C5 to autoLine Red"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Align Drivebase"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

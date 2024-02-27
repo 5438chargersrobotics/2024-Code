@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7531929553145035,
-      "y": 6.6590848621184895
+      "x": 0.7141939224496041,
+      "y": 4.397140955802102
     },
-    "rotation": 60.52411099619394
+    "rotation": -59.794481089584956
   },
   "command": {
     "type": "sequential",
@@ -46,7 +46,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Sub to W1"
+            "pathName": "Sub to W3 Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W3 to AutoLine"
           }
         },
         {
@@ -75,31 +81,6 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Run Index"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "W1 to C2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "C2 to autoLine"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
                   "name": "Align Drivebase"
                 }
               },
@@ -115,7 +96,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "W1 to C1 Max Speed"
+            "pathName": "W3 to C4 Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C4 to AutoLine Blue"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Align Drivebase"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Run Index"
           }
         }
       ]

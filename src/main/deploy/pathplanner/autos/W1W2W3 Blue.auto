@@ -22,7 +22,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to SubwooferSide"
+                        "name": "Arm to Subwoofer"
                       }
                     },
                     {
@@ -89,6 +89,12 @@
           "type": "path",
           "data": {
             "pathName": "W3 to Sub"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Run Index"
           }
         },
         {
