@@ -180,6 +180,10 @@ public class RobotContainer
         m_arm.setMotor(ArmConstants.kWingLineSpot);
         },
         m_arm).withTimeout(0.7));
+         NamedCommands.registerCommand("Arm to Podium Auto", Commands.run(() -> {
+        m_arm.setMotor(ArmConstants.kPodiumAutoSpot);
+        },
+        m_arm).withTimeout(1.5));
       NamedCommands.registerCommand("Stop Intake", Commands.run(m_Intake::stopIntake, m_Intake));
       
     // Build an auto chooser. This will use Commands.none() as the default option.

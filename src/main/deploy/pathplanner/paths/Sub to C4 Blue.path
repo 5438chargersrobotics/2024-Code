@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 0.7531929553170285,
-        "y": 4.426390230452671
+        "y": 4.397140955802102
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7379185352194946,
-        "y": 3.743907155272744
+        "x": 2.9273890376759386,
+        "y": 2.47643858708145
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.25075702407937,
-        "y": 0.7604811409147759
+        "x": 8.231257507645656,
+        "y": 2.3886907631297456
       },
       "prevControl": {
-        "x": 6.12530973280474,
-        "y": 0.9067275141676177
+        "x": 6.525049819695839,
+        "y": -0.10724734038541506
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "Intake",
-      "waypointRelativePos": 0,
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
@@ -57,20 +57,20 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 1.5,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0
+    "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 23.749494492866734,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Field Side",
   "previewStartingState": {
-    "rotation": -59.0362434679265,
+    "rotation": -58.75307058652308,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

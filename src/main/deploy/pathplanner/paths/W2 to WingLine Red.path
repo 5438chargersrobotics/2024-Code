@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7531929553170285,
-        "y": 4.397140955802102
+        "x": 7.4902758831645935,
+        "y": 6.132597918402489
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.9273890376759386,
-        "y": 2.47643858708145
+        "x": 6.759044016900386,
+        "y": 6.259344775221617
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.231257507645656,
-        "y": 2.3886907631297456
+        "x": 5.803567711648489,
+        "y": 6.395841390257602
       },
       "prevControl": {
-        "x": 6.525049819695839,
-        "y": -0.10724734038541506
+        "x": 6.505550303262128,
+        "y": 6.259344775221617
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
-      "waypointRelativePos": 0.05,
+      "name": "Arm to WingLine",
+      "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,13 +41,24 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to Intake"
+                "name": "Arm to WingLine"
               }
-            },
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Arm to WingLine",
+      "waypointRelativePos": 0.8,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
             {
               "type": "named",
               "data": {
-                "name": "Run Intake with Sensor"
+                "name": "Arm to WingLine"
               }
             }
           ]
@@ -57,19 +68,19 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 360.0
+    "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 23.749494492866734,
-    "rotateFast": false
+    "rotation": 10.304846468766131,
+    "rotateFast": true
   },
   "reversed": false,
-  "folder": "Field Side",
+  "folder": "Amp Side",
   "previewStartingState": {
-    "rotation": -58.75307058652308,
+    "rotation": -1.1233027140753868,
     "velocity": 0
   },
   "useDefaultConstraints": false

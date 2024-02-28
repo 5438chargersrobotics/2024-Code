@@ -112,21 +112,21 @@ public final class Constants
     // public static final double m_encoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
     public static final double m_EncoderDistancePerRotation = 2.0 * Math.PI;
     public static final int kEncoderPort = 0;
-
+    public static final double kEncoderDifference = 0;
     // The offset of the arm from the horizontal in its neutral position,
     // measured from the horizontal
-    public static final double kArmOffsetRads = 3.715;
-    public static final double kAmpSpot = 2.035;
-    public static final double kSubwooferSpot = 3.45 ;
-    public static final double kSourceSpot = 2.3;
-    public static final double kStowSpot = 3.6;
-    public static final double kPodiumSpot = 3.02;
-    public static final double kWingLineSpot = 2.94;
-   public static final double kMiddleSpot = 3.181;
-   public static final double kSubwooferSideSpot = 3.573;
-   public static final double kHoardSpot = 2.611;
-   public static final double kMiddleAutoSpot  = 3.14;
-    
+    public static final double kArmOffsetRads = 2.671;//3.715;
+    public static final double kAmpSpot = 1.0;//2.035;
+    public static final double kSubwooferSpot = 2.406;//3.45 ;
+    public static final double kSourceSpot = 1.256; //2.3;
+    public static final double kStowSpot = 2.556;//3.6;
+    public static final double kPodiumSpot = 1.9;//3.02;
+    public static final double kWingLineSpot = 1.82;//2.94;
+   public static final double kMiddleSpot = 2.05;//3.181;
+   public static final double kSubwooferSideSpot = 2.529;//3.573;
+   public static final double kHoardSpot = 1.567;//2.611;
+   public static final double kMiddleAutoSpot  = 2.096;//3.14;
+   public static final double kPodiumAutoSpot = 1.95;
   }
 
   public static final class AutoConstants {
