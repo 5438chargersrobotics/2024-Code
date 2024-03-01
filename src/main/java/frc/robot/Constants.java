@@ -121,12 +121,12 @@ public final class Constants
     public static final double kSourceSpot = 1.256; //2.3;
     public static final double kStowSpot = 2.556;//3.6;
     public static final double kPodiumSpot = 1.9;//3.02;
-    public static final double kWingLineSpot = 1.82;//2.94;
+    public static final double kWingLineSpot = 1.85;//2.94;
    public static final double kMiddleSpot = 2.05;//3.181;
    public static final double kSubwooferSideSpot = 2.529;//3.573;
-   public static final double kHoardSpot = 1.567;//2.611;
+   public static final double kHoardSpot = 1.52;//2.611;
    public static final double kMiddleAutoSpot  = 2.096;//3.14;
-   public static final double kPodiumAutoSpot = 1.95;
+   public static final double kPodiumAutoSpot = 1.98;
   }
 
   public static final class AutoConstants {

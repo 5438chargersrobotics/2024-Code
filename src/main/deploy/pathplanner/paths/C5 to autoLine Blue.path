@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.8773406810471585,
-        "y": 1.7549564790340981
+        "x": 4.8383416481797346,
+        "y": 1.3552163921429994
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.8981397630253705,
-        "y": 3.704908122405319
+        "x": 2.391152335748853,
+        "y": 3.5099129580681963
       },
       "prevControl": {
-        "x": 4.555598659890906,
-        "y": 2.6129352021174355
+        "x": 3.92186437579526,
+        "y": 1.316217359275574
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to Podium"
+                "name": "Arm to Mid"
               }
             },
             {
@@ -64,7 +64,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to Podium"
+                "name": "Arm to Mid"
               }
             }
           ]
@@ -80,7 +80,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.58891873287457,
+    "rotation": -43.11181199325899,
     "rotateFast": false
   },
   "reversed": false,
