@@ -287,7 +287,7 @@ public class RobotContainer
      m_operatorController.button(15).onTrue(Commands.run(m_climb::setLeftMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopLeftMotor, m_climb));
      m_operatorController.povLeft().onTrue(Commands.run(m_climb::setBothMotorsUp, m_climb)).onFalse(Commands.run(m_climb::stopBothMotors, m_climb));
       m_operatorController.povRight().onTrue(Commands.run(m_climb::setBothMotorsDown, m_climb)).onFalse(Commands.run(m_climb::stopBothMotors, m_climb));
-     m_operatorController.button(14).onTrue(Commands.run(m_LED::setLEDColorRed, m_LED));
+    // m_operatorController.button(14).onTrue(Commands.run(m_LED::setLEDColorRed, m_LED));
      
   
      //Intake setpoint and run LEDs: if just one sensor is detected, display yellow, if both are detected, display green   
@@ -300,7 +300,7 @@ public class RobotContainer
               m_arm.setMotor(ArmConstants.kArmOffsetRads);
             },
             m_arm), Commands.run(m_Intake::runIntakeWithSensor, m_Intake),
-            Commands.run(m_LED::setLEDColorYellow), Commands.run(m_LED::setLEDColorGreen))); 
+            Commands.run(m_LED::setLEDColorYellow))); 
   // Stow Setpoint
     m_operatorController
     .circle()

@@ -4,6 +4,7 @@ import java.util.Timer;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.PS4Controller;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.util.Color;
@@ -14,7 +15,7 @@ public class LEDSubsystem extends SubsystemBase{
     private final AddressableLED m_addressableLED = new AddressableLED(3);
     private final AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(70);
     private final PS5Controller m_Controller = new PS5Controller(0);
-    private final PS5Controller m_operatorController = new PS5Controller(1);
+    private final PS4Controller m_operatorController = new PS4Controller(1);
     private final Timer m_Timer = new Timer();
     private IntakeSubsystem m_IntakeSubsystem;
 public LEDSubsystem(IntakeSubsystem m_IntakeSubsystem){
@@ -27,7 +28,7 @@ public void setLEDColorGreen() {
     if(m_IntakeSubsystem.getBothSensors()){
          for (var i = 0; i < m_ledBuffer.getLength(); i++) {
       m_ledBuffer.setLED(i, Color.kGreen);
-      //m_Controller.setRumble(RumbleType.kBothRumble, 1);
+      //m_operatorController.setRumble(RumbleType.kLeftRumble, 1);
     }
     m_addressableLED.setData(m_ledBuffer);
     }
@@ -44,6 +45,7 @@ public void setLEDColorYellow() {
       m_ledBuffer.setLED(i, Color.kGreen);
     }
     m_addressableLED.setData(m_ledBuffer);
+   // m_operatorController.setRumble(RumbleType.kBothRumble, 1);
   }
    else{
       for (var i = 0; i < m_ledBuffer.getLength(); i++) {
