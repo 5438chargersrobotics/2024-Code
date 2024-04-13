@@ -133,11 +133,7 @@ public class RobotContainer
         () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
         () -> -driverController.getRawAxis(2), () -> true);
-    TeleopDrive closedFieldRobotOriented = new TeleopDrive(
-      drivebase,
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverController.getRawAxis(2), () -> false);
+   
 
     drivebase.setDefaultCommand(closedFieldRel);
     m_arm.setDefaultCommand(new ArmJoystickCmd(m_arm, () -> MathUtil.applyDeadband(m_operatorController.getLeftY(), .05)));
@@ -226,15 +222,22 @@ public class RobotContainer
    
     //Driver Controls
     driverController.R1().onTrue((new InstantCommand(drivebase::zeroGyro)));
-     driverController.R2().whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
+     driverController.L2().whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
      driverController.square().onTrue(Commands.run(m_shooter::setMotorTrapSpeed, m_shooter)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
+     driverController.R2().onTrue(new ParallelCommandGroup(
+        Commands.run(
+            () -> {
+              m_arm.setMotor(ArmConstants.kSourceSpot);
+            },
+            m_arm), Commands.run(m_Intake::runIntakeWithSensor, m_Intake),
+            Commands.run(m_LED::setLEDColorYellow)));
     // driverController.L2().whileTrue(new RepeatCommand(new InstantCommand(drivebase::aimAtTarget)));//.onFalse(new TeleopDrive(
     //     drivebase,
      //    () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
      //  () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
      // () -> -driverController.getRawAxis(2), () -> true));
      // Limelight drivebase targeting
-     driverController.L2().onTrue(new TeleopDrive( drivebase,
+     driverController.cross().onTrue(new TeleopDrive( drivebase,
         () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
         () -> -drivebase.calculateTurnAngle(), () -> true)).onFalse(new TeleopDrive(
@@ -265,14 +268,14 @@ public class RobotContainer
     //   },
     //   m_climb)
     // );
-     driverController
-    .cross()
-    .onTrue(
-      Commands.run(() -> {
-      m_arm.setMotor(ArmConstants.kWingLineSpot);
-      },
-      m_arm)
-    );
+    //  driverController
+    // .cross()
+    // .onTrue(
+    //   Commands.run(() -> {
+    //   m_arm.setMotor(ArmConstants.kWingLineSpot);
+    //   },
+    //   m_arm)
+    // );
     
    // driverController.R2().onTrue(new InstantCommand(drivebase::addFakeVisionReading));
    //Operator Controls
@@ -383,6 +386,8 @@ public class RobotContainer
    */
   public Command getAutonomousCommand()
   {
+
+
     // An example command will be run in autonomous
    //return drivebase.getAutonomousCommand("W1 to C1 slow", true);
    return autoChooser.getSelected();

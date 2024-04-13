@@ -5,7 +5,7 @@
       "x": 0.7531929553145035,
       "y": 6.6590848621184895
     },
-    "rotation": 61.16137250655765
+    "rotation": 58.309178695175206
   },
   "command": {
     "type": "sequential",
@@ -66,14 +66,14 @@
                     {
                       "type": "named",
                       "data": {
+                        "name": "Align Drivebase"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
                         "name": "Rev Shooter Wheels"
                       }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Align Drivebase"
-                      }
                     }
                   ]
                 }
@@ -90,13 +90,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "W1 to C1 Blue"
+            "pathName": "W1 to C2 Red"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "W1 to WingLine Blue"
+            "pathName": "C2 to WingLine Red"
           }
         },
         {
@@ -118,6 +118,12 @@
                       "data": {
                         "name": "Align Drivebase"
                       }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Rev Shooter Wheels"
+                      }
                     }
                   ]
                 }
@@ -134,13 +140,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "WingLine to C2 Blue"
+            "pathName": "WingLine to C1 Red"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "W2 to WingLine Blue"
+            "pathName": "C1 to WingLine Red"
           }
         },
         {
@@ -162,6 +168,12 @@
                       "data": {
                         "name": "Align Drivebase"
                       }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Rev Shooter Wheels"
+                      }
                     }
                   ]
                 }
@@ -170,12 +182,6 @@
                 "type": "named",
                 "data": {
                   "name": "Run Index"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Stop Shooter Wheels"
                 }
               }
             ]

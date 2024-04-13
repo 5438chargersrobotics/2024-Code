@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.8383416481797346,
-        "y": 1.3552163921429994
+        "x": 4.682345516710037,
+        "y": 1.5307120400464085
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.391152335748853,
-        "y": 3.5099129580681963
+        "x": 2.3521533028814288,
+        "y": 3.40266561768278
       },
       "prevControl": {
-        "x": 3.92186437579526,
-        "y": 1.316217359275574
+        "x": 4.565348418107764,
+        "y": 1.579460831130689
       },
       "nextControl": null,
       "isLocked": false,
@@ -56,7 +56,7 @@
     },
     {
       "name": "Arm to Podium",
-      "waypointRelativePos": 0.85,
+      "waypointRelativePos": 0.9,
       "command": {
         "type": "parallel",
         "data": {

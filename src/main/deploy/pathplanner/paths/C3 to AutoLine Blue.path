@@ -36,12 +36,12 @@
         "y": 5.654859765778418
       },
       "prevControl": {
-        "x": 3.2359250976923084,
-        "y": 5.633748182361678
+        "x": 3.229631542398478,
+        "y": 5.684109040427108
       },
       "nextControl": {
-        "x": 2.586147500085083,
-        "y": 5.67435928221213
+        "x": 2.5867485469790528,
+        "y": 5.627384070246835
       },
       "isLocked": false,
       "linkedName": null
@@ -108,6 +108,23 @@
               "type": "named",
               "data": {
                 "name": "Stop Intake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Arm to Sub",
+      "waypointRelativePos": 2.65,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Arm to Subwoofer"
               }
             }
           ]

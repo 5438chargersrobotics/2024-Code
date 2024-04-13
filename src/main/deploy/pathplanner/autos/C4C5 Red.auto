@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7531929553145035,
-      "y": 6.6590848621184895
+      "x": 0.7434431971001721,
+      "y": 4.416640472235815
     },
-    "rotation": 61.16137250655765
+    "rotation": -60.1178835654667
   },
   "command": {
     "type": "sequential",
@@ -46,7 +46,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Sub to W1"
+            "pathName": "Sub to C4 Red"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C4 to AutoLine Blue"
           }
         },
         {
@@ -60,7 +66,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to Podium Auto"
+                        "name": "Align Drivebase"
                       }
                     },
                     {
@@ -68,12 +74,6 @@
                       "data": {
                         "name": "Rev Shooter Wheels"
                       }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Align Drivebase"
-                      }
                     }
                   ]
                 }
@@ -90,13 +90,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "W1 to C1 Blue"
+            "pathName": "AutoLine to C5 Blue"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "W1 to WingLine Blue"
+            "pathName": "C5 to autoLine Blue"
           }
         },
         {
@@ -110,13 +110,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to WingLine"
+                        "name": "Align Drivebase"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Align Drivebase"
+                        "name": "Rev Shooter Wheels"
                       }
                     }
                   ]
@@ -126,56 +126,6 @@
                 "type": "named",
                 "data": {
                   "name": "Run Index"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "WingLine to C2 Blue"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "W2 to WingLine Blue"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Arm to WingLine"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Align Drivebase"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Run Index"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Stop Shooter Wheels"
                 }
               }
             ]

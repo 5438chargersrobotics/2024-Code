@@ -111,12 +111,6 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "Arm to Subwoofer"
-                }
-              },
-              {
                 "type": "sequential",
                 "data": {
                   "commands": [

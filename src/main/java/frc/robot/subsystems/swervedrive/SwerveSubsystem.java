@@ -42,7 +42,7 @@ public class SwerveSubsystem extends SubsystemBase
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  public        double      maximumSpeed = Units.feetToMeters(15.1);
+  public        double      maximumSpeed = Units.feetToMeters(15.883);
   // Limelight setup
   NetworkTableInstance inst = NetworkTableInstance.getDefault();
   private NetworkTableEntry tx = inst.getTable("limelight").getEntry("tx");
@@ -63,7 +63,8 @@ public class SwerveSubsystem extends SubsystemBase
     //  In this case the wheel diameter is 4 inches, which must be converted to meters to get meters/second.
     //  The gear ratio is 6.75 motor revolutions per wheel rotation.
     //  The encoder resolution per motor revolution is 1 per motor revolution.
-    double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4.2), 6.75, 1);
+    double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4), 6.5934, 1);
+    //drive gear ratio: 6.5934
     System.out.println("\"conversionFactor\": {");
     System.out.println("\t\"angle\": " + angleConversionFactor + ",");
     System.out.println("\t\"drive\": " + driveConversionFactor);
@@ -80,8 +81,8 @@ public class SwerveSubsystem extends SubsystemBase
     {
       throw new RuntimeException(e);
     }
-    swerveDrive.setHeadingCorrection(true); // Heading correction should only be used while controlling the robot via angle.
-    
+    swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
+    swerveDrive.setCosineCompensator(false);
     setupPathPlanner();
   }
 
@@ -102,7 +103,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                           swerveDrive.swerveController.config.headingPIDF.i,
                                                           swerveDrive.swerveController.config.headingPIDF.d),
                                          // Rotation PID constants
-                                         4,
+                                         4.9,
                                          // Max module speed, in m/s
                                          swerveDrive.swerveDriveConfiguration.getDriveBaseRadiusMeters(),
                                          // Drive base radius in meters. Distance from robot center to furthest module.
@@ -397,6 +398,7 @@ public class SwerveSubsystem extends SubsystemBase
     double kP = 0.025;
     double minMoveCmdFar = 1.3;
     double minMoveCmdClose = 2;
+    double moveCmd = kP * targetOffsetHorizontal;
     
   //   if(targetOffsetHorizontal < 7 && targetOffsetHorizontal > -7){
   //     return kP*targetOffsetHorizontal* minMoveCmdClose;
@@ -408,13 +410,17 @@ public class SwerveSubsystem extends SubsystemBase
   //     return kP*targetOffsetHorizontal;
   //   }
   // }
-  
-   if(targetOffsetHorizontal< 12 && targetOffsetHorizontal > -12){
-     return minMoveCmdClose * kP * targetOffsetHorizontal;
-   }
-   else{
-  return kP*targetOffsetHorizontal;
+  if(moveCmd > .6){
+  moveCmd = .6;
 }
+else if(moveCmd < -.6){
+  moveCmd = -.6;
+}
+else{
+  moveCmd = kP * targetOffsetHorizontal;
+}
+   return moveCmd;
+
 
   }
 

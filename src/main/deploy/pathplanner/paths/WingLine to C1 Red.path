@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7434431971001721,
-        "y": 4.416640472235815
+        "x": 6.807792807984667,
+        "y": 6.7858317189318464
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.917639279459082,
-        "y": 2.4959381035151633
+        "x": 7.363529026345464,
+        "y": 7.09782398187124
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.231257507645656,
-        "y": 2.3886907631297456
+        "x": 8.016762826874823,
+        "y": 7.409816244810638
       },
       "prevControl": {
-        "x": 6.525049819695839,
-        "y": -0.10724734038541506
+        "x": 7.480526124947738,
+        "y": 7.097823981871242
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "Intake",
-      "waypointRelativePos": 0.05,
+      "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
         "data": {
@@ -59,18 +59,18 @@
     "maxVelocity": 4.0,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 360.0
+    "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 38.48019824834296,
+    "rotation": 30.618605408909332,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Field Side",
+  "folder": "Amp Side",
   "previewStartingState": {
-    "rotation": -60.255118703057796,
+    "rotation": 21.571307191254668,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

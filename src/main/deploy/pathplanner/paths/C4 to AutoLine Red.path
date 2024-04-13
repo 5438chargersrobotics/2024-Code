@@ -3,37 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7434431971001721,
-        "y": 4.416640472235815
+        "x": 6.963788939454365,
+        "y": 1.579460831130689
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.917639279459082,
-        "y": 2.4959381035151633
+        "x": 5.199082702203412,
+        "y": 1.6672086550823946
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.231257507645656,
-        "y": 2.3886907631297456
+        "x": 2.3521533028814288,
+        "y": 3.40266561768278
       },
       "prevControl": {
-        "x": 6.525049819695839,
-        "y": -0.10724734038541506
+        "x": 3.8926151011446914,
+        "y": 2.1546965659251995
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Field Side autoLine"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
-      "waypointRelativePos": 0.05,
+      "name": "Arm to Podium",
+      "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,13 +41,30 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to Intake"
+                "name": "Arm to Podium"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "Run Intake with Sensor"
+                "name": "Rev Shooter Wheels"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Arm to Podium",
+      "waypointRelativePos": 0.9,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Arm to Podium"
               }
             }
           ]
@@ -59,17 +76,17 @@
     "maxVelocity": 4.0,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 360.0
+    "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 38.48019824834296,
+    "rotation": -53.49855887949367,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Field Side",
   "previewStartingState": {
-    "rotation": -60.255118703057796,
+    "rotation": 34.28687697720886,
     "velocity": 0
   },
   "useDefaultConstraints": false
