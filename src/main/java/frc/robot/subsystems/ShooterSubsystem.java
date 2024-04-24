@@ -48,6 +48,10 @@ public class ShooterSubsystem extends PIDSubsystem {
   public void setMotorQuarterSpeed(){
     m_shooterMotor.set(0.25);
   }
+  public void setMotorHoardSpeed(){
+    m_shooterMotor.set(0.43
+    );
+  }
   public void setMotorHalfSpeed(){
     m_shooterMotor.set(1);
   }

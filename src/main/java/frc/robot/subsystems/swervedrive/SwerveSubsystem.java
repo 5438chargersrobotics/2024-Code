@@ -4,25 +4,49 @@
 
 package frc.robot.subsystems.swervedrive;
 
+import com.ctre.phoenix6.SignalLogger;
+import com.ctre.phoenix6.configs.VoltageConfigs;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
+import com.ctre.phoenix6.Utils;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
+
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.units.Time;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.LimelightHelpers;
+import frc.robot.RobotContainer;
+import frc.robot.LimelightHelpers.LimelightResults;
+
 import java.io.File;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Supplier;
+
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.math.SwerveMath;
@@ -32,6 +56,7 @@ import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
+
 public class SwerveSubsystem extends SubsystemBase
 {
 
@@ -39,15 +64,20 @@ public class SwerveSubsystem extends SubsystemBase
    * Swerve drive object.
    */
   private final SwerveDrive swerveDrive;
+  private final SwerveDrivePoseEstimator m_poseEstimator1;
+    private Field2d m_field1;
+    private boolean blue = false;
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  public        double      maximumSpeed = Units.feetToMeters(15.883);
+  public        double      maximumSpeed = Units.feetToMeters(15.1);
   // Limelight setup
   NetworkTableInstance inst = NetworkTableInstance.getDefault();
   private NetworkTableEntry tx = inst.getTable("limelight").getEntry("tx");
   private NetworkTableEntry ty = inst.getTable("limelight").getEntry("ty");
-
+  int[] validIDs = {3,4};
+ 
+ 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
    *
@@ -63,15 +93,14 @@ public class SwerveSubsystem extends SubsystemBase
     //  In this case the wheel diameter is 4 inches, which must be converted to meters to get meters/second.
     //  The gear ratio is 6.75 motor revolutions per wheel rotation.
     //  The encoder resolution per motor revolution is 1 per motor revolution.
-    double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4), 6.5934, 1);
-    //drive gear ratio: 6.5934
-    System.out.println("\"conversionFactor\": {");
-    System.out.println("\t\"angle\": " + angleConversionFactor + ",");
-    System.out.println("\t\"drive\": " + driveConversionFactor);
-    System.out.println("}");
-
+    double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4.2), 6.75, 1);
+    //System.out.println("\"conversionFactor\": {");
+   // System.out.println("\t\"angle\": " + angleConversionFactor + ",");
+   // System.out.println("\t\"drive\": " + driveConversionFactor);
+   // System.out.println("}");
+   
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
-    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.LOW;
     try
     {
       swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed);
@@ -81,8 +110,25 @@ public class SwerveSubsystem extends SubsystemBase
     {
       throw new RuntimeException(e);
     }
-    swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
+    swerveDrive.setHeadingCorrection(true); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(false);
+    m_poseEstimator1 = new SwerveDrivePoseEstimator(getKinematics(), getHeading(), swerveDrive.getModulePositions(), new Pose2d());
+   
+   // SwerveDrivePoseEstimator m_swerveDrivePoseEstimator = new SwerveDrivePoseEstimator(getKinematics(), getHeading(), swerveDrive.getModulePositions(), getPose());
+    // Initialise field
+  m_field1 = new Field2d();
+  SmartDashboard.putData("Field1",m_field1);
+ // m_field1.setRobotPose(getPose());
+// Setup path logging callback
+    // PathPlannerLogging.setLogActivePathCallback((poses) -> {
+    //   if (poses.size() < 1) return;
+    //   var trajectory = TrajectoryGenerator.generateTrajectory(
+    //     poses,
+    //     new TrajectoryConfig(swerveDrive.getMaximumVelocity(), swerveDrive.)
+    //   );
+
+    //   m_field.getObject("currentPath").setTrajectory(trajectory);
+    // });
     setupPathPlanner();
   }
 
@@ -103,7 +149,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                           swerveDrive.swerveController.config.headingPIDF.i,
                                                           swerveDrive.swerveController.config.headingPIDF.d),
                                          // Rotation PID constants
-                                         4.9,
+                                         4,
                                          // Max module speed, in m/s
                                          swerveDrive.swerveDriveConfiguration.getDriveBaseRadiusMeters(),
                                          // Drive base radius in meters. Distance from robot center to furthest module.
@@ -151,6 +197,7 @@ public class SwerveSubsystem extends SubsystemBase
   public SwerveSubsystem(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg)
   {
     swerveDrive = new SwerveDrive(driveCfg, controllerCfg, maximumSpeed);
+   m_poseEstimator1 = new SwerveDrivePoseEstimator(getKinematics(), getHeading(), swerveDrive.getModulePositions(), new Pose2d());
   }
 
   /**
@@ -197,8 +244,54 @@ public class SwerveSubsystem extends SubsystemBase
 
   @Override
   public void periodic()
-  {
-    swerveDrive.addVisionMeasurement(getPose(), Timer.getFPGATimestamp());
+  { 
+  m_field1.setRobotPose(getPose());
+    boolean doRejectUpdate = false;
+     LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+     m_poseEstimator1.update(getHeading(), swerveDrive.getModulePositions());
+     if(mt1.tagCount!=0){
+      if(mt1.avgTagDist>5){
+      doRejectUpdate = true;
+    }
+     }
+    if(mt1.tagCount == 0){
+      doRejectUpdate = true;
+    }
+    if(mt1.avgTagDist>4.1){
+      doRejectUpdate = true;
+    }
+    // if(mt1.rawFiducials[1].ambiguity>.7){
+    //   doRejectUpdate=true;
+    // }
+    if(doRejectUpdate == false){
+     // System.out.println("adding vision measurement");
+      //System.out.println("ambiguity "+mt1.rawFiducials[0].ambiguity);
+      
+        m_poseEstimator1.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
+         m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(2,.2,9999999));
+    }
+    if(doRejectUpdate == true){
+     // System.out.println("rejecting vision measurement");
+    }
+    //System.out.println("distance "+mt1.avgTagDist);
+    
+    //swerveDrive.addVisionMeasurement(m_poseEstimator1.getEstimatedPosition(), Timer.getFPGATimestamp());
+    //swerveDrive.updateOdometry();
+    //LimelightHelpers.SetFiducialIDFiltersOverride("limelight", validIDs);
+    
+  }
+ 
+
+ 
+   public ChassisSpeeds test(double xInput, double yInput, Rotation2d angle){
+     LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+      Rotation2d m_rotation = new Rotation2d(0,5.5);
+    xInput = Math.pow(xInput, 3);
+    yInput = Math.pow(yInput, 3);
+ angle = m_rotation.minus(swerveDrive.getPose().getTranslation().getAngle());
+    return swerveDrive.swerveController.getTargetSpeeds(xInput, yInput,    angle.getRadians(),
+    getHeading().getRadians(),
+    maximumSpeed);
   }
 
   @Override
@@ -227,7 +320,9 @@ public class SwerveSubsystem extends SubsystemBase
   {
     swerveDrive.resetOdometry(initialHolonomicPose);
   }
-
+public void resetOdometryToSpeaker(){
+  swerveDrive.resetOdometry(new Pose2d(1,4, new Rotation2d()));
+}
   /**
    * Gets the current pose (position and rotation) of the robot, as reported by odometry.
    *
@@ -235,9 +330,11 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public Pose2d getPose()
   {
-    return swerveDrive.getPose();
+    
+    //return swerveDrive.getPose();
+   return m_poseEstimator1.getEstimatedPosition();
+  
   }
-
   /**
    * Set chassis speeds with closed-loop velocity control.
    *
@@ -283,7 +380,7 @@ public class SwerveSubsystem extends SubsystemBase
    */
   public Rotation2d getHeading()
   {
-    return getPose().getRotation();//swerveDrive.getYaw();
+    return swerveDrive.getYaw();
   }
 
   /**
@@ -326,6 +423,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                         getHeading().getRadians(),
                                                         maximumSpeed);
   }
+ 
 
   /**
    * Gets the current field-relative velocity (x, y and omega) of the robot
@@ -398,8 +496,8 @@ public class SwerveSubsystem extends SubsystemBase
     double kP = 0.025;
     double minMoveCmdFar = 1.3;
     double minMoveCmdClose = 2;
-    double moveCmd = kP * targetOffsetHorizontal;
-    
+    double moveCmd = kP*targetOffsetHorizontal;
+   
   //   if(targetOffsetHorizontal < 7 && targetOffsetHorizontal > -7){
   //     return kP*targetOffsetHorizontal* minMoveCmdClose;
   //   }
@@ -410,18 +508,23 @@ public class SwerveSubsystem extends SubsystemBase
   //     return kP*targetOffsetHorizontal;
   //   }
   // }
-  if(moveCmd > .6){
-  moveCmd = .6;
+ 
+//    if(targetOffsetHorizontal< 12 && targetOffsetHorizontal > -12){
+//      return minMoveCmdClose * kP * targetOffsetHorizontal;
+//    }
+//    else{
+//   return kP*targetOffsetHorizontal;
+// }
+if(moveCmd>.6){
+  moveCmd=.6;
 }
-else if(moveCmd < -.6){
-  moveCmd = -.6;
+else if(moveCmd<-.6){
+  moveCmd=-.6;
 }
 else{
   moveCmd = kP * targetOffsetHorizontal;
 }
-   return moveCmd;
-
-
+return moveCmd;
   }
 
 public Command aimAtTarget()
@@ -436,5 +539,64 @@ public Command aimAtTarget()
     }
   });
 }
+ 
+public void updateOdometry(){
+  m_poseEstimator1.update(
+        getHeading(),
+       swerveDrive.getModulePositions());
+
+
+    boolean useMegaTag2 = false; //set to false to use MegaTag1
+    boolean doRejectUpdate = false;
+    if(useMegaTag2 == false)
+    {
+      LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+     
+      if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1)
+      {
+        if(mt1.rawFiducials[0].ambiguity > .7)
+        {
+          doRejectUpdate = true;
+        }
+        if(mt1.rawFiducials[0].distToCamera > 3)
+        {
+          doRejectUpdate = true;
+        }
+      }
+      if(mt1.tagCount == 0)
+      {
+        doRejectUpdate = true;
+      }
+
+      if(!doRejectUpdate)
+      {System.out.println("Adding vision measurement");
+        m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
+        m_poseEstimator1.addVisionMeasurement(
+            mt1.pose,
+            mt1.timestampSeconds);
+           
+      }
+    }
+    else if (useMegaTag2 == true)
+    {
+      LimelightHelpers.SetRobotOrientation("limelight", m_poseEstimator1.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+      LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+      if(swerveDrive.getFieldVelocity().omegaRadiansPerSecond > 50) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
+      {
+        doRejectUpdate = true;
+      }
+      if(mt2.tagCount == 0)
+      {
+        doRejectUpdate = true;
+      }
+      if(!doRejectUpdate)
+      {
+        m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+        m_poseEstimator1.addVisionMeasurement(
+            mt2.pose,
+            mt2.timestampSeconds);
+      }
+    }
 }
 
+}

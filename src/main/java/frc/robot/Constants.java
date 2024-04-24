@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
@@ -118,7 +119,7 @@ public final class Constants
     public static final double kArmOffsetRads = 2.681;//3.715;
     public static final double kAmpSpot = 1.0;//2.035;
     public static final double kSubwooferSpot = 2.375;//2.406
-    public static final double kSourceSpot = 1.62; 
+    public static final double kSourceSpot = 1.61; 
     public static final double kStowSpot = 2.556;//3.6;
     public static final double kPodiumSpot = 1.9;//3.02;
     public static final double kWingLineSpot = 1.85;//2.94;
@@ -138,4 +139,13 @@ public final class Constants
   public static final class OIConstants {
     public static final int kOperatorControllerPort = 1;
   }
+
+  public static final class Field{
+    public static final Translation2d blueSpeaker = new Translation2d(Units.inchesToMeters(8.5), Units.inchesToMeters(214));//223.42
+    public static final Translation2d redSpeaker = new Translation2d(Units.inchesToMeters(642.73), Units.inchesToMeters(214));//213.42
+    public static final double noteVelocity = 10;//642.73
+    public static final Translation2d blueHoardSpot = new Translation2d(Units.inchesToMeters(12), Units.inchesToMeters(272));//272
+     public static final Translation2d redHoardSpot = new Translation2d(Units.inchesToMeters(638), Units.inchesToMeters(272));
+  }
 }
+

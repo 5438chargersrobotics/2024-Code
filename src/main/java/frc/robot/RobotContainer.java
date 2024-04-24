@@ -4,12 +4,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -43,6 +48,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
 
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.util.PathPlannerLogging;
@@ -77,6 +84,15 @@ public class RobotContainer
   // private final SendableChooser<Command> autoChooser;
     private final SendableChooser<Command> autoChooser;
     private final Field2d field;
+    private Translation2d speaker;
+    private Translation2d HoardSpot;
+    private double angleToSpeaker;
+    
+    private boolean blue = false;
+    private double dist;
+    DriveRequestType controlType = DriveRequestType.OpenLoopVoltage;
+    SwerveRequest.FieldCentricFacingAngle autoAim = new SwerveRequest.FieldCentricFacingAngle()
+    .withDriveRequestType(controlType);
     
       
 
@@ -133,9 +149,19 @@ public class RobotContainer
         () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
         () -> -driverController.getRawAxis(2), () -> true);
-   
-
-    drivebase.setDefaultCommand(closedFieldRel);
+   TeleopDrive closedFieldRelRed = new TeleopDrive(
+        drivebase,
+        () -> MathUtil.applyDeadband(driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+        () -> -driverController.getRawAxis(2), () -> true);
+  drivebase.setDefaultCommand(closedFieldRel);
+    // if(DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
+    //   drivebase.setDefaultCommand(closedFieldRel);
+    // }
+    // else{
+    //   drivebase.setDefaultCommand(closedFieldRelRed);
+    // }
+    SmartDashboard.putBoolean("Blue?",blue);
     m_arm.setDefaultCommand(new ArmJoystickCmd(m_arm, () -> MathUtil.applyDeadband(m_operatorController.getLeftY(), .05)));
     // Pathplanner commands
    NamedCommands.registerCommand("Arm to Subwoofer", Commands.run(() -> {
@@ -201,6 +227,7 @@ public class RobotContainer
         PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
           // Do whatever you want with the pose here
           field.getObject("target pose").setPose(pose);
+         // field.getObject("pose1").setPose(drivebase.getPose());
       });
 
       // Logging callback for the active path, this is sent as a list of poses
@@ -208,6 +235,9 @@ public class RobotContainer
           // Do whatever you want with the poses here
           field.getObject("path").setPoses(poses);
       });
+      SmartDashboard.putNumber("Calculated Arm Angle", calculateArmAngleWithPose());
+
+      
   }
 
   /**
@@ -231,25 +261,28 @@ public class RobotContainer
             },
             m_arm), Commands.run(m_Intake::runIntakeWithSensor, m_Intake),
             Commands.run(m_LED::setLEDColorYellow)));
+    driverController.triangle().whileTrue(drivebase.run(()->autoAim()));
+     driverController.cross().whileTrue(drivebase.run(()->autoAimToHoardSpot()));
     // driverController.L2().whileTrue(new RepeatCommand(new InstantCommand(drivebase::aimAtTarget)));//.onFalse(new TeleopDrive(
     //     drivebase,
      //    () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
      //  () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
      // () -> -driverController.getRawAxis(2), () -> true));
      // Limelight drivebase targeting
-     driverController.cross().onTrue(new TeleopDrive( drivebase,
-        () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-        () -> -drivebase.calculateTurnAngle(), () -> true)).onFalse(new TeleopDrive(
-        drivebase,
-        () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-        () -> -driverController.getRawAxis(2), () -> true));
+    //  driverController.cross().onTrue(new TeleopDrive( drivebase,
+    //     () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+    //     () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+    //     () -> -drivebase.calculateTurnAngle(), () -> true)).onFalse(new TeleopDrive(
+    //     drivebase,
+    //     () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+    //     () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+    //     () -> -driverController.getRawAxis(2), () -> true));
     // drive robot oriented
     driverController.L1().toggleOnTrue(new TeleopDrive(drivebase,
         () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
         () -> -driverController.getRawAxis(2), () -> false));
+   
     //Climber Pid Control
       //Climbing in middle of chain
     //   driverController
@@ -292,7 +325,7 @@ public class RobotContainer
       m_operatorController.povRight().onTrue(Commands.run(m_climb::setBothMotorsDown, m_climb)).onFalse(Commands.run(m_climb::stopBothMotors, m_climb));
     // m_operatorController.button(14).onTrue(Commands.run(m_LED::setLEDColorRed, m_LED));
      
-  
+  driverController.circle().onTrue(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
      //Intake setpoint and run LEDs: if just one sensor is detected, display yellow, if both are detected, display green   
     m_operatorController
     .cross()
@@ -358,14 +391,15 @@ public class RobotContainer
       
     )).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
        
-    // m_operatorController
-    // .options()
-    // .onTrue(
-    //   Commands.run(() -> {
-    //   m_arm.setMotor(m_arm.calculateArmAngle());
-    //   },
-    //   m_arm)
-    // );
+    driverController
+    .options()
+    .onTrue(
+      Commands.run(() -> {
+      m_arm.setMotor(calculateArmAngleWithPose());
+      },
+      m_arm)
+    );
+    
    
     // Stop the arm
     m_operatorController.button(12)
@@ -409,5 +443,81 @@ public class RobotContainer
   public void setMotorBrake(boolean brake)
   {
     drivebase.setMotorBrake(brake);
+  }
+  public double calculateArmAngleWithPose(){
+    double shotAngle = 2.49 +(-0.308*(getSpeakerDistance())+0.0337*Math.pow(getSpeakerDistance(), 2));//2.7 +(-0.418*(getSpeakerDistance())+0.0478*Math.pow(getSpeakerDistance(), 2));//2.32 + (-0.202*getSpeakerDistance())+0.0189*Math.pow(getSpeakerDistance(),2);
+    //SmartDashboard.putNumber("calculatedArmAngle", shotAngle);
+    // SmartDashboard.putNumber("speakerDistance", getSpeakerDistance());
+    return shotAngle;
+  }//2.32 + -0.202x + 0.0189x^2     2.7 + -0.418x + 0.0478x^2    2.49 + -0.308x + 0.0337x^2
+
+  // public void colorReceived(Alliance ally){
+  //   if(ally == Alliance.Blue){
+  //     blue = true;
+  //   }
+  //   else{
+  //     blue = false;
+  //   }
+  // }
+private Rotation2d getHoardRotation(){
+  HoardSpot = getHoardPose(blue);
+  Rotation2d setpoint = HoardSpot.minus(drivebase.getPose().getTranslation()).getAngle().minus(new Rotation2d(Math.PI));
+  return setpoint;
+}
+private void autoAimToHoardSpot(){
+  Rotation2d hoardSpot = getHoardRotation();
+  if(!blue){
+    hoardSpot = hoardSpot.plus(new Rotation2d(Math.PI));
+  }
+ drivebase.driveFieldOriented(blue?drivebase.getTargetSpeeds(MathUtil.applyDeadband(driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getHoardRotation()):
+ drivebase.getTargetSpeeds(MathUtil.applyDeadband(-driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(-driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getHoardRotation()));
+}
+  private Rotation2d getSpeakerRotation(){
+    speaker=getMovingSpeaker(blue);
+    Rotation2d currentAngle = drivebase.getHeading();
+    Rotation2d setpoint = speaker.minus(drivebase.getPose().getTranslation()).getAngle().minus(new Rotation2d(Math.PI));
+    //SmartDashboard.putNumber("Auto Aim Robot", currentAngle.getRadians());
+   // SmartDashboard.putNumber("Auto Aim Setpoint", setpoint.getRadians());
+    return setpoint;
+  }
+  private void autoAim(){
+    Rotation2d speaker = getSpeakerRotation();
+    if(!blue){
+      speaker = speaker.plus(new Rotation2d(Math.PI));
+    }
+   
+    
+      drivebase.driveFieldOriented(blue? drivebase.getTargetSpeeds(MathUtil.applyDeadband(driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()):
+      drivebase.getTargetSpeeds(MathUtil.applyDeadband(-driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(-driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()));
+    
+    
+    
+  }
+  public double getSpeakerDistance(){
+    var alliance = DriverStation.getAlliance();
+   blue = alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+   Translation2d goalPose = blue ? Constants.Field.redSpeaker : Constants.Field.blueSpeaker;
+   double distanceToSpeaker = drivebase.getPose().getTranslation().getDistance(goalPose);
+   //System.out.println("getSpeakerDistance() "+distanceToSpeaker);
+   return distanceToSpeaker;
+  }
+
+  public Translation2d getMovingSpeaker(boolean blue){
+   var alliance = DriverStation.getAlliance();
+   blue = alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+    Translation2d goalPose = blue ? Constants.Field.redSpeaker : Constants.Field.blueSpeaker;
+    ChassisSpeeds robotVel = drivebase.getFieldVelocity();
+    double distanceToSpeaker = drivebase.getPose().getTranslation().getDistance(goalPose);
+    double x = goalPose.getX() - (robotVel.vxMetersPerSecond *(distanceToSpeaker/Constants.Field.noteVelocity));
+    double y = goalPose.getY() - (robotVel.vyMetersPerSecond *(distanceToSpeaker/Constants.Field.noteVelocity));
+    //SmartDashboard.putNumber("speakerDistance", distanceToSpeaker);
+    return new Translation2d(x,y);
+    //return goalPose;
+  }
+  public Translation2d getHoardPose(boolean blue){
+     var alliance = DriverStation.getAlliance();
+    blue = alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+    Translation2d goalPose = blue ? Constants.Field.redHoardSpot : Constants.Field.blueHoardSpot;
+     return goalPose;
   }
 }
