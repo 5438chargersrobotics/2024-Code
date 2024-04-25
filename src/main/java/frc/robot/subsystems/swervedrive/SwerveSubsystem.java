@@ -75,7 +75,6 @@ public class SwerveSubsystem extends SubsystemBase
   NetworkTableInstance inst = NetworkTableInstance.getDefault();
   private NetworkTableEntry tx = inst.getTable("limelight").getEntry("tx");
   private NetworkTableEntry ty = inst.getTable("limelight").getEntry("ty");
-  int[] validIDs = {3,4};
  
  
   /**
@@ -113,23 +112,11 @@ public class SwerveSubsystem extends SubsystemBase
     swerveDrive.setHeadingCorrection(true); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(false);
     m_poseEstimator1 = new SwerveDrivePoseEstimator(getKinematics(), getHeading(), swerveDrive.getModulePositions(), new Pose2d());
-   
-   // SwerveDrivePoseEstimator m_swerveDrivePoseEstimator = new SwerveDrivePoseEstimator(getKinematics(), getHeading(), swerveDrive.getModulePositions(), getPose());
+  
     // Initialise field
   m_field1 = new Field2d();
   SmartDashboard.putData("Field1",m_field1);
-  swerveDrive.setGyroOffset(new Rotation3d(0,0,0));
- // m_field1.setRobotPose(getPose());
-// Setup path logging callback
-    // PathPlannerLogging.setLogActivePathCallback((poses) -> {
-    //   if (poses.size() < 1) return;
-    //   var trajectory = TrajectoryGenerator.generateTrajectory(
-    //     poses,
-    //     new TrajectoryConfig(swerveDrive.getMaximumVelocity(), swerveDrive.)
-    //   );
-
-    //   m_field.getObject("currentPath").setTrajectory(trajectory);
-    // });
+  
     setupPathPlanner();
   }
 
@@ -273,7 +260,7 @@ public class SwerveSubsystem extends SubsystemBase
     if(doRejectUpdate == false){
      // System.out.println("adding vision measurement");
       //System.out.println("ambiguity "+mt1.rawFiducials[0].ambiguity);
-      
+      //swerveDrive.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
         m_poseEstimator1.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
          m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(0.7,0.7,9999999));
     }
