@@ -207,6 +207,13 @@ public class RobotContainer
         },
         m_arm).withTimeout(1.5));
       NamedCommands.registerCommand("Stop Intake", Commands.run(m_Intake::stopIntake, m_Intake));
+       NamedCommands.registerCommand("Auto Arm Angle", Commands.run(() -> {
+        m_arm.setMotor(calculateArmAngleWithPose());
+        },
+        m_arm).withTimeout(1.5));
+     NamedCommands.registerCommand("Align to Speaker", drivebase.run(() -> autoAim
+     ()).withTimeout(1));
+      
       
     // Build an auto chooser. This will use Commands.none() as the default option.
     // autoChooser = AutoBuilder.buildAutoChooser("W1C1");
@@ -445,7 +452,7 @@ public class RobotContainer
     drivebase.setMotorBrake(brake);
   }
   public double calculateArmAngleWithPose(){
-    double shotAngle = 2.49 +(-0.308*(getSpeakerDistance())+0.0337*Math.pow(getSpeakerDistance(), 2));//2.7 +(-0.418*(getSpeakerDistance())+0.0478*Math.pow(getSpeakerDistance(), 2));//2.32 + (-0.202*getSpeakerDistance())+0.0189*Math.pow(getSpeakerDistance(),2);
+    double shotAngle = 2.35 +(-0.218*(getSpeakerDistance())+0.021*Math.pow(getSpeakerDistance(), 2));//2.35 + -0.218x + 0.021x^2
     //SmartDashboard.putNumber("calculatedArmAngle", shotAngle);
     // SmartDashboard.putNumber("speakerDistance", getSpeakerDistance());
     return shotAngle;

@@ -20,6 +20,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -66,11 +67,10 @@ public class SwerveSubsystem extends SubsystemBase
   private final SwerveDrive swerveDrive;
   private final SwerveDrivePoseEstimator m_poseEstimator1;
     private Field2d m_field1;
-    private boolean blue = false;
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  public        double      maximumSpeed = Units.feetToMeters(15.1);
+  public        double      maximumSpeed = Units.feetToMeters(16.5);
   // Limelight setup
   NetworkTableInstance inst = NetworkTableInstance.getDefault();
   private NetworkTableEntry tx = inst.getTable("limelight").getEntry("tx");
@@ -100,7 +100,7 @@ public class SwerveSubsystem extends SubsystemBase
    // System.out.println("}");
    
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
-    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.LOW;
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try
     {
       swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed);
@@ -118,6 +118,7 @@ public class SwerveSubsystem extends SubsystemBase
     // Initialise field
   m_field1 = new Field2d();
   SmartDashboard.putData("Field1",m_field1);
+  swerveDrive.setGyroOffset(new Rotation3d(0,0,0));
  // m_field1.setRobotPose(getPose());
 // Setup path logging callback
     // PathPlannerLogging.setLogActivePathCallback((poses) -> {
@@ -198,6 +199,7 @@ public class SwerveSubsystem extends SubsystemBase
   {
     swerveDrive = new SwerveDrive(driveCfg, controllerCfg, maximumSpeed);
    m_poseEstimator1 = new SwerveDrivePoseEstimator(getKinematics(), getHeading(), swerveDrive.getModulePositions(), new Pose2d());
+   //m_poseEstimator1.resetPosition(getHeading(), swerveDrive.getModulePositions(), getPose());
   }
 
   /**
@@ -245,19 +247,24 @@ public class SwerveSubsystem extends SubsystemBase
   @Override
   public void periodic()
   { 
-  m_field1.setRobotPose(getPose());
+   swerveDrive.updateOdometry();
+  m_field1.setRobotPose(m_poseEstimator1.getEstimatedPosition());
     boolean doRejectUpdate = false;
      LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
      m_poseEstimator1.update(getHeading(), swerveDrive.getModulePositions());
+      //swerveDrive.addVisionMeasurement(m_poseEstimator1.getEstimatedPosition(),mt1.timestampSeconds );
      if(mt1.tagCount!=0){
-      if(mt1.avgTagDist>5){
+      if(mt1.tagCount <= 2){
+      if(mt1.avgTagDist>4.1){
       doRejectUpdate = true;
+    }}
+    else if(mt1.tagCount >=3){
+      if(mt1.avgTagDist>15){
+        doRejectUpdate = true;
+      }
     }
      }
     if(mt1.tagCount == 0){
-      doRejectUpdate = true;
-    }
-    if(mt1.avgTagDist>4.1){
       doRejectUpdate = true;
     }
     // if(mt1.rawFiducials[1].ambiguity>.7){
@@ -268,7 +275,7 @@ public class SwerveSubsystem extends SubsystemBase
       //System.out.println("ambiguity "+mt1.rawFiducials[0].ambiguity);
       
         m_poseEstimator1.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
-         m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(2,.2,9999999));
+         m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(0.7,0.7,9999999));
     }
     if(doRejectUpdate == true){
      // System.out.println("rejecting vision measurement");
@@ -283,16 +290,7 @@ public class SwerveSubsystem extends SubsystemBase
  
 
  
-   public ChassisSpeeds test(double xInput, double yInput, Rotation2d angle){
-     LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
-      Rotation2d m_rotation = new Rotation2d(0,5.5);
-    xInput = Math.pow(xInput, 3);
-    yInput = Math.pow(yInput, 3);
- angle = m_rotation.minus(swerveDrive.getPose().getTranslation().getAngle());
-    return swerveDrive.swerveController.getTargetSpeeds(xInput, yInput,    angle.getRadians(),
-    getHeading().getRadians(),
-    maximumSpeed);
-  }
+  
 
   @Override
   public void simulationPeriodic()
@@ -320,9 +318,7 @@ public class SwerveSubsystem extends SubsystemBase
   {
     swerveDrive.resetOdometry(initialHolonomicPose);
   }
-public void resetOdometryToSpeaker(){
-  swerveDrive.resetOdometry(new Pose2d(1,4, new Rotation2d()));
-}
+
   /**
    * Gets the current pose (position and rotation) of the robot, as reported by odometry.
    *
@@ -334,6 +330,9 @@ public void resetOdometryToSpeaker(){
     //return swerveDrive.getPose();
    return m_poseEstimator1.getEstimatedPosition();
   
+  }
+  public Pose2d getOdometryPose(){
+    return swerveDrive.getPose();
   }
   /**
    * Set chassis speeds with closed-loop velocity control.
@@ -361,6 +360,7 @@ public void resetOdometryToSpeaker(){
   public void zeroGyro()
   {
     swerveDrive.zeroGyro();
+    
   }
 
   /**
@@ -380,7 +380,8 @@ public void resetOdometryToSpeaker(){
    */
   public Rotation2d getHeading()
   {
-    return swerveDrive.getYaw();
+    return swerveDrive.getOdometryHeading();
+    
   }
 
   /**

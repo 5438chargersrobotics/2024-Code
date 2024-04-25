@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Arm to WingLine",
+      "name": "Auto Arm Angle",
       "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
@@ -47,7 +47,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to WingLine"
+                "name": "Auto Arm Angle"
               }
             }
           ]
@@ -55,7 +55,7 @@
       }
     },
     {
-      "name": "Arm to WingLine",
+      "name": "Auto Arm Angle",
       "waypointRelativePos": 0.9,
       "command": {
         "type": "parallel",
@@ -64,7 +64,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to WingLine"
+                "name": "Auto Arm Angle"
               }
             }
           ]

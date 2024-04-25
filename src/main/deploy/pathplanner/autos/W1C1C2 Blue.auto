@@ -60,7 +60,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to Podium Auto"
+                        "name": "Auto Arm Angle"
                       }
                     },
                     {

@@ -144,8 +144,8 @@ public final class Constants
     public static final Translation2d blueSpeaker = new Translation2d(Units.inchesToMeters(8.5), Units.inchesToMeters(214));//223.42
     public static final Translation2d redSpeaker = new Translation2d(Units.inchesToMeters(642.73), Units.inchesToMeters(214));//213.42
     public static final double noteVelocity = 10;//642.73
-    public static final Translation2d blueHoardSpot = new Translation2d(Units.inchesToMeters(12), Units.inchesToMeters(272));//272
-     public static final Translation2d redHoardSpot = new Translation2d(Units.inchesToMeters(638), Units.inchesToMeters(272));
+    public static final Translation2d blueHoardSpot = new Translation2d(Units.inchesToMeters(12), Units.inchesToMeters(260));//272
+     public static final Translation2d redHoardSpot = new Translation2d(Units.inchesToMeters(638), Units.inchesToMeters(260));
   }
 }
 
