@@ -46,38 +46,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center Sub to W3 Blue"
+            "pathName": "Sub to W2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "W3 to MiddleAutoLine"
+            "pathName": "W2 to Sub"
           }
         },
         {
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Align to Speaker"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Auto Arm Angle"
-                      }
-                    }
-                  ]
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -90,38 +71,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "W3 to W2 Blue"
+            "pathName": "Center Sub to W3 Red"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W3 to Sub"
           }
         },
         {
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Auto Arm Angle"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Rev Shooter Wheels"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Align to Speaker"
-                      }
-                    }
-                  ]
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -134,38 +96,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "W2 to W1 Blue"
+            "pathName": "Center Sub to W1 Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W1 to Sub"
           }
         },
         {
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Auto Arm Angle"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Rev Shooter Wheels"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Align to Speaker"
-                      }
-                    }
-                  ]
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -178,7 +121,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "W1 to C1 Red"
+            "pathName": "Sub to C3 Blue"
           }
         }
       ]

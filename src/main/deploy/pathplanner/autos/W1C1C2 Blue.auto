@@ -72,7 +72,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Align Drivebase"
+                        "name": "Align to Speaker"
                       }
                     }
                   ]
@@ -110,13 +110,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to WingLine"
+                        "name": "Auto Arm Angle"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Align Drivebase"
+                        "name": "Align to Speaker"
                       }
                     }
                   ]
@@ -154,13 +154,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to WingLine"
+                        "name": "Auto Arm Angle"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Align Drivebase"
+                        "name": "Align to Speaker"
                       }
                     }
                   ]

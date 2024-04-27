@@ -9,6 +9,11 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.subsystems.IntakeSubsystem;
+
 import java.io.File;
 import java.io.IOException;
 import swervelib.parser.SwerveParser;
@@ -25,12 +30,14 @@ public class Robot extends TimedRobot
   private        Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  //private IntakeSubsystem m_IntakeSubsystem;
 
   private Timer disabledTimer;
 
   public Robot()
   {
     instance = this;
+    //addPeriodic(()->{m_IntakeSubsystem.runIntakeWithSensor();}, 0.005,0.005);
   }
 
   public static Robot getInstance()
@@ -47,7 +54,7 @@ public class Robot extends TimedRobot
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-
+    
     // Create a timer to disable motor brake a few seconds after disable.  This will let the robot stop
     // immediately when disabled, but then also let it be pushed more 
     disabledTimer = new Timer();

@@ -30,6 +30,10 @@ public class ShooterSubsystem extends PIDSubsystem {
     setSetpoint(ShooterConstants.kShooterTargetRPS);
     m_shooterMotor1.follow(m_shooterMotor);
   }
+  @Override
+  public void periodic(){
+   
+  }
 
   @Override
   public void useOutput(double output, double setpoint) {
@@ -49,7 +53,7 @@ public class ShooterSubsystem extends PIDSubsystem {
     m_shooterMotor.set(0.25);
   }
   public void setMotorHoardSpeed(){
-    m_shooterMotor.set(0.43
+    m_shooterMotor.set(0.3
     );
   }
   public void setMotorHalfSpeed(){

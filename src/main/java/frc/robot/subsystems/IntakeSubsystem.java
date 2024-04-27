@@ -24,13 +24,18 @@ public class IntakeSubsystem extends SubsystemBase{
 
     public IntakeSubsystem(){
         m_IntakeMotor.setIdleMode(IdleMode.kBrake);
+       
     }
-
+@Override
+public void periodic(){
+    
+}
     public void runIntake(){
         m_IntakeMotor.set(IntakeConstants.kIntakeMotorSpeed);
     }
 
     public void runIntakeWithSensor(){
+       
      if(!m_LeftDistanceSensor.get() || !m_RightDistanceSensor.get()){
         m_IntakeMotor.set(0);
        // m_Controller.setRumble(RumbleType.kBothRumble, 0.5);

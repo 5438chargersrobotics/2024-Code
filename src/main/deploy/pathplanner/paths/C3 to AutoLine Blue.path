@@ -8,40 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.004087537866288,
-        "y": 4.07539893464585
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.921864375795261,
-        "y": 5.537862667174266
-      },
-      "prevControl": {
-        "x": 5.3531195975237456,
-        "y": 4.60948090172876
-      },
-      "nextControl": {
-        "x": 3.561123321771585,
-        "y": 5.771856864378813
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.8981397630244783,
-        "y": 5.654859765778418
-      },
-      "prevControl": {
-        "x": 3.229631542398478,
-        "y": 5.684109040427108
-      },
-      "nextControl": {
-        "x": 2.5867485469790528,
-        "y": 5.627384070246835
+        "x": 4.146108814782951,
+        "y": 3.8219052210075923
       },
       "isLocked": false,
       "linkedName": null
@@ -52,8 +20,8 @@
         "y": 5.537862667174266
       },
       "prevControl": {
-        "x": 2.191282292303302,
-        "y": 5.498863634306841
+        "x": 5.472075932275382,
+        "y": 5.5768617000416905
       },
       "nextControl": null,
       "isLocked": false,
@@ -81,8 +49,8 @@
       }
     },
     {
-      "name": "Arm to Mid",
-      "waypointRelativePos": 0.7,
+      "name": "Arm to Sub",
+      "waypointRelativePos": 0.35,
       "command": {
         "type": "parallel",
         "data": {
@@ -116,7 +84,7 @@
     },
     {
       "name": "Arm to Sub",
-      "waypointRelativePos": 2.65,
+      "waypointRelativePos": 0.85,
       "command": {
         "type": "parallel",
         "data": {
@@ -134,7 +102,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

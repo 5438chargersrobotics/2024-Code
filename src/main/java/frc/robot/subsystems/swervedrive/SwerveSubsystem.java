@@ -35,6 +35,7 @@ import edu.wpi.first.units.Time;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,6 +46,7 @@ import frc.robot.RobotContainer;
 import frc.robot.LimelightHelpers.LimelightResults;
 
 import java.io.File;
+import java.sql.Driver;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 
@@ -70,7 +72,7 @@ public class SwerveSubsystem extends SubsystemBase
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  public        double      maximumSpeed = Units.feetToMeters(16.5);
+  public        double      maximumSpeed = Units.feetToMeters(10);
   // Limelight setup
   NetworkTableInstance inst = NetworkTableInstance.getDefault();
   private NetworkTableEntry tx = inst.getTable("limelight").getEntry("tx");
@@ -99,7 +101,7 @@ public class SwerveSubsystem extends SubsystemBase
    // System.out.println("}");
    
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
-    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.LOW;
     try
     {
       swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed);
@@ -109,7 +111,7 @@ public class SwerveSubsystem extends SubsystemBase
     {
       throw new RuntimeException(e);
     }
-    swerveDrive.setHeadingCorrection(true); // Heading correction should only be used while controlling the robot via angle.
+    swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(false);
     m_poseEstimator1 = new SwerveDrivePoseEstimator(getKinematics(), getHeading(), swerveDrive.getModulePositions(), new Pose2d());
   
@@ -126,7 +128,7 @@ public class SwerveSubsystem extends SubsystemBase
   public void setupPathPlanner()
   {
     AutoBuilder.configureHolonomic(
-        this::getPose, // Robot pose supplier
+        this::getOdometryPose, // Robot pose supplier
         this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
         this::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
@@ -137,7 +139,7 @@ public class SwerveSubsystem extends SubsystemBase
                                                           swerveDrive.swerveController.config.headingPIDF.i,
                                                           swerveDrive.swerveController.config.headingPIDF.d),
                                          // Rotation PID constants
-                                         4,
+                                         4.5,
                                          // Max module speed, in m/s
                                          swerveDrive.swerveDriveConfiguration.getDriveBaseRadiusMeters(),
                                          // Drive base radius in meters. Distance from robot center to furthest module.
@@ -235,7 +237,7 @@ public class SwerveSubsystem extends SubsystemBase
   public void periodic()
   { 
    swerveDrive.updateOdometry();
-  m_field1.setRobotPose(m_poseEstimator1.getEstimatedPosition());
+  m_field1.setRobotPose(getPose());
     boolean doRejectUpdate = false;
      LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
      m_poseEstimator1.update(getHeading(), swerveDrive.getModulePositions());
@@ -258,21 +260,29 @@ public class SwerveSubsystem extends SubsystemBase
     //   doRejectUpdate=true;
     // }
     if(doRejectUpdate == false){
+       m_poseEstimator1.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
+          m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(5,5,9999999));
+//       if(Timer.getMatchTime() < 10 && DriverStation.isAutonomous()){
+//  m_poseEstimator1.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
+//          m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(4,4,9999999));
+//       }
+//       if(DriverStation.isTeleopEnabled()||DriverStation.isDisabled()){
+//          m_poseEstimator1.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
+//          m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(15,15,9999999));
+//       }
      // System.out.println("adding vision measurement");
       //System.out.println("ambiguity "+mt1.rawFiducials[0].ambiguity);
       //swerveDrive.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
-        m_poseEstimator1.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
-         m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(0.7,0.7,9999999));
+       
     }
     if(doRejectUpdate == true){
      // System.out.println("rejecting vision measurement");
     }
     //System.out.println("distance "+mt1.avgTagDist);
-    
-    //swerveDrive.addVisionMeasurement(m_poseEstimator1.getEstimatedPosition(), Timer.getFPGATimestamp());
+   // System.out.println("Match Time "+Timer.getMatchTime());
     //swerveDrive.updateOdometry();
     //LimelightHelpers.SetFiducialIDFiltersOverride("limelight", validIDs);
-    
+    SmartDashboard.putNumber("Match Time", Timer.getMatchTime());
   }
  
 
@@ -304,6 +314,7 @@ public class SwerveSubsystem extends SubsystemBase
   public void resetOdometry(Pose2d initialHolonomicPose)
   {
     swerveDrive.resetOdometry(initialHolonomicPose);
+    m_poseEstimator1.resetPosition(getHeading(), swerveDrive.getModulePositions(), initialHolonomicPose);
   }
 
   /**
@@ -347,6 +358,7 @@ public class SwerveSubsystem extends SubsystemBase
   public void zeroGyro()
   {
     swerveDrive.zeroGyro();
+   m_poseEstimator1.resetPosition(getHeading(), swerveDrive.getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
     
   }
 

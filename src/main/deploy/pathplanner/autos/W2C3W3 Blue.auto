@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3674277229789629,
-      "y": 5.567111941824834
+      "x": 1.3381784483283943,
+      "y": 5.547612425391122
     },
-    "rotation": 0.734521034254806
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -22,7 +22,45 @@
                     {
                       "type": "named",
                       "data": {
+                        "name": "Rev Shooter Wheels"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
                         "name": "Arm to Subwoofer"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Sub to W2"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Auto Arm Angle"
                       }
                     },
                     {
@@ -38,6 +76,51 @@
                 "type": "named",
                 "data": {
                   "name": "Run Index"
+                }
+              },
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Arm to Intake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W2 to C3 Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C3 to AutoLine Blue"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Run Index"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -52,133 +135,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "W3 to MiddleAutoLine"
+            "pathName": "W3 to Sub"
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Align to Speaker"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Auto Arm Angle"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Run Index"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "W3 to W2 Blue"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Auto Arm Angle"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Rev Shooter Wheels"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Align to Speaker"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Run Index"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "W2 to W1 Blue"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Auto Arm Angle"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Rev Shooter Wheels"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Align to Speaker"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Run Index"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "W1 to C1 Red"
+            "name": "Run Index"
           }
         }
       ]

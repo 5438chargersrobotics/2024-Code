@@ -106,7 +106,7 @@ public class RobotContainer
   {
     // Configure the trigger bindings
     configureBindings();
-
+    
     AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
                                                           // Applies deadbands and inverts controls because joysticks
                                                           // are back-right positive while robot
@@ -155,6 +155,7 @@ public class RobotContainer
         () -> MathUtil.applyDeadband(driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
         () -> -driverController.getRawAxis(2), () -> true);
   drivebase.setDefaultCommand(closedFieldRel);
+  m_shooter.setDefaultCommand(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter));
     // if(DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
     //   drivebase.setDefaultCommand(closedFieldRel);
     // }
@@ -211,8 +212,8 @@ public class RobotContainer
         m_arm.setMotor(calculateArmAngleWithPose());
         },
         m_arm).withTimeout(1.5));
-     NamedCommands.registerCommand("Align to Speaker", drivebase.run(() -> autoAim
-     ()).withTimeout(1));
+     NamedCommands.registerCommand("Align to Speaker", drivebase.run(() -> autoAimWithOdometry
+     ()).withTimeout(1.5));
       
       
     // Build an auto chooser. This will use Commands.none() as the default option.
@@ -242,7 +243,7 @@ public class RobotContainer
           // Do whatever you want with the poses here
           field.getObject("path").setPoses(poses);
       });
-      SmartDashboard.putNumber("Calculated Arm Angle", calculateArmAngleWithPose());
+      SmartDashboard.putNumber("Calculated Arm Angle", calculateArmAngleWithOdometryPose());
 
       
   }
@@ -321,8 +322,8 @@ public class RobotContainer
    //Operator Controls
    
    m_operatorController.L2().onTrue(new ParallelCommandGroup(Commands.run(m_Intake::runOuttake, m_Intake), Commands.run(m_shooter::setMotorReverse, m_shooter)))
-   .onFalse(new ParallelCommandGroup(Commands.run(m_Intake::stopIntake, m_Intake), Commands.run(m_shooter::stopMotor, m_shooter)));
-    m_operatorController.R1().onTrue(Commands.run(m_shooter::setMotorFullSpeed, m_shooter)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
+   .onFalse(new ParallelCommandGroup(Commands.run(m_Intake::stopIntake, m_Intake), Commands.run(m_shooter::setMotorHoardSpeed, m_shooter)));
+    m_operatorController.R1().onTrue(Commands.run(m_shooter::setMotorFullSpeed, m_shooter)).onFalse(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter));
     m_operatorController.R2().onTrue(Commands.run(m_Intake::runIntake, m_Intake)).onFalse(Commands.run(m_Intake::stopIntake, m_Intake));
      m_operatorController.povUp().onTrue(Commands.run(m_climb::setRightMotorUp, m_climb)).onFalse(Commands.run(m_climb::stopRightMotor, m_climb));
      m_operatorController.povDown().onTrue(Commands.run(m_climb::setRightMotorDown, m_climb)).onFalse(Commands.run(m_climb::stopRightMotor, m_climb));
@@ -332,17 +333,18 @@ public class RobotContainer
       m_operatorController.povRight().onTrue(Commands.run(m_climb::setBothMotorsDown, m_climb)).onFalse(Commands.run(m_climb::stopBothMotors, m_climb));
     // m_operatorController.button(14).onTrue(Commands.run(m_LED::setLEDColorRed, m_LED));
      
-  driverController.circle().onTrue(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
+  m_operatorController.options().onTrue(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter)).onFalse(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter));
      //Intake setpoint and run LEDs: if just one sensor is detected, display yellow, if both are detected, display green   
     m_operatorController
     .cross()
+
     .onTrue(
       new ParallelCommandGroup(
         Commands.run(
             () -> {
               m_arm.setMotor(ArmConstants.kArmOffsetRads);
             },
-            m_arm), Commands.run(m_Intake::runIntakeWithSensor, m_Intake),
+            m_arm),Commands.run(m_Intake::runIntakeWithSensor, m_Intake),
             Commands.run(m_LED::setLEDColorYellow))); 
   // Stow Setpoint
     m_operatorController
@@ -362,23 +364,23 @@ public class RobotContainer
       m_arm)
     );
     // Podium Setpoint
-     m_operatorController
-    .square()
-    .onTrue(
-      Commands.run(() -> {
-      m_arm.setMotor(ArmConstants.kPodiumSpot);
-      },
-      m_arm)
-    );
+    //  m_operatorController
+    // .square()
+    // .onTrue(
+    //   Commands.run(() -> {
+    //   m_arm.setMotor(ArmConstants.kPodiumSpot);
+    //   },
+    //   m_arm)
+    // );
     //  Middle Line Setpoint
-      m_operatorController
-    .options()
-    .onTrue(
-      Commands.run(() -> {
-      m_arm.setMotor(ArmConstants.kMiddleSpot);
-      },
-      m_arm)
-    );
+    //   m_operatorController
+    // .options()
+    // .onTrue(
+    //   Commands.run(() -> {
+    //   m_arm.setMotor(ArmConstants.kMiddleSpot);
+    //   },
+    //   m_arm)
+    // );
     //  Hoard Setpoint
       m_operatorController
     .button(9)
@@ -394,12 +396,11 @@ public class RobotContainer
     .onTrue(
       new ParallelCommandGroup(Commands.run(() -> {
       m_arm.setMotor(ArmConstants.kAmpSpot);
-      }, m_arm),Commands.run(m_shooter::setMotorHalfSpeed, m_shooter)
+      }, m_arm),Commands.run(m_shooter::setMotorHoardSpeed, m_shooter)
       
-    )).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
+    )).onFalse(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter));
        
-    driverController
-    .options()
+    m_operatorController.square()
     .onTrue(
       Commands.run(() -> {
       m_arm.setMotor(calculateArmAngleWithPose());
@@ -457,7 +458,11 @@ public class RobotContainer
     // SmartDashboard.putNumber("speakerDistance", getSpeakerDistance());
     return shotAngle;
   }//2.32 + -0.202x + 0.0189x^2     2.7 + -0.418x + 0.0478x^2    2.49 + -0.308x + 0.0337x^2
-
+public double calculateArmAngleWithOdometryPose(){
+  //2.28 + -0.166x + 0.0121x^2
+   double shotAngle = 2.28 +(-0.166*(getSpeakerDistancewithOdometry())+0.0121*Math.pow(getSpeakerDistance(), 2));
+   return shotAngle;
+}
   // public void colorReceived(Alliance ally){
   //   if(ally == Alliance.Blue){
   //     blue = true;
@@ -487,6 +492,14 @@ private void autoAimToHoardSpot(){
    // SmartDashboard.putNumber("Auto Aim Setpoint", setpoint.getRadians());
     return setpoint;
   }
+   private Rotation2d getSpeakerRotationWithOdometry(){
+    speaker=getMovingSpeakerWithOdometry(blue);
+    Rotation2d currentAngle = drivebase.getHeading();
+    Rotation2d setpoint = speaker.minus(drivebase.getOdometryPose().getTranslation()).getAngle().minus(new Rotation2d(Math.PI));
+    //SmartDashboard.putNumber("Auto Aim Robot", currentAngle.getRadians());
+   // SmartDashboard.putNumber("Auto Aim Setpoint", setpoint.getRadians());
+    return setpoint;
+  }
   private void autoAim(){
     Rotation2d speaker = getSpeakerRotation();
     if(!blue){
@@ -496,9 +509,16 @@ private void autoAimToHoardSpot(){
     
       drivebase.driveFieldOriented(blue? drivebase.getTargetSpeeds(MathUtil.applyDeadband(driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()):
       drivebase.getTargetSpeeds(MathUtil.applyDeadband(-driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(-driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()));
+  }
+    private void autoAimWithOdometry(){
+    Rotation2d speaker = getSpeakerRotationWithOdometry();
+    if(!blue){
+      speaker = speaker.plus(new Rotation2d(Math.PI));
+    }
+   
     
-    
-    
+      drivebase.driveFieldOriented(blue? drivebase.getTargetSpeeds(MathUtil.applyDeadband(driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()):
+      drivebase.getTargetSpeeds(MathUtil.applyDeadband(-driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(-driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()));
   }
   public double getSpeakerDistance(){
     var alliance = DriverStation.getAlliance();
@@ -508,7 +528,14 @@ private void autoAimToHoardSpot(){
    //System.out.println("getSpeakerDistance() "+distanceToSpeaker);
    return distanceToSpeaker;
   }
-
+ public double getSpeakerDistancewithOdometry(){
+    var alliance = DriverStation.getAlliance();
+   blue = alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+   Translation2d goalPose = blue ? Constants.Field.redSpeaker : Constants.Field.blueSpeaker;
+   double distanceToSpeaker = drivebase.getOdometryPose().getTranslation().getDistance(goalPose);
+   //System.out.println("getSpeakerDistance() "+distanceToSpeaker);
+   return distanceToSpeaker;
+  }
   public Translation2d getMovingSpeaker(boolean blue){
    var alliance = DriverStation.getAlliance();
    blue = alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
@@ -520,6 +547,18 @@ private void autoAimToHoardSpot(){
     //SmartDashboard.putNumber("speakerDistance", distanceToSpeaker);
     return new Translation2d(x,y);
     //return goalPose;
+  }
+   public Translation2d getMovingSpeakerWithOdometry(boolean blue){
+   var alliance = DriverStation.getAlliance();
+   blue = alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+    Translation2d goalPose = blue ? Constants.Field.redSpeaker : Constants.Field.blueSpeaker;
+    ChassisSpeeds robotVel = drivebase.getFieldVelocity();
+    double distanceToSpeaker = drivebase.getOdometryPose().getTranslation().getDistance(goalPose);
+    double x = goalPose.getX() - (robotVel.vxMetersPerSecond *(distanceToSpeaker/Constants.Field.noteVelocity));
+    double y = goalPose.getY() - (robotVel.vyMetersPerSecond *(distanceToSpeaker/Constants.Field.noteVelocity));
+    //SmartDashboard.putNumber("speakerDistance", distanceToSpeaker);
+   // return new Translation2d(x,y);
+    return goalPose;
   }
   public Translation2d getHoardPose(boolean blue){
      var alliance = DriverStation.getAlliance();

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3674277229789629,
-      "y": 5.567111941824834
+      "x": 1.4161765140632432,
+      "y": 3.422165134116492
     },
-    "rotation": 0.734521034254806
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -22,95 +22,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to Subwoofer"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
                         "name": "Rev Shooter Wheels"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Run Index"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center Sub to W3 Blue"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "W3 to MiddleAutoLine"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Align to Speaker"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
                         "name": "Auto Arm Angle"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Run Index"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "W3 to W2 Blue"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Auto Arm Angle"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Rev Shooter Wheels"
                       }
                     },
                     {
@@ -134,7 +52,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "W2 to W1 Blue"
+            "pathName": "AutoLine Start to C4 Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C4 to AutoLine Under Stage Blue"
           }
         },
         {
@@ -149,12 +73,6 @@
                       "type": "named",
                       "data": {
                         "name": "Auto Arm Angle"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Rev Shooter Wheels"
                       }
                     },
                     {
@@ -178,7 +96,45 @@
         {
           "type": "path",
           "data": {
-            "pathName": "W1 to C1 Red"
+            "pathName": "AutoLine to C3 Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C3 to AutoLine Field Side Blue"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Auto Arm Angle"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align to Speaker"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
           }
         }
       ]
