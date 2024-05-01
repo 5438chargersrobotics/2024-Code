@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.568273948899444,
-        "y": 6.074099369101352
+        "x": 8.270256540513081,
+        "y": 6.005851061583359
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.95403918123751,
-        "y": 6.20669728750384
+        "x": 6.944289423020653,
+        "y": 7.273319629774651
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.160083669335986,
-        "y": 6.3470925991733225
+        "x": 4.555598659890908,
+        "y": 6.659084862112717
       },
       "prevControl": {
-        "x": 6.183808282105876,
-        "y": 6.249595017004761
+        "x": 5.384328108323675,
+        "y": 6.990576641485824
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "WingLine"
     }
   ],
   "rotationTargets": [],
@@ -47,7 +47,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Auto Arm Angle"
+                "name": "Arm to WingLine"
               }
             }
           ]
@@ -56,7 +56,7 @@
     },
     {
       "name": "Auto Arm Angle",
-      "waypointRelativePos": 0.9,
+      "waypointRelativePos": 0.85,
       "command": {
         "type": "parallel",
         "data": {
@@ -64,7 +64,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Auto Arm Angle"
+                "name": "Arm to WingLine"
               }
             }
           ]
@@ -74,7 +74,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -89,5 +89,5 @@
     "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -116,7 +116,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Align to Speaker"
+                        "name": "Align Drivebase"
                       }
                     },
                     {
@@ -157,12 +157,6 @@
                 "type": "parallel",
                 "data": {
                   "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Auto Arm Angle"
-                      }
-                    },
                     {
                       "type": "named",
                       "data": {

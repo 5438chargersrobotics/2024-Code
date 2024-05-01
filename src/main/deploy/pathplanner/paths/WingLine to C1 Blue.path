@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.9108150520339064,
-        "y": 6.6493351038958615
+        "x": 4.555598659890908,
+        "y": 6.659084862112717
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.661546434731825,
-        "y": 6.766332202498135
+        "x": 5.3453290754562515,
+        "y": 6.698083894980142
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "WingLine"
     },
     {
       "anchor": {
-        "x": 8.397003397332211,
-        "y": 6.912578575750977
+        "x": 8.611498078103045,
+        "y": 6.90282881753412
       },
       "prevControl": {
-        "x": 7.831517420754557,
-        "y": 6.90282881753412
+        "x": 8.036262343308536,
+        "y": 6.844330268232984
       },
       "nextControl": null,
       "isLocked": false,
@@ -53,11 +53,34 @@
           ]
         }
       }
+    },
+    {
+      "name": "Stop Intake and Shooter",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Intake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Shooter Wheels"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -72,5 +95,5 @@
     "rotation": 13.495733280795857,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

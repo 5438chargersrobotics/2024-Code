@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -47,6 +48,7 @@ import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.io.File;
+import java.util.function.BooleanSupplier;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
@@ -93,6 +95,7 @@ public class RobotContainer
     DriveRequestType controlType = DriveRequestType.OpenLoopVoltage;
     SwerveRequest.FieldCentricFacingAngle autoAim = new SwerveRequest.FieldCentricFacingAngle()
     .withDriveRequestType(controlType);
+    
     
       
 
@@ -156,6 +159,7 @@ public class RobotContainer
         () -> -driverController.getRawAxis(2), () -> true);
   drivebase.setDefaultCommand(closedFieldRel);
   m_shooter.setDefaultCommand(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter));
+  m_Intake.setDefaultCommand(Commands.run(m_Intake::stopIntake, m_Intake));
     // if(DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
     //   drivebase.setDefaultCommand(closedFieldRel);
     // }
@@ -168,7 +172,7 @@ public class RobotContainer
    NamedCommands.registerCommand("Arm to Subwoofer", Commands.run(() -> {
       m_arm.setMotor(ArmConstants.kSubwooferSpot);
       },
-      m_arm).withTimeout(1.5)
+      m_arm).withTimeout(1.7)
     );
     NamedCommands.registerCommand("Arm to SubwooferSide", Commands.run(() -> {
       m_arm.setMotor(ArmConstants.kSubwooferSideSpot);
@@ -212,14 +216,24 @@ public class RobotContainer
         m_arm.setMotor(calculateArmAngleWithPose());
         },
         m_arm).withTimeout(1.5));
+        NamedCommands.registerCommand("Auto Arm Angle Short Delay", Commands.run(() -> {
+        m_arm.setMotor(calculateArmAngleWithPose());
+        },
+        m_arm).withTimeout(1.2));
      NamedCommands.registerCommand("Align to Speaker", drivebase.run(() -> autoAimWithOdometry
-     ()).withTimeout(1.5));
-      
+     ()).withTimeout(1.5)); 
+     NamedCommands.registerCommand("Align to Speaker Short", drivebase.run(() -> autoAimWithOdometry
+     ()).withTimeout(1.2));
+
+       NamedCommands.registerCommand("Arm to HoardSpot", Commands.run(() -> {
+        m_arm.setMotor(ArmConstants.kHoardSpot);
+        },
+        m_arm).withTimeout(0.7));
       
     // Build an auto chooser. This will use Commands.none() as the default option.
     // autoChooser = AutoBuilder.buildAutoChooser("W1C1");
 
-
+        
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
       autoChooser = AutoBuilder.buildAutoChooser("W1C1");
@@ -257,7 +271,7 @@ public class RobotContainer
    */
   private void configureBindings()
   {
-   
+  
     //Driver Controls
     driverController.R1().onTrue((new InstantCommand(drivebase::zeroGyro)));
      driverController.L2().whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
@@ -417,7 +431,12 @@ public class RobotContainer
       }
         , m_arm)
     );
-
+m_operatorController.button(12)
+    .toggleOnTrue(
+      Commands.run(
+       m_shooter::stopMotor
+        , m_shooter)
+    );
 
   }
 

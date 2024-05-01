@@ -235,7 +235,7 @@ public class SwerveSubsystem extends SubsystemBase
 
   @Override
   public void periodic()
-  { 
+  { //updateOdometry();
    swerveDrive.updateOdometry();
   m_field1.setRobotPose(getPose());
     boolean doRejectUpdate = false;
@@ -280,9 +280,8 @@ public class SwerveSubsystem extends SubsystemBase
     }
     //System.out.println("distance "+mt1.avgTagDist);
    // System.out.println("Match Time "+Timer.getMatchTime());
-    //swerveDrive.updateOdometry();
-    //LimelightHelpers.SetFiducialIDFiltersOverride("limelight", validIDs);
-    SmartDashboard.putNumber("Match Time", Timer.getMatchTime());
+
+   // SmartDashboard.putNumber("Match Time", Timer.getMatchTime());
   }
  
 
@@ -492,6 +491,7 @@ public class SwerveSubsystem extends SubsystemBase
   }
 
   public double calculateTurnAngle(){
+  
     double targetOffsetHorizontal = tx.getDouble(0);
     double kP = 0.025;
     double minMoveCmdFar = 1.3;
@@ -515,15 +515,6 @@ public class SwerveSubsystem extends SubsystemBase
 //    else{
 //   return kP*targetOffsetHorizontal;
 // }
-if(moveCmd>.6){
-  moveCmd=.6;
-}
-else if(moveCmd<-.6){
-  moveCmd=-.6;
-}
-else{
-  moveCmd = kP * targetOffsetHorizontal;
-}
 return moveCmd;
   }
 
@@ -546,13 +537,13 @@ public void updateOdometry(){
        swerveDrive.getModulePositions());
 
 
-    boolean useMegaTag2 = false; //set to false to use MegaTag1
+    boolean useMegaTag2 = true; //set to false to use MegaTag1
     boolean doRejectUpdate = false;
     if(useMegaTag2 == false)
     {
       LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
      
-      if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1)
+      if(mt1.tagCount == 1 )
       {
         if(mt1.rawFiducials[0].ambiguity > .7)
         {

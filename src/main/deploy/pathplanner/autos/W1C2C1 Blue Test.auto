@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3381784483283943,
-      "y": 5.547612425391122
+      "x": 0.7531929553145035,
+      "y": 6.6590848621184895
     },
-    "rotation": 0
+    "rotation": 58.309178695175206
   },
   "command": {
     "type": "sequential",
@@ -22,13 +22,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Rev Shooter Wheels"
+                        "name": "Arm to Subwoofer"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to Subwoofer"
+                        "name": "Rev Shooter Wheels"
                       }
                     }
                   ]
@@ -46,7 +46,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Sub to W2"
+            "pathName": "Sub to W1"
           }
         },
         {
@@ -66,6 +66,12 @@
                     {
                       "type": "named",
                       "data": {
+                        "name": "Align to Speaker Short"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
                         "name": "Rev Shooter Wheels"
                       }
                     }
@@ -84,30 +90,48 @@
         {
           "type": "path",
           "data": {
-            "pathName": "W2 to C3 Blue"
+            "pathName": "W1 to C2 Blue Test"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "C3 to AutoLine Blue"
+            "pathName": "C2 to WingLine Blue Test"
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "parallel",
                 "data": {
                   "commands": [
                     {
                       "type": "named",
                       "data": {
-                        "name": "Run Index"
+                        "name": "Auto Arm Angle Short Delay"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align to Speaker Short"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Rev Shooter Wheels"
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
                 }
               }
             ]
@@ -116,19 +140,51 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center Sub to W3 Blue"
+            "pathName": "WingLine to C1 Blue test"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "W3 to Sub"
+            "pathName": "C1 to WingLine Blue Test"
           }
         },
         {
-          "type": "named",
+          "type": "sequential",
           "data": {
-            "name": "Run Index"
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align to Speaker Short"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Rev Shooter Wheels"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Auto Arm Angle Short Delay"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
           }
         }
       ]

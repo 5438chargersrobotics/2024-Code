@@ -44,6 +44,7 @@ public class ArmSubsystem extends SubsystemBase {
   /** Create a new ArmSubsystem. */
   public ArmSubsystem() {
     m_Encoder.setDistancePerRotation(ArmConstants.m_EncoderDistancePerRotation);
+    m_Arm1.setInverted(true);
     m_Arm.follow(m_Arm1, true);
    // pidController1.reset(getMeasurement());
   

@@ -94,8 +94,8 @@ public final class Constants
   }
 
   public static final class ArmConstants {
-    public static final int kMotorPort = 11;
-    public static final int kMotor1Port = 9;
+    public static final int kMotorPort = 9;
+    public static final int kMotor1Port = 11;
 
     public static final double kP = 1.3;
 
@@ -141,8 +141,8 @@ public final class Constants
   }
 
   public static final class Field{
-    public static final Translation2d blueSpeaker = new Translation2d(Units.inchesToMeters(8.5), Units.inchesToMeters(214));//223.42
-    public static final Translation2d redSpeaker = new Translation2d(Units.inchesToMeters(642.73), Units.inchesToMeters(214));//213.42
+    public static final Translation2d blueSpeaker = new Translation2d(Units.inchesToMeters(8.5), Units.inchesToMeters(216));//223.42
+    public static final Translation2d redSpeaker = new Translation2d(Units.inchesToMeters(642.73), Units.inchesToMeters(216));//213.42
     public static final double noteVelocity = 10;//642.73
     public static final Translation2d blueHoardSpot = new Translation2d(Units.inchesToMeters(12), Units.inchesToMeters(260));//272
      public static final Translation2d redHoardSpot = new Translation2d(Units.inchesToMeters(638), Units.inchesToMeters(260));

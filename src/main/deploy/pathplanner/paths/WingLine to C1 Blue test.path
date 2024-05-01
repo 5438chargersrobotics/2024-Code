@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.392778300996032,
-        "y": 4.07539893464585
+        "x": 4.555598659890908,
+        "y": 6.659084862112717
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.394077866540532,
-        "y": 3.9389023196098654
+        "x": 5.3453290754562515,
+        "y": 6.698083894980142
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "WingLine"
     },
     {
       "anchor": {
-        "x": 1.3576779647621067,
-        "y": 5.537862667174266
+        "x": 8.406753155549067,
+        "y": 6.863829784666696
       },
       "prevControl": {
-        "x": 7.480526124947738,
-        "y": 6.035100336233927
+        "x": 7.831517420754558,
+        "y": 6.80533123536556
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Rev shooter wheels",
+      "name": "Intake",
       "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
@@ -41,24 +41,13 @@
             {
               "type": "named",
               "data": {
-                "name": "Rev Shooter Wheels"
+                "name": "Arm to Intake"
               }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Arm to Sub",
-      "waypointRelativePos": 0.35,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
+            },
             {
               "type": "named",
               "data": {
-                "name": "Arm to Subwoofer"
+                "name": "Run Intake with Sensor"
               }
             }
           ]
@@ -66,8 +55,8 @@
       }
     },
     {
-      "name": "Stop Intake",
-      "waypointRelativePos": 0,
+      "name": "Stop Intake and Shooter",
+      "waypointRelativePos": 1.0,
       "command": {
         "type": "parallel",
         "data": {
@@ -77,22 +66,11 @@
               "data": {
                 "name": "Stop Intake"
               }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Arm to Sub",
-      "waypointRelativePos": 0.85,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
+            },
             {
               "type": "named",
               "data": {
-                "name": "Arm to Subwoofer"
+                "name": "Stop Shooter Wheels"
               }
             }
           ]
@@ -101,20 +79,20 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 3.7,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 5.946863053973492,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Middle",
+  "folder": "Amp Side",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 13.495733280795857,
     "velocity": 0
   },
   "useDefaultConstraints": false

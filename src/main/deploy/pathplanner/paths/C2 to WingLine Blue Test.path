@@ -3,36 +3,36 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.392778300996032,
-        "y": 4.07539893464585
+        "x": 8.270256540513081,
+        "y": 6.005851061583359
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.394077866540532,
-        "y": 3.9389023196098654
+        "x": 6.944289423020653,
+        "y": 7.273319629774651
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.3576779647621067,
-        "y": 5.537862667174266
+        "x": 4.555598659890908,
+        "y": 6.659084862112717
       },
       "prevControl": {
-        "x": 7.480526124947738,
-        "y": 6.035100336233927
+        "x": 5.384328108323675,
+        "y": 6.990576641485824
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "WingLine"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Rev shooter wheels",
+      "name": "Auto Arm Angle",
       "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
@@ -43,22 +43,11 @@
               "data": {
                 "name": "Rev Shooter Wheels"
               }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Arm to Sub",
-      "waypointRelativePos": 0.35,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
+            },
             {
               "type": "named",
               "data": {
-                "name": "Arm to Subwoofer"
+                "name": "Arm to WingLine"
               }
             }
           ]
@@ -66,24 +55,7 @@
       }
     },
     {
-      "name": "Stop Intake",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Stop Intake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Arm to Sub",
+      "name": "Auto Arm Angle",
       "waypointRelativePos": 0.85,
       "command": {
         "type": "parallel",
@@ -92,7 +64,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to Subwoofer"
+                "name": "Arm to WingLine"
               }
             }
           ]
@@ -102,13 +74,13 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 3.7,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 8.972626614896424,
     "rotateFast": false
   },
   "reversed": false,
