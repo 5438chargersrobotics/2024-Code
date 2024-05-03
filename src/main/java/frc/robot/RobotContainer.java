@@ -159,7 +159,7 @@ public class RobotContainer
         () -> -driverController.getRawAxis(2), () -> true);
   drivebase.setDefaultCommand(closedFieldRel);
   m_shooter.setDefaultCommand(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter));
-  m_Intake.setDefaultCommand(Commands.run(m_Intake::stopIntake, m_Intake));
+  //m_Intake.setDefaultCommand(Commands.run(m_Intake::stopIntake, m_Intake));
     // if(DriverStation.getAlliance().get() == DriverStation.Alliance.Blue){
     //   drivebase.setDefaultCommand(closedFieldRel);
     // }

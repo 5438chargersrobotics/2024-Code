@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.3453290754562515,
-        "y": 6.698083894980142
+        "x": 5.364828591889964,
+        "y": 6.80533123536556
       },
       "isLocked": false,
       "linkedName": "WingLine"
     },
     {
       "anchor": {
-        "x": 8.611498078103045,
-        "y": 6.90282881753412
+        "x": 8.3775038808985,
+        "y": 7.390316728376925
       },
       "prevControl": {
-        "x": 8.036262343308536,
-        "y": 6.844330268232984
+        "x": 7.909515486489407,
+        "y": 7.30256890442522
       },
       "nextControl": null,
       "isLocked": false,
@@ -86,13 +86,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 5.946863053973492,
+    "rotation": 4.864514437760577,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Amp Side",
   "previewStartingState": {
-    "rotation": 13.495733280795857,
+    "rotation": 4.537772507906742,
     "velocity": 0
   },
   "useDefaultConstraints": false

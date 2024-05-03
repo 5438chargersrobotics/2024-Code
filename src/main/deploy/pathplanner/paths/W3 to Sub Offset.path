@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7531929553145035,
-        "y": 6.6590848621184895
+        "x": 2.4204016103994217,
+        "y": 4.5043882961875195
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.0749349764732798,
-        "y": 6.980826883268969
+        "x": 2.2156566878454433,
+        "y": 4.9528771741629
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.956638312326507,
-        "y": 7.0198259161363925
+        "x": 1.3674277229789629,
+        "y": 5.186871371367446
       },
       "prevControl": {
-        "x": 1.4356760304969558,
-        "y": 7.068574707220672
+        "x": 1.9036644249060484,
+        "y": 5.138122580283166
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
-      "waypointRelativePos": 0.2,
+      "name": "Arm to Sub",
+      "waypointRelativePos": 0.05,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,13 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to Intake"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Run Intake with Sensor"
+                "name": "Arm to Subwoofer"
               }
             }
           ]
@@ -57,20 +51,20 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 360.0
+    "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 1.1457628381751672,
-    "rotateFast": true
+    "rotation": 0,
+    "rotateFast": false
   },
   "reversed": false,
-  "folder": "Amp Side",
+  "folder": "Middle",
   "previewStartingState": {
-    "rotation": 59.198554023365745,
+    "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

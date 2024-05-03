@@ -18,6 +18,7 @@ public class IntakeSubsystem extends SubsystemBase{
     private final CANSparkMax m_IntakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotorPort, MotorType.kBrushless);
     private final DigitalInput m_LeftDistanceSensor = new DigitalInput(IntakeConstants.kLeftDistanceSensorPort);
     private final DigitalInput m_RightDistanceSensor = new DigitalInput(IntakeConstants.kRightDistanceSensorPort);
+    private final DigitalInput m_MiddleDistanceSensor = new DigitalInput(IntakeConstants.kMiddleDistanceSensorPort);
     private final PS5Controller m_Controller = new PS5Controller(0);
     private final PS5Controller m_operatorController = new PS5Controller(1);
     
@@ -36,7 +37,7 @@ public void periodic(){
 
     public void runIntakeWithSensor(){
        
-     if(!m_LeftDistanceSensor.get() || !m_RightDistanceSensor.get()){
+     if(!m_LeftDistanceSensor.get() || !m_RightDistanceSensor.get() || !m_MiddleDistanceSensor.get()){
         m_IntakeMotor.set(0);
        // m_Controller.setRumble(RumbleType.kBothRumble, 0.5);
        // m_operatorController.setRumble(RumbleType.kBothRumble, 0.5);

@@ -60,13 +60,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Arm to Mid"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Rev Shooter Wheels"
+                        "name": "Auto Arm Angle Short Delay"
                       }
                     }
                   ]
@@ -76,19 +70,6 @@
                 "type": "named",
                 "data": {
                   "name": "Run Index"
-                }
-              },
-              {
-                "type": "parallel",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Arm to Intake"
-                      }
-                    }
-                  ]
                 }
               }
             ]
@@ -107,29 +88,27 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Arm to Subwoofer"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Run Index"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
+            "name": "Run Index"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Sub to W3 Red Offset"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W3 to Sub Offset"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Run Index"
           }
         }
       ]

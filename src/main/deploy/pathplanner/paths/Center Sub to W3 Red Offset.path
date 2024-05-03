@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.578023707116299,
-        "y": 7.263569871557796
+        "x": 1.43,
+        "y": 5.22
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.895540631936372,
-        "y": 7.234320596907227
+        "x": 1.917487910842805,
+        "y": 5.22
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.018062392419323,
-        "y": 7.263569871557796
+        "x": 2.6056470165196877,
+        "y": 3.4709139252007724
       },
       "prevControl": {
-        "x": 6.924789906586939,
-        "y": 7.273319629774651
+        "x": 1.5331736126655164,
+        "y": 3.500163199851341
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Arm to WingLine",
+      "name": "Intake",
       "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
@@ -41,24 +41,13 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to HoardSpot"
+                "name": "Arm to Intake"
               }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Arm to WingLine",
-      "waypointRelativePos": 0.9,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
+            },
             {
               "type": "named",
               "data": {
-                "name": "Arm to HoardSpot"
+                "name": "Run Intake with Sensor"
               }
             }
           ]
@@ -67,20 +56,20 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 5.0,
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 21.801409486351773,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Amp Side",
+  "folder": "Middle",
   "previewStartingState": {
-    "rotation": 1.3639275316030015,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": false

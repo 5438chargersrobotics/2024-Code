@@ -82,6 +82,8 @@ public final class Constants
     public static final double kIntakeMotorSpeed = -1;
     public static final int kLeftDistanceSensorPort = 1;
      public static final int kRightDistanceSensorPort = 2;
+     public static final int kMiddleDistanceSensorPort = 3;
+
   }
 
   public static final class  ClimbConstants {

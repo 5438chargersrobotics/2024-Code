@@ -111,7 +111,7 @@ public class SwerveSubsystem extends SubsystemBase
     {
       throw new RuntimeException(e);
     }
-    swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
+    swerveDrive.setHeadingCorrection(true); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(false);
     m_poseEstimator1 = new SwerveDrivePoseEstimator(getKinematics(), getHeading(), swerveDrive.getModulePositions(), new Pose2d());
   
@@ -235,49 +235,49 @@ public class SwerveSubsystem extends SubsystemBase
 
   @Override
   public void periodic()
-  { //updateOdometry();
-   swerveDrive.updateOdometry();
-  m_field1.setRobotPose(getPose());
-    boolean doRejectUpdate = false;
-     LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
-     m_poseEstimator1.update(getHeading(), swerveDrive.getModulePositions());
-      //swerveDrive.addVisionMeasurement(m_poseEstimator1.getEstimatedPosition(),mt1.timestampSeconds );
-     if(mt1.tagCount!=0){
-      if(mt1.tagCount <= 2){
-      if(mt1.avgTagDist>4.1){
-      doRejectUpdate = true;
-    }}
-    else if(mt1.tagCount >=3){
-      if(mt1.avgTagDist>15){
-        doRejectUpdate = true;
-      }
-    }
-     }
-    if(mt1.tagCount == 0){
-      doRejectUpdate = true;
-    }
-    // if(mt1.rawFiducials[1].ambiguity>.7){
-    //   doRejectUpdate=true;
-    // }
-    if(doRejectUpdate == false){
-       m_poseEstimator1.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
-          m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(5,5,9999999));
-//       if(Timer.getMatchTime() < 10 && DriverStation.isAutonomous()){
-//  m_poseEstimator1.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
-//          m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(4,4,9999999));
+  { updateOdometry();
+//    swerveDrive.updateOdometry();
+//   m_field1.setRobotPose(getPose());
+//     boolean doRejectUpdate = false;
+//      LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+//      m_poseEstimator1.update(getHeading(), swerveDrive.getModulePositions());
+//       //swerveDrive.addVisionMeasurement(m_poseEstimator1.getEstimatedPosition(),mt1.timestampSeconds );
+//      if(mt1.tagCount!=0){
+//       if(mt1.tagCount <= 2){
+//       if(mt1.avgTagDist>4.1){
+//       doRejectUpdate = true;
+//     }}
+//     else if(mt1.tagCount >=3){
+//       if(mt1.avgTagDist>15){
+//         doRejectUpdate = true;
 //       }
-//       if(DriverStation.isTeleopEnabled()||DriverStation.isDisabled()){
-//          m_poseEstimator1.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
-//          m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(15,15,9999999));
-//       }
-     // System.out.println("adding vision measurement");
-      //System.out.println("ambiguity "+mt1.rawFiducials[0].ambiguity);
-      //swerveDrive.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
+//     }
+//      }
+//     if(mt1.tagCount == 0){
+//       doRejectUpdate = true;
+//     }
+//     // if(mt1.rawFiducials[1].ambiguity>.7){
+//     //   doRejectUpdate=true;
+//     // }
+//     if(doRejectUpdate == false){
+//        m_poseEstimator1.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
+//           m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(5,5,9999999));
+// //       if(Timer.getMatchTime() < 10 && DriverStation.isAutonomous()){
+// //  m_poseEstimator1.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
+// //          m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(4,4,9999999));
+// //       }
+// //       if(DriverStation.isTeleopEnabled()||DriverStation.isDisabled()){
+// //          m_poseEstimator1.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
+// //          m_poseEstimator1.setVisionMeasurementStdDevs(VecBuilder.fill(15,15,9999999));
+// //       }
+//      // System.out.println("adding vision measurement");
+//       //System.out.println("ambiguity "+mt1.rawFiducials[0].ambiguity);
+//       //swerveDrive.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
        
-    }
-    if(doRejectUpdate == true){
-     // System.out.println("rejecting vision measurement");
-    }
+//     }
+//     if(doRejectUpdate == true){
+//      // System.out.println("rejecting vision measurement");
+//     }
     //System.out.println("distance "+mt1.avgTagDist);
    // System.out.println("Match Time "+Timer.getMatchTime());
 
