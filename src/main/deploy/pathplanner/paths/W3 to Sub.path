@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.235156204279156,
-        "y": 4.611635636572936
+        "x": 2.4106518521825655,
+        "y": 4.660384427657217
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.030411281725178,
-        "y": 5.284368953536008
+        "x": 2.205906929628587,
+        "y": 5.333117744620289
       },
       "isLocked": false,
       "linkedName": null
@@ -53,11 +53,28 @@
           ]
         }
       }
+    },
+    {
+      "name": "run index",
+      "waypointRelativePos": 0.9,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Run Index"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 2.0,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

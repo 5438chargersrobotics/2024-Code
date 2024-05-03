@@ -50,13 +50,14 @@ public class TeleopDrive extends Command
   // Called when the command is initially scheduled.
   @Override
   public void initialize()
-  {
+  { var alliance = DriverStation.getAlliance();
+    blue = alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
-  {
+  { 
     double xVelocity   = blue? Math.pow(-vX.getAsDouble(), 3) : Math.pow(vX.getAsDouble(),3);
     double yVelocity   = blue? Math.pow(-vY.getAsDouble(), 3) : Math.pow(vY.getAsDouble(),3);
     double angVelocity = Math.pow(omega.getAsDouble(), 3);

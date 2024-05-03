@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.9108150520339064,
-        "y": 7.146572772955523
+        "x": 7.753519355019709,
+        "y": 7.205071322256659
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.110035312707207,
-        "y": 7.263569871557795
+        "x": 7.10028555449035,
+        "y": 7.097823981871242
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 9.284231395066117,
-        "y": 5.216120646018014
+        "x": 5.637821821961934,
+        "y": 6.8150809935824155
       },
       "prevControl": {
-        "x": 7.870516453621984,
-        "y": 6.727333169630709
+        "x": 6.359303930009286,
+        "y": 7.000326399702681
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,8 +32,8 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
-      "waypointRelativePos": 0,
+      "name": "Auto Arm Angle",
+      "waypointRelativePos": 0.1,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,13 +41,24 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to Intake"
+                "name": "Auto Arm Angle"
               }
-            },
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Auto Arm Angle",
+      "waypointRelativePos": 0.9,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
             {
               "type": "named",
               "data": {
-                "name": "Run Intake with Sensor"
+                "name": "Auto Arm Angle Short Delay"
               }
             }
           ]
@@ -56,15 +67,15 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.2,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 6.0,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 200.0
+    "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -42.70938995736156,
-    "rotateFast": true
+    "rotation": 21.801409486351773,
+    "rotateFast": false
   },
   "reversed": false,
   "folder": "Amp Side",

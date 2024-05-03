@@ -3,37 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.9108150520339064,
-        "y": 7.146572772955523
+        "x": 8.280006298729937,
+        "y": 5.791356380812524
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.110035312707207,
-        "y": 7.263569871557795
+        "x": 7.27578120239376,
+        "y": 6.308093566305898
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 9.284231395066117,
-        "y": 5.216120646018014
+        "x": 5.277080767938259,
+        "y": 6.80533123536556
       },
       "prevControl": {
-        "x": 7.870516453621984,
-        "y": 6.727333169630709
+        "x": 6.603047885430691,
+        "y": 6.863829784666697
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "WingLine"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
-      "waypointRelativePos": 0,
+      "name": "Auto Arm Angle",
+      "waypointRelativePos": 0.3,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,13 +41,13 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to Intake"
+                "name": "Rev Shooter Wheels"
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "Run Intake with Sensor"
+                "name": "Auto Arm Angle"
               }
             }
           ]
@@ -56,18 +56,18 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.2,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 6.0,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 200.0
+    "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -42.70938995736156,
-    "rotateFast": true
+    "rotation": 8.972626614896424,
+    "rotateFast": false
   },
   "reversed": false,
-  "folder": "Amp Side",
+  "folder": "Middle",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

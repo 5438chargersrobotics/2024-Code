@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.9108150520339064,
-        "y": 7.146572772955523
+        "x": 0.7336934388833163,
+        "y": 6.67858437854643
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.110035312707207,
-        "y": 7.263569871557795
+        "x": 1.1626828004249845,
+        "y": 6.980826883268969
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 9.284231395066117,
-        "y": 5.216120646018014
+        "x": 2.371652819315141,
+        "y": 7.07832446543753
       },
       "prevControl": {
-        "x": 7.870516453621984,
-        "y": 6.727333169630709
+        "x": 1.3716528193151412,
+        "y": 7.07832446543753
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
+      "name": "Arm to Sub",
       "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
@@ -41,13 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to Intake"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "Run Intake with Sensor"
+                "name": "Arm to Subwoofer"
               }
             }
           ]
@@ -57,19 +51,19 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 4.2,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 200.0
+    "maxAngularAcceleration": 360.0
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -42.70938995736156,
+    "velocity": 4.0,
+    "rotation": -1.1017061152063352,
     "rotateFast": true
   },
   "reversed": false,
   "folder": "Amp Side",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 59.88626684901755,
     "velocity": 0
   },
   "useDefaultConstraints": false

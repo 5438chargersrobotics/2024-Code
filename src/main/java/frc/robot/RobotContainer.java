@@ -219,12 +219,13 @@ public class RobotContainer
         NamedCommands.registerCommand("Auto Arm Angle Short Delay", Commands.run(() -> {
         m_arm.setMotor(calculateArmAngleWithPose());
         },
-        m_arm).withTimeout(1.2));
+        m_arm).withTimeout(1.1));
      NamedCommands.registerCommand("Align to Speaker", drivebase.run(() -> autoAimWithOdometry
      ()).withTimeout(1.5)); 
      NamedCommands.registerCommand("Align to Speaker Short", drivebase.run(() -> autoAimWithOdometry
-     ()).withTimeout(1.2));
+     ()).withTimeout(1.1));
 
+     
        NamedCommands.registerCommand("Arm to HoardSpot", Commands.run(() -> {
         m_arm.setMotor(ArmConstants.kHoardSpot);
         },

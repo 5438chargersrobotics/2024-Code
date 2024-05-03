@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.597523223550011,
-        "y": 7.263569871557796
+        "x": 7.743769596802853,
+        "y": 7.380566970160069
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.9150401483700845,
-        "y": 7.234320596907227
+        "x": 7.061286521622926,
+        "y": 7.3513176955095
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.018062392419323,
-        "y": 7.263569871557796
+        "x": 5.4428266576248125,
+        "y": 7.166072289389235
       },
       "prevControl": {
-        "x": 6.924789906586939,
-        "y": 7.273319629774651
+        "x": 6.203307798539589,
+        "y": 7.312318662642077
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to HoardSpot"
+                "name": "Auto Arm Angle"
               }
             }
           ]
@@ -58,7 +58,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Arm to HoardSpot"
+                "name": "Auto Arm Angle"
               }
             }
           ]

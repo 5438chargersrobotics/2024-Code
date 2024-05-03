@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.9108150520339064,
-        "y": 7.146572772955523
+        "x": 5.277080767938259,
+        "y": 6.80533123536556
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.110035312707207,
-        "y": 7.263569871557795
+        "x": 6.0765609417204605,
+        "y": 6.990576641485826
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "WingLine"
     },
     {
       "anchor": {
-        "x": 9.284231395066117,
-        "y": 5.216120646018014
+        "x": 8.445752188416492,
+        "y": 7.409816244810638
       },
       "prevControl": {
-        "x": 7.870516453621984,
-        "y": 6.727333169630709
+        "x": 7.977763794007399,
+        "y": 7.322068420858932
       },
       "nextControl": null,
       "isLocked": false,
@@ -53,23 +53,46 @@
           ]
         }
       }
+    },
+    {
+      "name": "Stop Intake and Shooter",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Intake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "Stop Shooter Wheels"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 4.2,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 6.0,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 200.0
+    "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -42.70938995736156,
-    "rotateFast": true
+    "rotation": 4.864514437760577,
+    "rotateFast": false
   },
   "reversed": false,
   "folder": "Amp Side",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 4.537772507906742,
     "velocity": 0
   },
   "useDefaultConstraints": false

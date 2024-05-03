@@ -1,0 +1,145 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7531929553145035,
+      "y": 6.6590848621184895
+    },
+    "rotation": 58.309178695175206
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Arm to Subwoofer"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Rev Shooter Wheels"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Sub to W1 Raised Arm Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "W1 to C1 3 piece Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C1 to WingLine Blue"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Auto Arm Angle"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align to Speaker"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "WingLine to C2 Blue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "C2 to WingLine Blue"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Auto Arm Angle Short Delay"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Align to Speaker Short"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Run Index"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
