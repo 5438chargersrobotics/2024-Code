@@ -120,12 +120,12 @@ public final class Constants
     // measured from the horizontal
     public static final double kArmOffsetRads = 2.681;//3.715;
     public static final double kAmpSpot = 1.0;//2.035;
-    public static final double kSubwooferSpot = 2.375;//2.406
+    public static final double kSubwooferSpot = 2.275; //2.375;
     public static final double kSourceSpot = 1.61; 
-    public static final double kStowSpot = 2.556;//3.6;
+    public static final double kStowSpot = 2.556;//3.6; 0.095
     public static final double kPodiumSpot = 1.9;//3.02;
     public static final double kWingLineSpot = 1.85;//2.94;
-   public static final double kMiddleSpot = 2.05;//3.181;
+   public static final double kMiddleSpot = 1.99; //2.05;
    public static final double kSubwooferSideSpot = 2.529;//3.573;
    public static final double kHoardSpot = 1.52;//2.611;
    public static final double kMiddleAutoSpot  = 2.096;//3.14;

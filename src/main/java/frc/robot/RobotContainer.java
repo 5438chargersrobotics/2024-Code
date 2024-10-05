@@ -225,7 +225,7 @@ public class RobotContainer
      NamedCommands.registerCommand("Align to Speaker Short", drivebase.run(() -> autoAimWithOdometry
      ()).withTimeout(1.1));
 
-     
+
        NamedCommands.registerCommand("Arm to HoardSpot", Commands.run(() -> {
         m_arm.setMotor(ArmConstants.kHoardSpot);
         },
@@ -348,7 +348,7 @@ public class RobotContainer
       m_operatorController.povRight().onTrue(Commands.run(m_climb::setBothMotorsDown, m_climb)).onFalse(Commands.run(m_climb::stopBothMotors, m_climb));
     // m_operatorController.button(14).onTrue(Commands.run(m_LED::setLEDColorRed, m_LED));
      
-  m_operatorController.options().onTrue(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter)).onFalse(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter));
+ // m_operatorController.options().onTrue(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter)).onFalse(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter));
      //Intake setpoint and run LEDs: if just one sensor is detected, display yellow, if both are detected, display green   
     m_operatorController
     .cross()
@@ -388,14 +388,14 @@ public class RobotContainer
     //   m_arm)
     // );
     //  Middle Line Setpoint
-    //   m_operatorController
-    // .options()
-    // .onTrue(
-    //   Commands.run(() -> {
-    //   m_arm.setMotor(ArmConstants.kMiddleSpot);
-    //   },
-    //   m_arm)
-    // );
+      m_operatorController
+    .options()
+    .onTrue(
+      Commands.run(() -> {
+      m_arm.setMotor(ArmConstants.kMiddleSpot);
+      },
+      m_arm)
+    );
     //  Hoard Setpoint
       m_operatorController
     .button(9)
@@ -473,7 +473,7 @@ m_operatorController.button(12)
     drivebase.setMotorBrake(brake);
   }
   public double calculateArmAngleWithPose(){
-    double shotAngle = 2.35 +(-0.218*(getSpeakerDistance())+0.021*Math.pow(getSpeakerDistance(), 2));//2.35 + -0.218x + 0.021x^2
+    double shotAngle = 2.33 +(-0.218*(getSpeakerDistance())+0.021*Math.pow(getSpeakerDistance(), 2));//2.35 + -0.218x + 0.021x^2
     //SmartDashboard.putNumber("calculatedArmAngle", shotAngle);
     // SmartDashboard.putNumber("speakerDistance", getSpeakerDistance());
     return shotAngle;

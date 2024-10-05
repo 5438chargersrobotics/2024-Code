@@ -82,7 +82,7 @@ public class ArmSubsystem extends SubsystemBase {
 
  public double calculateArmAngle(){
   double targetOffsetAngleVertical = ty.getDouble(0);
-  double shotAngle = 0.0001 * Math.pow(targetOffsetAngleVertical,2.0) + .002*targetOffsetAngleVertical+.4992;
+  double shotAngle = 0.0001 * Math.pow(targetOffsetAngleVertical,2.0) + .002*targetOffsetAngleVertical+.7; //.4992
   return shotAngle;
  }
 }
