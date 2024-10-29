@@ -80,7 +80,7 @@ public class RobotContainer
   private final Command m_stopShooter = Commands.runOnce(m_shooter::disable, m_shooter);
   // CommandJoystick rotationController = new CommandJoystick(1);
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  CommandPS5Controller driverController = new CommandPS5Controller(0);
+  CommandJoystick driverController = new CommandJoystick(0);
    CommandPS5Controller m_operatorController =
       new CommandPS5Controller(OIConstants.kOperatorControllerPort);
   // private final SendableChooser<Command> autoChooser;
@@ -110,24 +110,24 @@ public class RobotContainer
     // Configure the trigger bindings
     configureBindings();
     
-    AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
-                                                          // Applies deadbands and inverts controls because joysticks
-                                                          // are back-right positive while robot
+   // AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
+     //                                                     // Applies deadbands and inverts controls because joysticks
+       //                                                   // are back-right positive while robot
                                                           // controls are front-left positive
-                                                          () -> MathUtil.applyDeadband(driverController.getLeftY(),
-                                                                                       OperatorConstants.LEFT_Y_DEADBAND),
-                                                          () -> MathUtil.applyDeadband(driverController.getLeftX(),
-                                                                                       OperatorConstants.LEFT_X_DEADBAND),
-                                                          () -> -driverController.getRightX(),
-                                                          () -> -driverController.getRightY());
+         //                                                 () -> MathUtil.applyDeadband(driverController.getLeftY(),
+           //                                                                            OperatorConstants.LEFT_Y_DEADBAND),
+             //                                             () -> MathUtil.applyDeadband(driverController.getLeftX(),
+               //                                                                        OperatorConstants.LEFT_X_DEADBAND),
+                 //                                         () -> -driverController.getRightX(),
+                   //                                       () -> -driverController.getRightY());
 
-    AbsoluteFieldDrive closedFieldAbsoluteDrive = new AbsoluteFieldDrive(drivebase,
-                                                                         () ->
-                                                                             MathUtil.applyDeadband(driverController.getLeftY(),
-                                                                                                    OperatorConstants.LEFT_Y_DEADBAND),
-                                                                         () -> MathUtil.applyDeadband(driverController.getLeftX(),
-                                                                                                      OperatorConstants.LEFT_X_DEADBAND),
-                                                                         () -> driverController.getRawAxis(2));
+  //  AbsoluteFieldDrive closedFieldAbsoluteDrive = new AbsoluteFieldDrive(drivebase,
+   ///                                                                      () ->
+    //                                                                         MathUtil.applyDeadband(driverController.getLeftY(),
+     //                                                                                               OperatorConstants.LEFT_Y_DEADBAND),
+       //                                                                  () -> MathUtil.applyDeadband(driverController.getLeftX(),
+         //                                                                                             OperatorConstants.LEFT_X_DEADBAND),
+           //                                                              () -> driverController.getRawAxis(2));
 
     // AbsoluteDriveAdv closedAbsoluteDriveAdv = new AbsoluteDriveAdv(drivebase,
     //                                                                   () -> MathUtil.applyDeadband(driverController.getLeftY(),
@@ -141,22 +141,18 @@ public class RobotContainer
     //                                                                   driverController::getXButtonPressed, 
     //                                                                   driverController::getBButtonPressed);
 
-    TeleopDrive simClosedFieldRel = new TeleopDrive(drivebase,
-                                                    () -> MathUtil.applyDeadband(driverController.getLeftY(),
-                                                                                 OperatorConstants.LEFT_Y_DEADBAND),
-                                                    () -> MathUtil.applyDeadband(driverController.getLeftX(),
-                                                                                 OperatorConstants.LEFT_X_DEADBAND),
-                                                    () -> driverController.getRawAxis(2), () -> true);
+   // TeleopDrive simClosedFieldRel = new TeleopDrive(drivebase,
+   //                                                 () -> MathUtil.applyDeadband(driverController.getLeftY(),
+    //                                                                             OperatorConstants.LEFT_Y_DEADBAND),
+    //                                                () -> MathUtil.applyDeadband(driverController.getLeftX(),
+    //                                                                             OperatorConstants.LEFT_X_DEADBAND),
+    //                                                () -> driverController.getRawAxis(2), () -> true);
     TeleopDrive closedFieldRel = new TeleopDrive(
         drivebase,
-        () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-        () -> -driverController.getRawAxis(2), () -> true);
-   TeleopDrive closedFieldRelRed = new TeleopDrive(
-        drivebase,
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-        () -> -driverController.getRawAxis(2), () -> true);
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_X_DEADBAND),
+        () -> -driverController.getRawAxis(3), () -> true);
+
   drivebase.setDefaultCommand(closedFieldRel);
   m_shooter.setDefaultCommand(Commands.run(m_shooter::setMotorHoardSpeed, m_shooter));
   //m_Intake.setDefaultCommand(Commands.run(m_Intake::stopIntake, m_Intake));
@@ -274,18 +270,19 @@ public class RobotContainer
   {
   
     //Driver Controls
-    driverController.R1().onTrue((new InstantCommand(drivebase::zeroGyro)));
-     driverController.L2().whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
-     driverController.square().onTrue(Commands.run(m_shooter::setMotorTrapSpeed, m_shooter)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
-     driverController.R2().onTrue(new ParallelCommandGroup(
-        Commands.run(
-            () -> {
-              m_arm.setMotor(ArmConstants.kSourceSpot);
-            },
-            m_arm), Commands.run(m_Intake::runIntakeWithSensor, m_Intake),
-            Commands.run(m_LED::setLEDColorYellow)));
-    driverController.triangle().whileTrue(drivebase.run(()->autoAim()));
-     driverController.cross().whileTrue(drivebase.run(()->autoAimToHoardSpot()));
+   driverController.button(12).onTrue((new InstantCommand(drivebase::zeroGyro)));
+    driverController.button(8).whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
+  //  driverController.square().onTrue(Commands.run(m_shooter::setMotorTrapSpeed, m_shooter)).onFalse(Commands.run(m_shooter::stopMotor, m_shooter));
+ //  driverController.R2().onTrue(new ParallelCommandGroup(
+   //    Commands.run(
+     //       () -> {
+       //       m_arm.setMotor(ArmConstants.kSourceSpot);
+         //   },
+           // m_arm), Commands.run(m_Intake::runIntakeWithSensor, m_Intake),
+         //   Commands.run(m_LED::setLEDColorYellow)));
+   driverController.button(1).whileTrue(drivebase.run(()->autoAim()));
+  driverController.button(2).whileTrue(drivebase.run(()->autoAimToHoardSpot()));
+
     // driverController.L2().whileTrue(new RepeatCommand(new InstantCommand(drivebase::aimAtTarget)));//.onFalse(new TeleopDrive(
     //     drivebase,
      //    () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
@@ -301,10 +298,10 @@ public class RobotContainer
     //     () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
     //     () -> -driverController.getRawAxis(2), () -> true));
     // drive robot oriented
-    driverController.L1().toggleOnTrue(new TeleopDrive(drivebase,
-        () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
-        () -> -driverController.getRawAxis(2), () -> false));
+   // driverController.L1().toggleOnTrue(new TeleopDrive(drivebase,
+    //    () -> MathUtil.applyDeadband(-driverController.getRawAxis(1), OperatorConstants.LEFT_Y_DEADBAND),
+     //   () -> MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND),
+    //    () -> -driverController.getRawAxis(2), () -> false));
    
     //Climber Pid Control
       //Climbing in middle of chain
@@ -501,8 +498,8 @@ private void autoAimToHoardSpot(){
   if(!blue){
     hoardSpot = hoardSpot.plus(new Rotation2d(Math.PI));
   }
- drivebase.driveFieldOriented(blue?drivebase.getTargetSpeeds(MathUtil.applyDeadband(driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getHoardRotation()):
- drivebase.getTargetSpeeds(MathUtil.applyDeadband(-driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(-driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getHoardRotation()));
+ drivebase.driveFieldOriented(blue?drivebase.getTargetSpeeds(MathUtil.applyDeadband(driverController.getRawAxis(1),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND), getHoardRotation()):
+ drivebase.getTargetSpeeds(MathUtil.applyDeadband(-driverController.getRawAxis(1),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND), getHoardRotation()));
 }
   private Rotation2d getSpeakerRotation(){
     speaker=getMovingSpeaker(blue);
@@ -527,8 +524,8 @@ private void autoAimToHoardSpot(){
     }
    
     
-      drivebase.driveFieldOriented(blue? drivebase.getTargetSpeeds(MathUtil.applyDeadband(driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()):
-      drivebase.getTargetSpeeds(MathUtil.applyDeadband(-driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(-driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()));
+      drivebase.driveFieldOriented(blue? drivebase.getTargetSpeeds(MathUtil.applyDeadband(driverController.getRawAxis(1),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()):
+      drivebase.getTargetSpeeds(MathUtil.applyDeadband(-driverController.getRawAxis(1),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()));
   }
     private void autoAimWithOdometry(){
     Rotation2d speaker = getSpeakerRotationWithOdometry();
@@ -537,8 +534,8 @@ private void autoAimToHoardSpot(){
     }
    
     
-      drivebase.driveFieldOriented(blue? drivebase.getTargetSpeeds(MathUtil.applyDeadband(driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()):
-      drivebase.getTargetSpeeds(MathUtil.applyDeadband(-driverController.getLeftY(),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(-driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()));
+      drivebase.driveFieldOriented(blue? drivebase.getTargetSpeeds(MathUtil.applyDeadband(driverController.getRawAxis(1),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()):
+      drivebase.getTargetSpeeds(MathUtil.applyDeadband(-driverController.getRawAxis(1),OperatorConstants.LEFT_Y_DEADBAND), MathUtil.applyDeadband(-driverController.getRawAxis(0), OperatorConstants.LEFT_X_DEADBAND), getSpeakerRotation()));
   }
   public double getSpeakerDistance(){
     var alliance = DriverStation.getAlliance();
